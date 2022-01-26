@@ -28,5 +28,6 @@ public interface R {
 	public static final FrameSignup frameSignup = new FrameSignup();
 	public static final FrameSearchPW frameSearchPw = new FrameSearchPW();
 	public static final FrameIDSearch frameIdSearch = new FrameIDSearch();
+	//코드수정
 	
 }
