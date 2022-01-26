@@ -34,7 +34,7 @@ public class FrameChattingRoom {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			}
+			}//defwfswfsfsfs
 		});
 	}
 
