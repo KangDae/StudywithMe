@@ -72,7 +72,7 @@ public class FrameStart extends JFrame implements R{
 				frameSignup.start();
 			}
 		});
-		panel.add(btnSingUp);
+		panel.add(btnSingUp);//dkssud
 	}
 	public void frameDown() {
 		setVisible(false);
