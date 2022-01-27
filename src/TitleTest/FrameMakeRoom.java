@@ -17,6 +17,8 @@ import javax.swing.JScrollBar;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FrameMakeRoom implements R{
 
@@ -98,6 +100,11 @@ public class FrameMakeRoom implements R{
 		panel_MakeRoom.add(spinner_userMax);
 		
 		JButton btn_RoomMaker = new JButton("방생성");
+		btn_RoomMaker.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btn_RoomMaker.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		btn_RoomMaker.setBounds(245, 38, 97, 40);
 		panel_MakeRoom.add(btn_RoomMaker);
