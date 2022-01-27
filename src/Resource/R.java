@@ -8,6 +8,7 @@ import TitleTest.FrameLogin;
 import TitleTest.FrameSearchPW;
 import TitleTest.FrameSignup;
 import TitleTest.FrameStart;
+import controlbtn.ButtonAction;
 
 public interface R {
 	public static final String[] tel = { "010", "02", "031", "032", "033", "041", "042", "043", "044", "051", "052", "053", "054",
@@ -28,5 +29,7 @@ public interface R {
 	public static final FrameSignup frameSignup = new FrameSignup();
 	public static final FrameSearchPW frameSearchPw = new FrameSearchPW();
 	public static final FrameIDSearch frameIdSearch = new FrameIDSearch();
+	
+	public static final ButtonAction action = new ButtonAction();
 	
 }
