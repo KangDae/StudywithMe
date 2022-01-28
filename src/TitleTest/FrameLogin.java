@@ -21,7 +21,7 @@ import java.awt.Color;
  */
 public class FrameLogin extends JFrame implements R{
 	public FrameLogin() {
-		
+//		this.setUndecorated(true);
 //		initialize();
 	}
 	
@@ -36,6 +36,7 @@ public class FrameLogin extends JFrame implements R{
 		initialize();
 	}
 	private void initialize() {
+		
 		this.setVisible(true);
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,12 +84,13 @@ public class FrameLogin extends JFrame implements R{
 		getContentPane().add(lblNewLabel_GoBack);
 		
 		textField_ID = new JTextField();
-		textField_ID.setBounds(56, 244, 276, 21);
+		textField_ID.setBounds(129, 244, 203, 21);
 		getContentPane().add(textField_ID);
 		textField_ID.setColumns(10);
 		
 		passwordField_PW = new JPasswordField();
-		passwordField_PW.setBounds(56, 275, 276, 21);
+		passwordField_PW.setBounds(129, 275, 203, 21);
+		passwordField_PW.setEchoChar('*');
 		getContentPane().add(passwordField_PW);
 		
 		JButton btnNewButton = new JButton("로그인");
@@ -137,6 +139,14 @@ public class FrameLogin extends JFrame implements R{
 		btn_login_End.setBackground(Color.WHITE);
 		btn_login_End.setBounds(260, 489, 72, 43);
 		getContentPane().add(btn_login_End);
+		
+		JLabel lblNewLabel = new JLabel(" 아 이 디 :");
+		lblNewLabel.setBounds(59, 244, 75, 21);
+		getContentPane().add(lblNewLabel);
+		
+		JLabel lblNewLabel_2 = new JLabel("비밀번호 : ");
+		lblNewLabel_2.setBounds(59, 275, 75, 21);
+		getContentPane().add(lblNewLabel_2);
 	}
 	private void frameDown() {
 		this.setVisible(false);

@@ -1,56 +1,37 @@
 package TitleTest;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
 import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
 import java.awt.Font;
-import java.awt.Insets;
-import javax.swing.JTextField;
 
 import Resource.R;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
 import java.awt.Color;
-import javax.swing.JComboBox;
-import java.awt.SystemColor;
 /*
  * 		프로그램 시작시 제일먼저
  * 		보이는 프레임 입니다.
  */
 public class FrameStart extends JFrame implements R{
-
-	
-	
-	
 	/**
 	 * Create the application.
 	 * @return 
 	 */
 	public FrameStart(){
-		initialize();
+//		initialize();
+//		this.setUndecorated(true);
 	}
 	public void start() {
 		initialize();
-		this.setVisible(true);
-//		this.setUndecorated(true);
-		
+		this.setVisible(true);	
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
-		
-		
+
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

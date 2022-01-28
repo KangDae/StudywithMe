@@ -25,7 +25,7 @@ import java.awt.Color;
  */
 public class FrameSearchPW extends JFrame implements R{
 	public FrameSearchPW() {
-		
+//		this.setUndecorated(true);
 //		initialize();
 	}
 	private JTextField textField_Name;
@@ -48,6 +48,7 @@ public class FrameSearchPW extends JFrame implements R{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		setVisible(true);
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

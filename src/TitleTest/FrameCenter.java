@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 public class FrameCenter extends JFrame implements R{
 	public FrameCenter() {
 //		initialize();
+//		this.setUndecorated(true);
 	}
 
 	private JFrame frame;
@@ -45,6 +46,7 @@ public class FrameCenter extends JFrame implements R{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		this.setVisible(true);
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

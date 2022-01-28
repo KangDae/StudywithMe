@@ -25,6 +25,7 @@ public class FrameIDSearch extends JFrame implements R{
 	public FrameIDSearch() {
 		
 //		initialize();
+//		this.setUndecorated(true);
 	}
 	private JTextField textField_Name;
 	private JTextField textField_Email;
@@ -40,6 +41,7 @@ public class FrameIDSearch extends JFrame implements R{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		this.setVisible(true);
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

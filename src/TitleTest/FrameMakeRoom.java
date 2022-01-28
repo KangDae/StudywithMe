@@ -27,6 +27,7 @@ public class FrameMakeRoom extends JFrame implements R{
 	private JPasswordField passwordField;
 	public FrameMakeRoom(){
 //		initialize();
+//		this.setUndecorated(true);
 	}
 
 	/**
@@ -40,6 +41,7 @@ public class FrameMakeRoom extends JFrame implements R{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		this.setVisible(true);
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,6 +68,7 @@ public class FrameMakeRoom extends JFrame implements R{
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(101, 290, 116, 21);
+		passwordField.setEchoChar('*');
 		panel_MakeRoom.add(passwordField);
 		
 		JLabel lbl_RoomName_1_1 = new JLabel("방 주제 : ");

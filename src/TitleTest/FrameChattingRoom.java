@@ -29,6 +29,7 @@ public class FrameChattingRoom extends JFrame implements R{
 
 	public FrameChattingRoom(){
 //		initialize();
+//		this.setUndecorated(true);
 	}
 	/**
 	 * Create the application.
@@ -41,6 +42,7 @@ public class FrameChattingRoom extends JFrame implements R{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		this.setVisible(true);
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -26,6 +26,7 @@ public class FramePassWordCheck extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		this.setUndecorated(true);
 		this.getContentPane().setBackground(new Color(135, 206, 250));
 		this.setBounds(100, 100, 345, 208);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
