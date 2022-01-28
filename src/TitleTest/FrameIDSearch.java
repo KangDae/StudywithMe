@@ -178,12 +178,6 @@ public class FrameIDSearch extends JFrame implements R{
 		this.getContentPane().add(btn_idSearchConfirm);
 		
 		JButton btn_Cancle = new JButton("취소");
-		btn_Cancle.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameDown();
-				frameStart.start();
-			}
-		});
 		btn_Cancle.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		btn_Cancle.setBounds(254, 423, 82, 39);
 		this.getContentPane().add(btn_Cancle);

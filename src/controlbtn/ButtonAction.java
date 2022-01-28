@@ -9,8 +9,20 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import Resource.R;
+import TitleTest.FrameCenter;
+import TitleTest.FrameIDSearch;
+import TitleTest.FrameLogin;
+import TitleTest.FrameSearchPW;
+import TitleTest.FrameSignup;
+import TitleTest.FrameStart;
 
 public class ButtonAction implements R, ActionListener, Runnable{
+	private FrameStart frameStart; // 시작화면
+	private FrameLogin frameLogin;
+	private FrameCenter frameCenter;
+	private FrameSignup frameSignup;
+	private FrameSearchPW frameSearchPw;
+	private FrameIDSearch frameIdSearch;
 	
 	private boolean condition_Email = false;
 	private boolean condition_ID    = false;
@@ -20,6 +32,14 @@ public class ButtonAction implements R, ActionListener, Runnable{
 	
 	private JButton btn_Confirm     = new JButton("확인");
 	
+	public ButtonAction(){
+		frameStart = new FrameStart();
+		frameLogin = new FrameLogin();
+		frameCenter = new FrameCenter();
+		frameSignup = new FrameSignup();
+		frameSearchPw = new FrameSearchPW();
+		frameIdSearch = new FrameIDSearch();
+	}
 	
 	public void event(){
 		// 시작 프레임 버튼 구현
@@ -45,14 +65,12 @@ public class ButtonAction implements R, ActionListener, Runnable{
 	public void actionPerformed(ActionEvent e) {
 
 		// 시작 프레임 부분 버튼 액션리스너
-		// ===============>  로그인 버튼 Click  <===============
 		if(e.getSource() == frameStart.loginBtn) {
 			
 			frameLogin.start();
 			frameStart.setVisible(false);
 		
-		}// ===============>  회원가입 버튼 Click  <===============
-		else if (e.getSource() == frameStart.btnSignUp) {
+		} else if (e.getSource() == frameStart.btnSignUp) {
 			
 			frameSignup.start();
 			frameStart.setVisible(false);
@@ -83,7 +101,6 @@ public class ButtonAction implements R, ActionListener, Runnable{
 				line += ( id+ "%" +pw+ "%" +name+ "%" +ageYear+ "%" +ageMonnth+ "%" +ageDay+ "%" +email1+"@"+email2)
 						+ "%" +tell1+tell2+tell3;
 				System.out.println(line);
-//				===============>  서버 잡히면 넣을부분 수정예정  <===============
 //				pw.println(Protocol.RESISTER + "|" + line);
 				JOptionPane.showMessageDialog(btn_Confirm, "회원가입 완료!");
 				frameSignup.textField_Name.setText("");
@@ -102,20 +119,16 @@ public class ButtonAction implements R, ActionListener, Runnable{
 				condition_Email = false;
 				condition_ID    = false;
 				scretNumber     = SCRET;
-//				===============>  중복확인 안했을때  <===============
-			} else if ( !condition_ID    && condition_Email) { 
+			} else if ( !condition_ID    && condition_Email) {
 				JOptionPane.showMessageDialog(btn_Confirm, "ID 중복확인 해주세요");
-			}// ===============>  인증확인 안했을때  <===============
-			else if ( !condition_Email && condition_ID   ) {
+			} else if ( !condition_Email && condition_ID   ) {
 				JOptionPane.showMessageDialog(btn_Confirm, "이메일 인증을 해주세요");
-			}// ===============>  둘다확인 안했을때  <===============
-			else if ( !condition_ID    && condition_Email) {
+			} else if ( !condition_ID    && condition_Email) {
 				JOptionPane.showMessageDialog(btn_Confirm, "ID중복, 이메일 인증을 해주세요");
 			}
 			
-		}//     ===============>  취소버튼 눌렀을때  <===============
-		else if (e.getSource() == frameSignup.btn_SignUpCancle ) {
-			frameStart.setVisible(true);
+		} else if (e.getSource() == frameSignup.btn_SignUpCancle ) {
+			frameStart.start();
 			frameSignup.setVisible(false);
 		}
 		
