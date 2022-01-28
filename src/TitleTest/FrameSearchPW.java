@@ -60,7 +60,7 @@ public class FrameSearchPW extends JFrame implements R{
 		this.getContentPane().setLayout(null);
 		getContentPane().setBackground(new Color(135, 206 ,235));
 		
-		JLabel lblNewLabel_SearchPassword = new JLabel(R.image);
+		JLabel lblNewLabel_SearchPassword = new JLabel();
 		lblNewLabel_SearchPassword.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		lblNewLabel_SearchPassword.setBounds(31, 32, 328, 107);
 		this.getContentPane().add(lblNewLabel_SearchPassword);
@@ -159,7 +159,7 @@ public class FrameSearchPW extends JFrame implements R{
 			}
 			
 		}
-	});//
+	});//0
 		btn_pwSearchConfirm.setBackground(new Color(255, 255, 255));
 		btn_pwSearchConfirm.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		btn_pwSearchConfirm.setBounds(31, 435, 80, 29);
