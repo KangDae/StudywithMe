@@ -20,28 +20,13 @@ import java.awt.event.ActionEvent;
  *  		회원가입 프레임 입니다.
  */
 public class FrameSignup extends JFrame implements R{
-//	public FrameSignup() {
-//		initialize();
-//	}
-	
-	public JTextField textField_Name;
-	public JTextField textField_ID;
-	public JPasswordField passwordField_PW;
-	public JTextField textField_FirstPhone;
-	public JTextField textField_LastPhone;
-	public JTextField textField_Email;
-	public JTextField textField_EmailCertification;
-	
-	public JComboBox comboBox_Year = new JComboBox<String>();
-	public JComboBox comboBox_Moonth = new JComboBox<String>();
-	public JComboBox comboBox_Day = new JComboBox<String>();
-	public JComboBox comboBox_SmallPhoneNumber = new JComboBox<String>();
-	public JComboBox comboBox_Email = new JComboBox<String>();
-	
-	public JButton btn_IDCheck = new JButton("중복");
-	public JButton btn_EmailSend = new JButton("전송");
-	public JButton btn_SignUpCheck = new JButton("확인");
-	public JButton btn_SignUpCancle = new JButton("취소");
+	private JTextField textField_Name;
+	private JTextField textField_ID;
+	private JPasswordField passwordField_PW;
+	private JTextField textField_FirstPhone;
+	private JTextField textField_LastPhone;
+	private JTextField textField_Email;
+	private JTextField textField;
 
 	public void start() {
 		initialize();
@@ -79,7 +64,7 @@ public class FrameSignup extends JFrame implements R{
 		textField_ID.setBounds(96, 124, 116, 21);
 		this.getContentPane().add(textField_ID);
 		
-		
+		JButton btn_IDCheck = new JButton("중복");
 		btn_IDCheck.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		btn_IDCheck.setBounds(222, 118, 72, 27);
 		getContentPane().add(btn_IDCheck);
@@ -100,15 +85,14 @@ public class FrameSignup extends JFrame implements R{
 		JPanel layout_DateOfBird = new JPanel();
 		layout_DateOfBird.setBorder(border_DateOfBird);
 		layout_DateOfBird.setLayout(null);
-		layout_DateOfBird.setBounds(12, 199, 350, 59);
+		layout_DateOfBird.setBounds(12, 199, 350, 50);
 		this.getContentPane().add(layout_DateOfBird);
 		
-//		JComboBox comboBox_Year = new JComboBox<String>(R.ageYear);
+		JComboBox comboBox_Year = new JComboBox<String>(R.ageYear);
 		comboBox_Year.setBounds(12, 19, 87, 23);
 		layout_DateOfBird.add(comboBox_Year);
 		
-		
-//		JComboBox comboBox_Moonth = new JComboBox<String>(R.ageMonth);
+		JComboBox comboBox_Moonth = new JComboBox<String>(R.ageMonth);
 		comboBox_Moonth.setBounds(144, 19, 61, 23);
 		layout_DateOfBird.add(comboBox_Moonth);
 		
@@ -117,7 +101,7 @@ public class FrameSignup extends JFrame implements R{
 		lblNewLabel_Year.setBounds(101, 20, 48, 15);
 		layout_DateOfBird.add(lblNewLabel_Year);
 		
-//		JComboBox comboBox_Day = new JComboBox<String>(R.ageDay);
+		JComboBox comboBox_Day = new JComboBox<String>(R.ageDay);
 		comboBox_Day.setBounds(241, 19, 72, 23);
 		layout_DateOfBird.add(comboBox_Day);
 		
@@ -140,8 +124,7 @@ public class FrameSignup extends JFrame implements R{
 		layout_PhoneNumber.setBounds(12, 259, 350, 53);
 		this.getContentPane().add(layout_PhoneNumber);
 		
-		
-//		JComboBox comboBox_SmallPhoneNumber = new JComboBox<String>(R.tel);
+		JComboBox comboBox_SmallPhoneNumber = new JComboBox<String>(R.tel);
 		comboBox_SmallPhoneNumber.setBounds(45, 19, 54, 23);
 		layout_PhoneNumber.add(comboBox_SmallPhoneNumber);
 		
@@ -189,11 +172,11 @@ public class FrameSignup extends JFrame implements R{
 		lblNewLabel_Email.setBounds(12, 23, 57, 15);
 		layout_Email.add(lblNewLabel_Email);
 		
-		
-//		JComboBox comboBox_Email = new JComboBox<String>(R.email);
+		JComboBox comboBox_Email = new JComboBox<String>(R.email);
 		comboBox_Email.setBounds(160, 19, 105, 23);
 		layout_Email.add(comboBox_Email);
 		
+		JButton btn_EmailSend = new JButton("전송");
 		btn_EmailSend.setBounds(277, 20, 76, 22);
 		layout_Email.add(btn_EmailSend);
 		btn_EmailSend.setFont(new Font("맑은 고딕", Font.BOLD, 13));
@@ -205,23 +188,34 @@ public class FrameSignup extends JFrame implements R{
 		lblNewLabel_Email_1.setBounds(27, 412, 91, 15);
 		this.getContentPane().add(lblNewLabel_Email_1);
 		
-		textField_EmailCertification = new JTextField();
-		textField_EmailCertification.setBounds(111, 412, 169, 21);
-		this.getContentPane().add(textField_EmailCertification);
-		textField_EmailCertification.setColumns(10);
+		textField = new JTextField();
+		textField.setBounds(111, 412, 169, 21);
+		this.getContentPane().add(textField);
+		textField.setColumns(10);
 		/*
 		 * 막단 확인, 취소
 		 */
-		
+		JButton btn_SignUpCheck = new JButton("확인");
 		btn_SignUpCheck.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		btn_SignUpCheck.setBounds(27, 507, 116, 40);
 		getContentPane().add(btn_SignUpCheck);
 		
+		JButton btn_SignUpCancle = new JButton("취소");
+		btn_SignUpCancle.addActionListener(new ActionListener() {
+			/*
+			 *  취소를 누를시 현재창을 setVisible하고 
+			 *  frame의 처음시작점으로 돌아감.
+			 */
+			public void actionPerformed(ActionEvent e) {
+				FrameSignup.this.setVisible(false);
+				frameStart.start();
+			}
+		});
 		btn_SignUpCancle.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		btn_SignUpCancle.setBounds(246, 507, 116, 40);
 		getContentPane().add(btn_SignUpCancle);
 		
-		action.event();
+		
 		
 		
 	}

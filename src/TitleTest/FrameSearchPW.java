@@ -122,6 +122,12 @@ public class FrameSearchPW extends JFrame implements R{
 		this.getContentPane().add(btn_pwSearchConfirm);
 		
 		JButton btn_pwCancle = new JButton("취소");
+		btn_pwCancle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameDown();
+				frameStart.start();
+			}
+		});
 		btn_pwCancle.setFont(new Font("맑은 고딕", Font.BOLD, 25));
 		btn_pwCancle.setBounds(242, 383, 116, 53);
 		this.getContentPane().add(btn_pwCancle);

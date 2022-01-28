@@ -2,13 +2,11 @@ package TitleTest;
 
 import javax.swing.JFrame;
 
-import Resource.R;
-
-public class TestMain implements R{
+public class TestMain {
+	public static final FrameStart startF = new FrameStart();
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		R.frameStartMain.start();
+		startF.start();
 	}
-	
 
 }
