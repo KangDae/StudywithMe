@@ -1,6 +1,6 @@
 package Resource;
 
-import javax.swing.JFrame;
+import javax.swing.ImageIcon;
 
 import TitleTest.FrameCenter;
 import TitleTest.FrameIDSearch;
@@ -8,7 +8,6 @@ import TitleTest.FrameLogin;
 import TitleTest.FrameSearchPW;
 import TitleTest.FrameSignup;
 import TitleTest.FrameStart;
-import controlbtn.ButtonAction;
 
 public interface R {
 	public static final String[] tel = { "010", "02", "031", "032", "033", "041", "042", "043", "044", "051", "052", "053", "054",
@@ -23,8 +22,7 @@ public interface R {
 			"16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" };
 	public static final String[] roomTopic = { "경영", "마케팅", "고객관리", "개발", "디자인" };
 	
-
-	public static final FrameStart frameStartMain = new FrameStart();
+	public ImageIcon image = new ImageIcon("Logo/로고.png");
 
 	public static final FrameStart frameStart = new FrameStart(); // 시작화면
 	public static final FrameLogin frameLogin = new FrameLogin(); // 배광민바보
