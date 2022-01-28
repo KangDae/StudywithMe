@@ -80,7 +80,7 @@ public class FrameStart extends JFrame implements R{
 		panel.add(loginBtn);
 		
 		JButton btnSingUp = new JButton("회 원 가 입");
-		btnSingUp.setBackground(new Color(135, 206, 235));
+		btnSingUp.setBackground(Color.WHITE);
 		
 		btnSingUp.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		btnSingUp.setBounds(134, 406, 122, 32);
@@ -100,7 +100,7 @@ public class FrameStart extends JFrame implements R{
 		});
 		loginBtn_1.setForeground(new Color(0, 0, 0));
 		loginBtn_1.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		loginBtn_1.setBackground(new Color(135, 206, 235));
+		loginBtn_1.setBackground(Color.WHITE);
 		loginBtn_1.setBounds(288, 519, 84, 32);
 		panel.add(loginBtn_1);
 	}

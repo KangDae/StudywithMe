@@ -3,8 +3,10 @@ package Resource;
 import javax.swing.ImageIcon;
 
 import TitleTest.FrameCenter;
+import TitleTest.FrameChattingRoom;
 import TitleTest.FrameIDSearch;
 import TitleTest.FrameLogin;
+import TitleTest.FrameMakeRoom;
 import TitleTest.FrameSearchPW;
 import TitleTest.FrameSignup;
 import TitleTest.FrameStart;
@@ -30,6 +32,8 @@ public interface R {
 	public static final FrameSignup frameSignup = new FrameSignup();
 	public static final FrameSearchPW frameSearchPw = new FrameSearchPW();
 	public static final FrameIDSearch frameIdSearch = new FrameIDSearch();
+	public static final FrameMakeRoom frameMakeRoom = new FrameMakeRoom();
+	public static final FrameChattingRoom frameChattingRoom = new FrameChattingRoom();
 
 
 	
