@@ -16,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 /*
  *  		회원가입 프레임 입니다.
  */
@@ -27,18 +28,22 @@ public class FrameSignup extends JFrame implements R{
 	private JTextField textField_LastPhone;
 	private JTextField textField_Email;
 	private JTextField textField;
-
+	public FrameSignup(){
+		
+		
+//		initialize();
+	}
 	public void start() {
 		initialize();
 	}
 
 	private void initialize() {
-		FrameSignup.this.setVisible(true);
-		this.setBounds(100, 100, 405, 632);
+		this.setVisible(true);
+		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
 		
-		
+		getContentPane().setBackground(new Color(135, 206 ,235));
 		JLabel lblNewLabel_SignUp = new JLabel("회원가입");
 		lblNewLabel_SignUp.setFont(new Font("맑은 고딕", Font.BOLD, 30));
 		lblNewLabel_SignUp.setBounds(160, 20, 143, 53);
@@ -65,6 +70,7 @@ public class FrameSignup extends JFrame implements R{
 		this.getContentPane().add(textField_ID);
 		
 		JButton btn_IDCheck = new JButton("중복");
+		btn_IDCheck.setBackground(new Color(0, 206, 209));
 		btn_IDCheck.setFont(new Font("맑은 고딕", Font.BOLD, 13));
 		btn_IDCheck.setBounds(222, 118, 72, 27);
 		getContentPane().add(btn_IDCheck);
@@ -83,16 +89,20 @@ public class FrameSignup extends JFrame implements R{
 		 */
 		Border border_DateOfBird = BorderFactory.createTitledBorder("생년월일");
 		JPanel layout_DateOfBird = new JPanel();
+		layout_DateOfBird.setForeground(new Color(0, 206, 209));
+		layout_DateOfBird.setBackground(new Color(64, 224, 208));
 		layout_DateOfBird.setBorder(border_DateOfBird);
 		layout_DateOfBird.setLayout(null);
 		layout_DateOfBird.setBounds(12, 199, 350, 50);
 		this.getContentPane().add(layout_DateOfBird);
 		
-		JComboBox comboBox_Year = new JComboBox<String>(R.ageYear);
+		JComboBox comboBox_Year = new JComboBox<String>();
+		comboBox_Year.setBackground(new Color(255, 255, 255));
 		comboBox_Year.setBounds(12, 19, 87, 23);
 		layout_DateOfBird.add(comboBox_Year);
 		
-		JComboBox comboBox_Moonth = new JComboBox<String>(R.ageMonth);
+		JComboBox comboBox_Moonth = new JComboBox<String>();
+		comboBox_Moonth.setBackground(new Color(255, 255, 255));
 		comboBox_Moonth.setBounds(144, 19, 61, 23);
 		layout_DateOfBird.add(comboBox_Moonth);
 		
@@ -101,7 +111,8 @@ public class FrameSignup extends JFrame implements R{
 		lblNewLabel_Year.setBounds(101, 20, 48, 15);
 		layout_DateOfBird.add(lblNewLabel_Year);
 		
-		JComboBox comboBox_Day = new JComboBox<String>(R.ageDay);
+		JComboBox comboBox_Day = new JComboBox<String>();
+		comboBox_Day.setBackground(new Color(255, 255, 255));
 		comboBox_Day.setBounds(241, 19, 72, 23);
 		layout_DateOfBird.add(comboBox_Day);
 		
@@ -119,12 +130,14 @@ public class FrameSignup extends JFrame implements R{
 		 */
 		Border border_PhoneNumber = BorderFactory.createTitledBorder("전화번호");
 		JPanel layout_PhoneNumber = new JPanel();
+		layout_PhoneNumber.setBackground(new Color(64, 224, 208));
 		layout_PhoneNumber.setBorder(border_PhoneNumber);
 		layout_PhoneNumber.setLayout(null);
 		layout_PhoneNumber.setBounds(12, 259, 350, 53);
 		this.getContentPane().add(layout_PhoneNumber);
 		
-		JComboBox comboBox_SmallPhoneNumber = new JComboBox<String>(R.tel);
+		JComboBox comboBox_SmallPhoneNumber = new JComboBox<String>();
+		comboBox_SmallPhoneNumber.setBackground(new Color(255, 255, 255));
 		comboBox_SmallPhoneNumber.setBounds(45, 19, 54, 23);
 		layout_PhoneNumber.add(comboBox_SmallPhoneNumber);
 		
@@ -139,6 +152,7 @@ public class FrameSignup extends JFrame implements R{
 		layout_PhoneNumber.add(lblNewLabel_Bar2);
 		
 		textField_FirstPhone = new JTextField();
+		textField_FirstPhone.setBackground(new Color(255, 255, 255));
 		textField_FirstPhone.setBounds(145, 20, 60, 21);
 		layout_PhoneNumber.add(textField_FirstPhone);
 		textField_FirstPhone.setColumns(4);
@@ -152,6 +166,7 @@ public class FrameSignup extends JFrame implements R{
 		 */
 		Border border_Email = BorderFactory.createTitledBorder("Email");
 		JPanel layout_Email = new JPanel();
+		layout_Email.setBackground(new Color(64, 224, 208));
 		layout_Email.setBorder(border_Email);
 		layout_Email.setLayout(null);
 		layout_Email.setBounds(12, 333, 365, 53);
@@ -172,11 +187,12 @@ public class FrameSignup extends JFrame implements R{
 		lblNewLabel_Email.setBounds(12, 23, 57, 15);
 		layout_Email.add(lblNewLabel_Email);
 		
-		JComboBox comboBox_Email = new JComboBox<String>(R.email);
+		JComboBox comboBox_Email = new JComboBox<String>();
 		comboBox_Email.setBounds(160, 19, 105, 23);
 		layout_Email.add(comboBox_Email);
 		
 		JButton btn_EmailSend = new JButton("전송");
+		btn_EmailSend.setBackground(new Color(0, 206, 209));
 		btn_EmailSend.setBounds(277, 20, 76, 22);
 		layout_Email.add(btn_EmailSend);
 		btn_EmailSend.setFont(new Font("맑은 고딕", Font.BOLD, 13));
@@ -196,11 +212,13 @@ public class FrameSignup extends JFrame implements R{
 		 * 막단 확인, 취소
 		 */
 		JButton btn_SignUpCheck = new JButton("확인");
+		btn_SignUpCheck.setBackground(new Color(0, 206, 209));
 		btn_SignUpCheck.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		btn_SignUpCheck.setBounds(27, 507, 116, 40);
 		getContentPane().add(btn_SignUpCheck);
 		
 		JButton btn_SignUpCancle = new JButton("취소");
+		btn_SignUpCancle.setBackground(new Color(0, 206, 209));
 		btn_SignUpCancle.addActionListener(new ActionListener() {
 			/*
 			 *  취소를 누를시 현재창을 setVisible하고 
