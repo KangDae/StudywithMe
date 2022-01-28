@@ -45,7 +45,6 @@ public class FrameLogin extends JFrame implements R{
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				FrameLogin.this.setVisible(false);
-				frameStart.start();
 				
 			}
 
@@ -89,32 +88,14 @@ public class FrameLogin extends JFrame implements R{
 		getContentPane().add(passwordField_PW);
 		
 		JButton btnNewButton = new JButton("로그인");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameDown();
-				frameCenter.start();
-			}
-		});
 		btnNewButton.setBounds(268, 76, 97, 52);
 		getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_SearchID = new JButton("아이디 찾기");
-		btnNewButton_SearchID.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameDown();
-				frameIdSearch.start();
-			}
-		});
 		btnNewButton_SearchID.setBounds(59, 155, 115, 30);
 		getContentPane().add(btnNewButton_SearchID);
 		
 		JButton btnNewButton_SearchID_1 = new JButton("비밀번호 찾기");
-		btnNewButton_SearchID_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameDown();
-				frameSearchPw.start();
-			}
-		});
 		btnNewButton_SearchID_1.setBounds(210, 155, 125, 30);
 		getContentPane().add(btnNewButton_SearchID_1);
 		

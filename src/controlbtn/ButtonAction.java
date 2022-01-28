@@ -9,6 +9,12 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import Resource.R;
+import TitleTest.FrameCenter;
+import TitleTest.FrameIDSearch;
+import TitleTest.FrameLogin;
+import TitleTest.FrameSearchPW;
+import TitleTest.FrameSignup;
+import TitleTest.FrameStart;
 
 public class ButtonAction implements R, ActionListener, Runnable{
 	
@@ -47,7 +53,6 @@ public class ButtonAction implements R, ActionListener, Runnable{
 		// 시작 프레임 부분 버튼 액션리스너
 		// ===============>  로그인 버튼 Click  <===============
 		if(e.getSource() == frameStart.loginBtn) {
-			
 			frameLogin.start();
 			frameStart.setVisible(false);
 		

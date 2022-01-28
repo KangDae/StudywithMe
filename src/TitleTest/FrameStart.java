@@ -24,15 +24,13 @@ import javax.swing.SwingConstants;
  * 		보이는 프레임 입니다.
  */
 public class FrameStart extends JFrame implements R{
+	
 	public JButton loginBtn = new JButton("로그인 하기");
 	public JButton btnSignUp = new JButton("회 원 가 입");
-	public FrameStart() {
+	
+//	public FrameStart() {
 //		initialize();
-	}
-	/**
-	 * Create the application.
-	 * @return 
-	 */
+//	}
 	public void start() {
 		initialize();
 		
