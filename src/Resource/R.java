@@ -23,7 +23,19 @@ public interface R {
 			"16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" };
 	public static final String[] roomTopic = { "경영", "마케팅", "고객관리", "개발", "디자인" };
 	
+
 	public static final FrameStart frameStartMain = new FrameStart();
+
+	public static final FrameStart frameStart = new FrameStart(); // 시작화면
+	public static final FrameLogin frameLogin = new FrameLogin(); // 배광민바보
+	public static final FrameCenter frameCenter = new FrameCenter();
+	public static final FrameSignup frameSignup = new FrameSignup();
+	public static final FrameSearchPW frameSearchPw = new FrameSearchPW();
+	public static final FrameIDSearch frameIdSearch = new FrameIDSearch();
+
+
 	
 	
+
+
 }
