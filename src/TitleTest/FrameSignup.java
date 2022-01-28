@@ -20,9 +20,9 @@ import java.awt.event.ActionEvent;
  *  		회원가입 프레임 입니다.
  */
 public class FrameSignup extends JFrame implements R{
-	public FrameSignup() {
+//	public FrameSignup() {
 //		initialize();
-	}
+//	}
 	
 	public JTextField textField_Name;
 	public JTextField textField_ID;
@@ -32,11 +32,11 @@ public class FrameSignup extends JFrame implements R{
 	public JTextField textField_Email;
 	public JTextField textField_EmailCertification;
 	
-	public JComboBox comboBox_Year = new JComboBox<String>(R.ageYear);
-	public JComboBox comboBox_Moonth = new JComboBox<String>(R.ageMonth);
-	public JComboBox comboBox_Day = new JComboBox<String>(R.ageDay);
-	public JComboBox comboBox_SmallPhoneNumber = new JComboBox<String>(R.tel);
-	public JComboBox comboBox_Email = new JComboBox<String>(R.email);
+	public JComboBox comboBox_Year = new JComboBox<String>();
+	public JComboBox comboBox_Moonth = new JComboBox<String>();
+	public JComboBox comboBox_Day = new JComboBox<String>();
+	public JComboBox comboBox_SmallPhoneNumber = new JComboBox<String>();
+	public JComboBox comboBox_Email = new JComboBox<String>();
 	
 	public JButton btn_IDCheck = new JButton("중복");
 	public JButton btn_EmailSend = new JButton("전송");
@@ -100,7 +100,7 @@ public class FrameSignup extends JFrame implements R{
 		JPanel layout_DateOfBird = new JPanel();
 		layout_DateOfBird.setBorder(border_DateOfBird);
 		layout_DateOfBird.setLayout(null);
-		layout_DateOfBird.setBounds(12, 199, 350, 50);
+		layout_DateOfBird.setBounds(12, 199, 350, 59);
 		this.getContentPane().add(layout_DateOfBird);
 		
 //		JComboBox comboBox_Year = new JComboBox<String>(R.ageYear);
@@ -221,7 +221,7 @@ public class FrameSignup extends JFrame implements R{
 		btn_SignUpCancle.setBounds(246, 507, 116, 40);
 		getContentPane().add(btn_SignUpCancle);
 		
-		
+		action.event();
 		
 		
 	}
