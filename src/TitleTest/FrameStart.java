@@ -66,6 +66,9 @@ public class FrameStart extends JFrame implements R{
 		btnSingUp.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		btnSingUp.setBounds(134, 406, 122, 32);
 		btnSingUp.addActionListener(new ActionListener() {
+			/*
+			 * 
+			 */
 			public void actionPerformed(ActionEvent e) {
 				frameDown();
 				frameSignup.start();

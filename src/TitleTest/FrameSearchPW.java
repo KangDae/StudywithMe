@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -26,13 +27,17 @@ import java.awt.Color;
 public class FrameSearchPW extends JFrame implements R{
 	public FrameSearchPW() {
 //		this.setUndecorated(true);
-//		initialize();
+		initialize();
 	}
 	private JTextField textField_Name;
 	private JTextField textField_Email;
 	private JTextField textField_EmailCheck;
 	private JTextField textField_ID;
 
+	
+	private boolean condition_Email = false;
+	private boolean condition_ID = false;
+	private final String SCRET = ":)h";
 	/**
 	 * Launch the application.
 	 */
@@ -118,13 +123,46 @@ public class FrameSearchPW extends JFrame implements R{
 		this.getContentPane().add(textField_EmailCheck);
 		textField_EmailCheck.setColumns(10);
 		
-		JButton btn_EmailConfirm = new JButton("전송");
+		JButton btn_EmailConfirm = new JButton("인증");
+		btn_EmailConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btn_EmailConfirm.setBackground(new Color(255, 255, 255));
 		btn_EmailConfirm.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		btn_EmailConfirm.setBounds(292, 340, 67, 23);
 		this.getContentPane().add(btn_EmailConfirm);
 		
 		JButton btn_pwSearchConfirm = new JButton("확인");
+		btn_pwSearchConfirm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 // 비밀번호 찾기 프레임 부분 버튼 액션 리스너
+		         String name        = frameSearchPw.textField_Name.getText();
+		         String id          = frameSearchPw.textField_ID.getText();
+		         String email1      = frameSearchPw.textField_Email.getText();
+		         String email2      = (String) comboBox_Email.getSelectedItem();
+//		         String emailCheck =  textField_EmailCertification.getText();
+		         
+		         if( name.length()==0 || id.length()==0 || email1.length()==0) { 
+		            // emailCheck.length() ==0
+		            JOptionPane.showMessageDialog(R.btn_Confirm, "빈칸을 입력해 주세요");
+		         }else if(condition_Email) {
+		            String line ="";
+		            line += ( name +"%" + id + "%" + email1 + "@" + email2  );
+		            System.out.println(line);
+		            textField_Name.setText("");
+		            textField_ID.setText("");
+		            textField_Email.setText("");
+		            comboBox_Email.setSelectedIndex(0);
+		            
+		            condition_Email =false;
+		            
+		         }else if ( !condition_Email) {
+		            JOptionPane.showMessageDialog(R.btn_Confirm, "이메일 인증을 해주세요");
+		         }
+
+			}
+		});
 		btn_pwSearchConfirm.setBackground(new Color(255, 255, 255));
 		btn_pwSearchConfirm.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		btn_pwSearchConfirm.setBounds(31, 435, 80, 29);
@@ -152,22 +190,22 @@ public class FrameSearchPW extends JFrame implements R{
 		lblNewLabel_ID.setBounds(27, 227, 57, 15);
 		this.getContentPane().add(lblNewLabel_ID);
 		
-		JButton btn_Send_1_1_1 = new JButton("재설정");
-		btn_Send_1_1_1.setBackground(new Color(255, 255, 255));
-		btn_Send_1_1_1.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		btn_Send_1_1_1.setBounds(27, 382, 332, 29);
-		this.getContentPane().add(btn_Send_1_1_1);
+		JButton btn_Reset = new JButton("재설정");
+		btn_Reset.setBackground(new Color(255, 255, 255));
+		btn_Reset.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		btn_Reset.setBounds(27, 382, 332, 29);
+		this.getContentPane().add(btn_Reset);
 		
-		JButton btn_pwCancle_1 = new JButton("종료");
-		btn_pwCancle_1.addActionListener(new ActionListener() {
+		JButton btn_Exit = new JButton("종료");
+		btn_Exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		btn_pwCancle_1.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		btn_pwCancle_1.setBackground(Color.WHITE);
-		btn_pwCancle_1.setBounds(292, 514, 80, 37);
-		getContentPane().add(btn_pwCancle_1);
+		btn_Exit.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		btn_Exit.setBackground(Color.WHITE);
+		btn_Exit.setBounds(292, 514, 80, 37);
+		getContentPane().add(btn_Exit);
 	}
 	private void frameDown() {
 		this.setVisible(false);

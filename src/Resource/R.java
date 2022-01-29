@@ -1,6 +1,7 @@
 package Resource;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 import TitleTest.FrameCenter;
 import TitleTest.FrameChattingRoom;
@@ -26,6 +27,8 @@ public interface R {
 	
 	public ImageIcon image = new ImageIcon("Logo/로고.png");
 
+	public static final JButton btn_Confirm = new JButton("확인");
+	
 	public static final FrameStart frameStart = new FrameStart(); // 시작화면
 	public static final FrameLogin frameLogin = new FrameLogin(); // 배광민바보
 	public static final FrameCenter frameCenter = new FrameCenter();

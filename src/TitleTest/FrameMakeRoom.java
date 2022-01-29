@@ -20,7 +20,9 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/*
+ *  방만드는 프레임
+ */
 public class FrameMakeRoom extends JFrame implements R{
 
 	private JTextField textField_RoomName;
@@ -102,6 +104,12 @@ public class FrameMakeRoom extends JFrame implements R{
 		panel_MakeRoom.add(btn_RoomMaker);
 		
 		JButton btn_Cancle = new JButton("취소");
+		btn_Cancle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameDown();
+				frameCenter.start();
+			}
+		});
 		btn_Cancle.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		btn_Cancle.setBounds(283, 460, 77, 29);
 		panel_MakeRoom.add(btn_Cancle);
