@@ -22,28 +22,26 @@ import java.awt.event.ActionEvent;
  * 		방만들기 이후 입장해서 보이게되는 화면의
  * 		프레임입니다.
  */
-public class FrameChattingRoom extends JFrame implements R{
+public class FrameChattingRoom extends R{
 
 	private JTextField textField;
 
 
 	public FrameChattingRoom(){
-//		initialize();
+		initialize();
 //		this.setUndecorated(true);
 	}
 	/**
 	 * Create the application.
 	 */
 	public void start() {
-		initialize();
+		this.setVisible(true);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
-		this.setVisible(true);
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -77,7 +75,7 @@ public class FrameChattingRoom extends JFrame implements R{
 		JButton btn_ExitButton = new JButton("나가기");
 		btn_ExitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frameCenter.start();
+				
 				frameDown();
 			}
 		});

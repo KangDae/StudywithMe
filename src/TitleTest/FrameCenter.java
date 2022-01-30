@@ -26,9 +26,9 @@ import java.awt.event.ActionEvent;
  * 		방목록등 전반적인 모든부분을
  * 		보여주는 프레임입니다.
  */
-public class FrameCenter extends JFrame implements R{
+public class FrameCenter extends R{
 	public FrameCenter() {
-//		initialize();
+		initialize();
 //		this.setUndecorated(true);
 	}
 
@@ -39,15 +39,13 @@ public class FrameCenter extends JFrame implements R{
 	 * Create the application.
 	 */
 	public void start() {
-		initialize();
+		this.setVisible(true);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
-		this.setVisible(true);
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
@@ -96,6 +94,10 @@ public class FrameCenter extends JFrame implements R{
 		panel_Waitting.add(scrollPane_ChattBord);
 		
 		JTextArea textArea_Chatting = new JTextArea();
+		textArea_Chatting.setEnabled(false);
+		textArea_Chatting.setEditable(false);
+		textArea_Chatting.setLineWrap(true);
+		textArea_Chatting.setWrapStyleWord(true);
 		textArea_Chatting.setText("안녕하세여");
 		textArea_Chatting.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		scrollPane_ChattBord.setViewportView(textArea_Chatting);
@@ -161,7 +163,7 @@ public class FrameCenter extends JFrame implements R{
 		tabbedPane_Cahtting.addTab("Developer", null, panel_Developer, null);
 		panel_Developer.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel(R.image);
+		JLabel lblNewLabel = new JLabel(image);
 		lblNewLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		lblNewLabel.setBounds(30, 40, 310, 128);
 		panel_Developer.add(lblNewLabel);
