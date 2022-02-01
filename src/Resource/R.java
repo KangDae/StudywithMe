@@ -3,6 +3,7 @@ package Resource;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -21,7 +22,7 @@ import TitleTest.FrameSearchPW;
 import TitleTest.FrameSignup;
 import TitleTest.FrameStart;
 
-public class R extends JFrame implements Runnable {
+public class R extends JFrame{
 	public static final String[] tel = { "010", "02", "031", "032", "033", "041", "042", "043", "044", "051", "052",
 			"053", "054", "055", "061", "062", "063", "064" };
 	public static final String[] email = { "naver.com", "gmail.com" };
@@ -53,10 +54,24 @@ public class R extends JFrame implements Runnable {
 	
 	public static final JButton btn_Confirm = new JButton("확인");
 	
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-
+	public static Socket socket; 
+	public static BufferedReader br;
+	public static PrintWriter pw;
+	
+	public void network() {
+		try {
+			socket = new Socket("127.0.0.1",9500);
+			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			System.out.println("서버를 찾을 수 없습니다.");
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("서버와 연결이 안되었습니다.");
+			e.printStackTrace();
+			System.exit(0);
+		}
 	}
 
 }

@@ -37,7 +37,7 @@ public class FrameStart extends R{
 	}
 
 	private void initialize() {
-
+		network();
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
