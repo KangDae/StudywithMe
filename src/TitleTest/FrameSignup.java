@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import DTO.Protocol;
 import FunctionTest.Email.SendMail_update;
 import Resource.R;
 
@@ -222,8 +223,8 @@ public class FrameSignup extends R {
 					 * db에 중복되는 아이디가 있을경우 
 					 * Client부분에서 처리
 					 */
-//					pw.println(Protocol.IDSEARCHCHECK + "|" + textField_ID.getText());
-//					pw.flush
+					pw.println(Protocol.IDSEARCHCHECK + "|" + textField_ID.getText());
+					pw.flush();
 				}
 					
 			}
@@ -285,7 +286,7 @@ public class FrameSignup extends R {
 				 */
 				String name = textField_Name.getText();
 				String id = textField_ID.getText();
-				String pw = passwordField_PW.getText();
+				String password = passwordField_PW.getText();
 				String ageYear = (String) comboBox_Year.getSelectedItem();
 				String ageMonnth = (String) comboBox_Moonth.getSelectedItem();
 				String ageDay = (String) comboBox_Day.getSelectedItem();
@@ -293,14 +294,15 @@ public class FrameSignup extends R {
 				String email2 = (String) comboBox_Email.getSelectedItem();
 //		        String emailCheck = textField_EmailCertification.getText();
 
-				if (name.length() == 0 || id.length() == 0 || pw.length() == 0 || email1.length() == 0) {// || emailCheck.length==0																					// emailCheck.length()==0
+				if (name.length() == 0 || id.length() == 0 || password.length() == 0 || email1.length() == 0) {// || emailCheck.length==0																					// emailCheck.length()==0
 					JOptionPane.showMessageDialog(btn_Confirm, "빈칸을 입력해 주세요");
 				} else if (condition_Email && condition_ID) {
 					String line = "";
-					line += (id + "%" + pw + "%" + name + "%" + ageYear + "%" + ageMonnth + "%" + ageDay + "%" + email1
+					line += (id + "%" + password + "%" + name + "%" + ageYear + "%" + ageMonnth + "%" + ageDay + "%" + email1
 							+ "@" + email2);
 					System.out.println(line);
-//		            pw.println(Protocol.RESISTER + "|" + line);
+		            pw.println(Protocol.REGISTER + "|" + line);
+		            pw.flush();
 					
 					JOptionPane.showMessageDialog(btn_Confirm, "회원가입 완료!");
 					/*
@@ -315,7 +317,7 @@ public class FrameSignup extends R {
 					comboBox_Day.setSelectedIndex(0);
 					textField_Email.setText("");
 					comboBox_Email.setSelectedIndex(0);
-					//frameSignup.textField_EmailCertification.setText("");
+					textField_auth.setText("");
 					/*
 					 * 인증받았던 값을 모두 false로 초기화 해준다.
 					 */

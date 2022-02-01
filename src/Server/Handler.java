@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -11,10 +12,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
+import DTO.Protocol;
 import DTO.Room;
 import DTO.User;
 
-public class Handler {
+public class Handler extends Thread{
 	private BufferedReader br;
 	private PrintWriter pw;
 	private Socket socket;
@@ -44,6 +46,30 @@ public class Handler {
 		pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 		
 		this.fileName = "";
+	}
+	
+	@Override
+	public void run() {
+		
+		try {
+			OutputStream out = null;
+			String[] line = null;
+			while(true) {
+				line = br.readLine().split("\\|");
+				if(line == null) {
+					break;
+				}
+				if(line[0].compareTo(Protocol.REGISTER) == 0) {
+					System.out.println(line[1]);
+					
+				}
+			}
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 

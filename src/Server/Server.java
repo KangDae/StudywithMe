@@ -60,9 +60,9 @@ public class Server {
 				 * 		소켓 
 				 */
 				Socket socket = serverSocket.accept();
-//				MainHandlerT handler = new MainHandlerT(socket, allUserList, waitUserList, roomtotalList, conn);
+				Handler handler = new Handler(socket, allUserList, waitUserList, roomtotalList, conn);
 //				handler.start();
-//				allUserList.add(handler);
+				allUserList.add(handler);
 			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
