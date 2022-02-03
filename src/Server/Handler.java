@@ -70,13 +70,15 @@ public class Handler extends Thread{
 						System.out.println(i);
 					}
 					
+				} else if (line[0].compareTo(Protocol.ENTERLOGIN) == 0) {
+					System.out.println(line[1]);
 				}
 			}
 			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("이거냐");
 		}
 	}
 	

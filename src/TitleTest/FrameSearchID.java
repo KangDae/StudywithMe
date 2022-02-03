@@ -11,8 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import DTO.Protocol;
 import FunctionTest.Email.SendMail_update;
 import Resource.R;
+import Server.Client;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -224,8 +226,8 @@ public class FrameSearchID extends R {
 					line += name + "%" + year + moonth + day + "%" + email + '@' + comboBox_Email.getSelectedItem();
 					System.out.println(line);
 
-//					pw.println("")
-//					pw.flush();
+					Client.pw.println(Protocol.IDSEARCH + "|" + line);
+					Client.pw.flush();
 
 					textField_Email.setText("");
 					textField_EmailCheck.setText("");

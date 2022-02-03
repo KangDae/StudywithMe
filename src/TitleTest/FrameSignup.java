@@ -8,6 +8,7 @@ import javax.swing.border.Border;
 import DTO.Protocol;
 import FunctionTest.Email.SendMail_update;
 import Resource.R;
+import Server.Client;
 
 import javax.swing.BorderFactory;
 
@@ -19,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
@@ -30,6 +32,8 @@ public class FrameSignup extends R {
 	 * 직렬화
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private PrintWriter pw = null;
 
 	private JTextField textField_Name;
 	private JTextField textField_ID;
@@ -47,7 +51,7 @@ public class FrameSignup extends R {
 	}
 
 	private void initialize() {
-		
+		pw = Client.pw;
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
@@ -225,8 +229,8 @@ public class FrameSignup extends R {
 					 */
 					JOptionPane.showMessageDialog(btn_Confirm, "사용가능한 아이디입니다.");
 					// ㄴ 테스트 하고 지울 것.
-					pw.println(Protocol.IDSEARCHCHECK + "|" + textField_ID.getText());
-					pw.flush();
+					Client.pw.println(Protocol.IDSEARCHCHECK + "|" + textField_ID.getText());
+					Client.pw.flush();
 				}
 					
 			}
@@ -302,8 +306,8 @@ public class FrameSignup extends R {
 					String line = "";
 					line += (id + "%" + password + "%" + name + "%" + ageYear + "." + ageMonnth + "." + ageDay + "%" + email1
 							+ "@" + email2);
-		            pw.println(Protocol.REGISTER + "|" + line);
-		            pw.flush();
+					pw.println(Protocol.REGISTER + "|" + line);
+					pw.flush();
 					
 					JOptionPane.showMessageDialog(btn_Confirm, "회원가입 완료!");
 					/*

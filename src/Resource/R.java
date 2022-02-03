@@ -18,6 +18,7 @@ import TitleTest.FrameChattingRoom;
 import TitleTest.FrameSearchID;
 import TitleTest.FrameLogin;
 import TitleTest.FrameMakeRoom;
+import TitleTest.FramePassWordCheck;
 import TitleTest.FrameSearchPW;
 import TitleTest.FrameSignup;
 import TitleTest.FrameStart;
@@ -37,12 +38,15 @@ public class R extends JFrame{
 	public static final String[] roomTopic = { "경영", "마케팅", "고객관리", "개발", "디자인" };
 	public static final String SCRET = ":)s2";
 	public static String scretNumber = ":)s2";
+	public static String newPassword = ""; // 새로 만드는 비밀번호
 	
 	public static boolean condition_Email = false; // 이메일 확인 여부
-	public static boolean condition_ID = false;    // 아이디 중복 확인 여부
+	public static boolean condition_ID = true;    // 아이디 중복 확인 여부
+	public static boolean condition_PW = false;    // 패스워드 유효성 검사 여부
 	
 	public ImageIcon image = new ImageIcon("Logo/로고.png");
 
+	
 	public static final FrameStart frameStart = new FrameStart(); // 시작화면
 	public static final FrameLogin frameLogin = new FrameLogin(); // 배광민바보
 	public static final FrameCenter frameCenter = new FrameCenter();
@@ -51,27 +55,8 @@ public class R extends JFrame{
 	public static final FrameSearchID frameSearchID = new FrameSearchID();
 	public static final FrameMakeRoom frameMakeRoom = new FrameMakeRoom();
 	public static final FrameChattingRoom frameChattingRoom = new FrameChattingRoom();
+	public static final FramePassWordCheck framePassWordCheck = new FramePassWordCheck();
 	
 	public static final JButton btn_Confirm = new JButton("확인");
-	
-	public static Socket socket; 
-	public static BufferedReader br;
-	public static PrintWriter pw;
-	
-	public void network() {
-		try {
-			socket = new Socket("127.0.0.1",9500);
-			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			System.out.println("서버를 찾을 수 없습니다.");
-			e.printStackTrace();
-		} catch (IOException e) {
-			System.out.println("서버와 연결이 안되었습니다.");
-			e.printStackTrace();
-			System.exit(0);
-		}
-	}
 
 }

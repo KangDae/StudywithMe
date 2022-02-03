@@ -5,15 +5,20 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import DTO.Protocol;
 import Resource.R;
+import Server.Client;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 
 import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 /*
@@ -31,6 +36,9 @@ public class FrameLogin extends R{
 	private JButton btnLogin;
 	private JTextField textField_ID;
 	private JPasswordField passwordField_PW;
+	
+	PrintWriter pw;
+	BufferedReader br;
 
 
 	public void start(){
@@ -38,14 +46,14 @@ public class FrameLogin extends R{
 	}
 	private void initialize() {
 		
-		
+		pw = Client.pw;
+		br = Client.br;
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		getContentPane().setBackground(new Color(135, 206 ,235));
 		JLabel lblNewLabel_GoBack = new JLabel(image);
-		lblNewLabel_GoBack.addMouseListener(new MouseListener() {
-
+		lblNewLabel_GoBack.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
@@ -53,31 +61,6 @@ public class FrameLogin extends R{
 				frameStart.setVisible(true);
 				
 			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
 		});
 		lblNewLabel_GoBack.setToolTipText("Home 으로 갑니다.");
 		lblNewLabel_GoBack.setFont(new Font("맑은 고딕", Font.PLAIN, 25));
@@ -96,46 +79,16 @@ public class FrameLogin extends R{
 		
 		JButton btnNewButton = new JButton("로그인");
 		btnNewButton.setBackground(new Color(255, 255, 255));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String ID = textField_ID.getText();
-				String PW = passwordField_PW.getText();
-				
-				if(ID.length() == 0 || PW.length() == 0) {
-					JOptionPane.showMessageDialog(btn_Confirm, "빈칸을 입력해주세요.");
-				} else {
-//					pw.println(Protocol.ENTERLOGIN + "|" + line);
-//					pw.flush();
-				}
-				/*
-				 * client부분에서 받아 setVisible
-				 */
-				frameDown();
-				frameCenter.start();
-			}
-		});
 		btnNewButton.setBounds(56, 316, 276, 30);
 		getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_SearchID = new JButton("아이디 찾기");
 		btnNewButton_SearchID.setBackground(new Color(255, 255, 255));
-		btnNewButton_SearchID.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameDown();
-				frameSearchID.start();
-			}
-		});
 		btnNewButton_SearchID.setBounds(56, 356, 115, 30);
 		getContentPane().add(btnNewButton_SearchID);
 		
 		JButton btnNewButton_SearchID_1 = new JButton("비밀번호 찾기");
 		btnNewButton_SearchID_1.setBackground(new Color(255, 255, 255));
-		btnNewButton_SearchID_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameDown();
-				frameSearchPw.start();
-			}
-		});
 		btnNewButton_SearchID_1.setBounds(207, 356, 125, 30);
 		getContentPane().add(btnNewButton_SearchID_1);
 		
@@ -144,11 +97,6 @@ public class FrameLogin extends R{
 		getContentPane().add(lblNewLabel_1);
 		
 		JButton btn_login_End = new JButton("종료");
-		btn_login_End.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(1);
-			}
-		});
 		btn_login_End.setBackground(Color.WHITE);
 		btn_login_End.setBounds(260, 489, 72, 43);
 		getContentPane().add(btn_login_End);
@@ -160,6 +108,51 @@ public class FrameLogin extends R{
 		JLabel lblNewLabel_2 = new JLabel("비밀번호 : ");
 		lblNewLabel_2.setBounds(59, 275, 75, 21);
 		getContentPane().add(lblNewLabel_2);
+		
+		
+		
+		// ==> 확인 버튼 <==
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String ID = textField_ID.getText();
+				String PW = passwordField_PW.getText();
+				String line = ID + "%" + PW;
+				if(ID.length() == 0 || PW.length() == 0) {
+					JOptionPane.showMessageDialog(btn_Confirm, "빈칸을 입력해주세요.");
+				} else {
+					pw.println(Protocol.ENTERLOGIN + "|" + line);
+					pw.flush();
+					
+					textField_ID.setText("");
+					passwordField_PW.setText("");
+				}
+				/*
+				 * client부분에서 받아 setVisible
+				 */
+				frameDown();
+				frameCenter.start();
+			}
+		});
+		// ==> 비밀번호 찾기 <==
+		btnNewButton_SearchID_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameDown();
+				frameSearchPw.start();
+			}
+		});
+		// ==> 아이디찾기 버튼 <==
+		btnNewButton_SearchID.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameDown();
+				frameSearchID.start();
+			}
+		});
+		// ==> 종료 버튼 <==
+		btn_login_End.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(1);
+			}
+		});
 	}
 	private void frameDown() {
 		this.setVisible(false);
