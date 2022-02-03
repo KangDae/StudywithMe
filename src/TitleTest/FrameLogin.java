@@ -2,6 +2,7 @@ package TitleTest;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import Resource.R;
@@ -19,10 +20,10 @@ import java.awt.Color;
  * 		시작 화면에서 로그인 클릭시 
  * 		보이게 되는 프레임입니다.
  */
-public class FrameLogin extends JFrame implements R{
+public class FrameLogin extends R{
 	public FrameLogin() {
 //		this.setUndecorated(true);
-//		initialize();
+		initialize();
 	}
 	
 	private JTextField tfId;
@@ -33,23 +34,23 @@ public class FrameLogin extends JFrame implements R{
 
 
 	public void start(){
-		initialize();
+		this.setVisible(true);
 	}
 	private void initialize() {
 		
-		this.setVisible(true);
+		
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		getContentPane().setBackground(new Color(135, 206 ,235));
-		JLabel lblNewLabel_GoBack = new JLabel(R.image);
+		JLabel lblNewLabel_GoBack = new JLabel(image);
 		lblNewLabel_GoBack.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				FrameLogin.this.setVisible(false);
-				frameStart.start();
+				frameDown();
+				frameStart.setVisible(true);
 				
 			}
 
@@ -97,6 +98,18 @@ public class FrameLogin extends JFrame implements R{
 		btnNewButton.setBackground(new Color(255, 255, 255));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String ID = textField_ID.getText();
+				String PW = passwordField_PW.getText();
+				
+				if(ID.length() == 0 || PW.length() == 0) {
+					JOptionPane.showMessageDialog(btn_Confirm, "빈칸을 입력해주세요.");
+				} else {
+//					pw.println(Protocol.ENTERLOGIN + "|" + line);
+//					pw.flush();
+				}
+				/*
+				 * client부분에서 받아 setVisible
+				 */
 				frameDown();
 				frameCenter.start();
 			}
@@ -109,7 +122,7 @@ public class FrameLogin extends JFrame implements R{
 		btnNewButton_SearchID.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameDown();
-				frameIdSearch.start();
+				frameSearchID.start();
 			}
 		});
 		btnNewButton_SearchID.setBounds(56, 356, 115, 30);
