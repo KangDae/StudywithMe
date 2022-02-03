@@ -26,9 +26,10 @@ import java.awt.event.ActionEvent;
  * 		방목록등 전반적인 모든부분을
  * 		보여주는 프레임입니다.
  */
-public class FrameCenter extends JFrame implements R{
+public class FrameCenter extends R{
 	public FrameCenter() {
-//		initialize();
+		initialize();
+//		this.setUndecorated(true);
 	}
 
 	private JFrame frame;
@@ -38,14 +39,13 @@ public class FrameCenter extends JFrame implements R{
 	 * Create the application.
 	 */
 	public void start() {
-		initialize();
+		this.setVisible(true);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		this.setVisible(true);
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
@@ -60,15 +60,15 @@ public class FrameCenter extends JFrame implements R{
 		tabbedPane_Freinds.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		tabbedPane_FriendsPanel.addTab("친구", null, tabbedPane_Freinds, null);
 		
-		JList list_MyFriedns = new JList();
-		list_MyFriedns.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		tabbedPane_Freinds.addTab("친구목록", null, list_MyFriedns, null);
-		
 		JPanel panel_Myinfomation = new JPanel();
-		panel_Myinfomation.setForeground(new Color(0, 206, 209));
-		panel_Myinfomation.setBackground(new Color(255, 255, 255));
+		panel_Myinfomation.setForeground(new Color(255, 255, 255));
+		panel_Myinfomation.setBackground(new Color(135, 206, 250));
 		tabbedPane_Freinds.addTab("내 정보", null, panel_Myinfomation, null);
-		tabbedPane_Freinds.setBackgroundAt(1, new Color(128, 128, 128));
+		tabbedPane_Freinds.setBackgroundAt(0, new Color(128, 128, 128));
+		
+		JPanel panel_MyFriends = new JPanel();
+		panel_MyFriends.setBackground(new Color(135, 206, 250));
+		tabbedPane_Freinds.addTab("New tab", null, panel_MyFriends, null);
 		tabbedPane_FriendsPanel.setForegroundAt(0, new Color(0, 0, 0));
 		tabbedPane_FriendsPanel.setBackgroundAt(0, Color.CYAN);
 		
@@ -76,6 +76,7 @@ public class FrameCenter extends JFrame implements R{
 		tabbedPane_FriendsPanel.addTab("방 참가", null, tabbedPane_Option, null);
 		
 		JPanel panel_Waitting = new JPanel();
+		panel_Waitting.setBackground(new Color(135, 206, 250));
 		tabbedPane_Option.addTab("대기자 채팅방", null, panel_Waitting, null);
 		panel_Waitting.setLayout(null);
 		
@@ -93,6 +94,10 @@ public class FrameCenter extends JFrame implements R{
 		panel_Waitting.add(scrollPane_ChattBord);
 		
 		JTextArea textArea_Chatting = new JTextArea();
+		textArea_Chatting.setEnabled(false);
+		textArea_Chatting.setEditable(false);
+		textArea_Chatting.setLineWrap(true);
+		textArea_Chatting.setWrapStyleWord(true);
 		textArea_Chatting.setText("안녕하세여");
 		textArea_Chatting.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		scrollPane_ChattBord.setViewportView(textArea_Chatting);
@@ -105,7 +110,7 @@ public class FrameCenter extends JFrame implements R{
 
 		
 		JPanel panel_RoomJoin = new JPanel();
-		panel_RoomJoin.setBackground(new Color(0, 206, 209));
+		panel_RoomJoin.setBackground(new Color(135, 206, 250));
 		tabbedPane_Option.addTab("방 참가하기", null, panel_RoomJoin, null);
 		panel_RoomJoin.setLayout(null);
 		
@@ -117,19 +122,30 @@ public class FrameCenter extends JFrame implements R{
 		scrollPane_ChattBord_1.setViewportView(textArea);
 		
 		JButton button_SearchRoom = new JButton("방 검색");
-		button_SearchRoom.setBackground(new Color(0, 255, 255));
+		button_SearchRoom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		button_SearchRoom.setBackground(new Color(255, 255, 255));
 		button_SearchRoom.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		button_SearchRoom.setBounds(15, 10, 88, 29);
 		panel_RoomJoin.add(button_SearchRoom);
 		
-		JButton button_SearchRoom_1 = new JButton("방 생성");
-		button_SearchRoom_1.setBackground(new Color(0, 255, 255));
-		button_SearchRoom_1.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		button_SearchRoom_1.setBounds(115, 10, 88, 29);
-		panel_RoomJoin.add(button_SearchRoom_1);
+		JButton button_MakeRoom = new JButton("방 생성");
+		button_MakeRoom.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frameMakeRoom.start();
+				frameDown();
+			}
+		});
+		button_MakeRoom.setBackground(new Color(255, 255, 255));
+		button_MakeRoom.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		button_MakeRoom.setBounds(115, 10, 88, 29);
+		panel_RoomJoin.add(button_MakeRoom);
 		
 		JComboBox comboBox_List = new JComboBox();
-		comboBox_List.setBackground(new Color(0, 206, 209));
+		comboBox_List.setBackground(new Color(255, 255, 255));
 		comboBox_List.setBounds(274, 10, 88, 29);
 		panel_RoomJoin.add(comboBox_List);
 		
@@ -143,43 +159,47 @@ public class FrameCenter extends JFrame implements R{
 		tabbedPane_FriendsPanel.addTab("스터디윗미!", null, tabbedPane_Cahtting, null);
 		
 		JPanel panel_Developer = new JPanel();
+		panel_Developer.setBackground(new Color(135, 206, 250));
 		tabbedPane_Cahtting.addTab("Developer", null, panel_Developer, null);
 		panel_Developer.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Study With ME !");
+		JLabel lblNewLabel = new JLabel(image);
 		lblNewLabel.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		lblNewLabel.setBounds(115, 10, 122, 80);
+		lblNewLabel.setBounds(30, 40, 310, 128);
 		panel_Developer.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("조장 : 우효진");
 		lblNewLabel_1.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		lblNewLabel_1.setBounds(23, 96, 254, 36);
+		lblNewLabel_1.setBounds(53, 203, 254, 36);
 		panel_Developer.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("팀원1 : 강대준");
 		lblNewLabel_1_1.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		lblNewLabel_1_1.setBounds(23, 142, 254, 36);
+		lblNewLabel_1_1.setBounds(53, 249, 254, 36);
 		panel_Developer.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("팀원2 : 강유진");
 		lblNewLabel_1_2.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		lblNewLabel_1_2.setBounds(23, 188, 254, 36);
+		lblNewLabel_1_2.setBounds(53, 295, 254, 36);
 		panel_Developer.add(lblNewLabel_1_2);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("팀원3 : 김강규");
 		lblNewLabel_1_3.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		lblNewLabel_1_3.setBounds(23, 234, 254, 36);
+		lblNewLabel_1_3.setBounds(53, 341, 254, 36);
 		panel_Developer.add(lblNewLabel_1_3);
 		
 		JLabel lblNewLabel_1_4 = new JLabel("팀원4 : 박규영");
 		lblNewLabel_1_4.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		lblNewLabel_1_4.setBounds(23, 280, 254, 36);
+		lblNewLabel_1_4.setBounds(53, 387, 254, 36);
 		panel_Developer.add(lblNewLabel_1_4);
 		
 		JLabel lblNewLabel_1_5 = new JLabel("팀원5 : 배광민");
 		lblNewLabel_1_5.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		lblNewLabel_1_5.setBounds(23, 326, 254, 36);
+		lblNewLabel_1_5.setBounds(53, 433, 254, 36);
 		panel_Developer.add(lblNewLabel_1_5);
 		tabbedPane_FriendsPanel.setBackgroundAt(2, new Color(0, 191, 255));
+	}
+	private void frameDown() {
+		this.setVisible(false);
 	}
 }
