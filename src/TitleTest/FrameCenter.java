@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Color;
 import javax.swing.border.MatteBorder;
 
+import DTO.Protocol;
 import Resource.R;
 import Server.Client;
 
@@ -67,14 +68,16 @@ public class FrameCenter extends R {
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
-		
+
 		panelRoomList = new PanelRoomList[100];
 
 		JTabbedPane tabbedPane_FriendsPanel = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_FriendsPanel.setBackground(new Color(135, 206, 250));
 		tabbedPane_FriendsPanel.setBounds(0, 0, 384, 561);
 		this.getContentPane().add(tabbedPane_FriendsPanel);
 
 		JTabbedPane tabbedPane_Freinds = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_Freinds.setBackground(new Color(135, 206, 250));
 		tabbedPane_Freinds.setToolTipText("친구목록");
 		tabbedPane_Freinds.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 191, 255)));
 		tabbedPane_Freinds.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
@@ -87,6 +90,7 @@ public class FrameCenter extends R {
 		panel_Myinfomation.setLayout(null);
 
 		textField_name = new JTextField();
+		textField_name.setEditable(false);
 		textField_name.setBounds(96, 231, 116, 21);
 		panel_Myinfomation.add(textField_name);
 		textField_name.setColumns(10);
@@ -97,6 +101,7 @@ public class FrameCenter extends R {
 		panel_Myinfomation.add(lbl_Name);
 
 		textField_ID = new JTextField();
+		textField_ID.setEditable(false);
 		textField_ID.setColumns(10);
 		textField_ID.setBounds(96, 275, 116, 21);
 		panel_Myinfomation.add(textField_ID);
@@ -112,6 +117,7 @@ public class FrameCenter extends R {
 		panel_Myinfomation.add(lbl_pw);
 
 		textField_email = new JTextField();
+		textField_email.setEditable(false);
 		textField_email.setColumns(10);
 		textField_email.setBounds(96, 362, 116, 21);
 		panel_Myinfomation.add(textField_email);
@@ -128,21 +134,29 @@ public class FrameCenter extends R {
 		panel_Myinfomation.add(btn_update);
 
 		passwordField_pw = new JPasswordField();
+		passwordField_pw.setEditable(false);
 		passwordField_pw.setBounds(96, 319, 116, 21);
 		panel_Myinfomation.add(passwordField_pw);
 
 		JLabel lbl_StudyWithMe = new JLabel(image);
 		lbl_StudyWithMe.setBounds(38, 26, 294, 153);
 		panel_Myinfomation.add(lbl_StudyWithMe);
+		
+		JButton btn_Logout = new JButton("로그아웃");
+		btn_Logout.setForeground(Color.BLACK);
+		btn_Logout.setBackground(Color.WHITE);
+		btn_Logout.setBounds(26, 451, 98, 34);
+		panel_Myinfomation.add(btn_Logout);
 		tabbedPane_Freinds.setBackgroundAt(0, new Color(128, 128, 128));
 
 		JPanel panel_MyFriends = new JPanel();
 		panel_MyFriends.setBackground(new Color(135, 206, 250));
-		tabbedPane_Freinds.addTab("New tab", null, panel_MyFriends, null);
+		tabbedPane_Freinds.addTab("친구", null, panel_MyFriends, null);
 		tabbedPane_FriendsPanel.setForegroundAt(0, new Color(0, 0, 0));
 		tabbedPane_FriendsPanel.setBackgroundAt(0, Color.CYAN);
 
 		JTabbedPane tabbedPane_Option = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_Option.setBackground(new Color(135, 206, 250));
 		tabbedPane_FriendsPanel.addTab("방 참가", null, tabbedPane_Option, null);
 
 		JPanel panel_Waitting = new JPanel();
@@ -185,7 +199,7 @@ public class FrameCenter extends R {
 			panelRoomList[i] = new PanelRoomList(br, pw);
 			centerPane.add(panelRoomList[i]);
 		}
-		
+
 		JScrollPane scrollPane_RoomList = new JScrollPane(centerPane);
 		scrollPane_RoomList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane_RoomList.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -214,7 +228,7 @@ public class FrameCenter extends R {
 		Label_Filter.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		Label_Filter.setBounds(229, 14, 57, 25);
 		panel_RoomJoin.add(Label_Filter);
-		tabbedPane_FriendsPanel.setBackgroundAt(1, new Color(0, 206, 209));
+		tabbedPane_FriendsPanel.setBackgroundAt(1, new Color(135, 206, 250));
 
 		JTabbedPane tabbedPane_Cahtting = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_FriendsPanel.addTab("스터디윗미!", null, tabbedPane_Cahtting, null);
@@ -261,27 +275,55 @@ public class FrameCenter extends R {
 		tabbedPane_FriendsPanel.setBackgroundAt(2, new Color(0, 191, 255));
 
 		
+		// ==> 로그아웃 <==
+		btn_Logout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				/*
+				 *  protocol 사용해서 서버쪽으로 신호 보내서 client log를 초기화시켜준다.
+				 *  아직 미구현
+				 */
+				frameDown();
+				frameLogin.start();
+				
+				pw.println(Protocol.EXITCHATTINGROOM + "|" + "message");
+				pw.flush();
+			}
+		});
 		// ==> 수정하기 버튼 <==
 		btn_update.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				/*
+				 * 아직 미구현 
+				 * 새로운 프레임 만들어서 update구현
+				 */
+				textField_ID.setEditable(true);
+				textField_name.setEditable(true);
+				passwordField_pw.setEditable(true);
+				textField_email.setEditable(true);
+
 			}
 		});
 		// ==> 메세지 전송 <==
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String line = textField.getText();
+				if (textField.getText().length() != 0) {
+					pw.println(Protocol.SENDMESSAGE + "|" + line);
+					pw.flush();
+					textField.setText("");
+				}
 			}
 		});
 		// ==> 이름으로 방검색 <==
 		button_SearchRoom.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				for (int i = 0; i < 100; i++) {
-					panelRoomList[i] = new PanelRoomList(br, pw);
-					centerPane.add(panelRoomList[i]);
-				}
+				/*
+				 * 아직 미구현
+				 * 새로운 JOptionPane inputMessageBox 사용해서 String 받아서 
+				 * 찾는방식
+				 */
 			}
 		});
 		// ==> 콤보박스 필터 <==
@@ -289,6 +331,11 @@ public class FrameCenter extends R {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				/*
+				 * 콤보박스 에 뽑은 String 을 바탕으로
+				 * subject 의 값과 비교해서
+				 * 가져온다.
+				 */
 				String subject = (String) comboBox_List.getSelectedItem();
 
 			}

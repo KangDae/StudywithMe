@@ -30,13 +30,13 @@ import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 
-public class FrameMakeRoom extends R{
+public class FrameMakeRoom extends R {
 
 	private JTextField textField_RoomName;
-	private JPasswordField passwordField;
 	PrintWriter pw;
 	BufferedReader br;
-	public FrameMakeRoom(){
+
+	public FrameMakeRoom() {
 		initialize();
 //		this.setUndecorated(true);
 	}
@@ -44,7 +44,7 @@ public class FrameMakeRoom extends R{
 	/**
 	 * Create the application.
 	 */
-	
+
 	public void start() {
 		this.setVisible(true);
 	}
@@ -57,70 +57,55 @@ public class FrameMakeRoom extends R{
 		br = Client.br;
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		JPanel panel_MakeRoom = new JPanel();
 		panel_MakeRoom.setBackground(new Color(135, 206, 250));
 		this.getContentPane().add(panel_MakeRoom, BorderLayout.CENTER);
 		panel_MakeRoom.setLayout(null);
-		
+
 		JLabel lbl_RoomName = new JLabel("방 제목 : ");
 		lbl_RoomName.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		lbl_RoomName.setBounds(34, 256, 77, 21);
 		panel_MakeRoom.add(lbl_RoomName);
-		
+
 		textField_RoomName = new JTextField();
 		textField_RoomName.setBounds(101, 259, 116, 21);
 		panel_MakeRoom.add(textField_RoomName);
 		textField_RoomName.setColumns(10);
-		
-		JLabel lbl_RoomName_1 = new JLabel("비밀번호 : ");
-		lbl_RoomName_1.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		lbl_RoomName_1.setBounds(23, 287, 77, 21);
-		panel_MakeRoom.add(lbl_RoomName_1);
-		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(101, 290, 116, 21);
-		passwordField.setEchoChar('*');
-		panel_MakeRoom.add(passwordField);
-		
+
 		JLabel lbl_RoomName_1_1 = new JLabel("방 주제 : ");
 		lbl_RoomName_1_1.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		lbl_RoomName_1_1.setBounds(34, 318, 77, 21);
+		lbl_RoomName_1_1.setBounds(34, 287, 77, 21);
 		panel_MakeRoom.add(lbl_RoomName_1_1);
 		//
-		JComboBox comboBox_RoomTopic = new JComboBox<String>(R.roomTopic);
-		comboBox_RoomTopic.setBounds(101, 321, 116, 23);
+		JComboBox comboBox_RoomTopic = new JComboBox<String>();
+		comboBox_RoomTopic.setBounds(101, 290, 116, 23);
 		panel_MakeRoom.add(comboBox_RoomTopic);
-		
+
 		JLabel lbl_RoomName_1_1_1 = new JLabel("허용인원 : ");
 		lbl_RoomName_1_1_1.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		lbl_RoomName_1_1_1.setBounds(23, 349, 77, 21);
+		lbl_RoomName_1_1_1.setBounds(23, 318, 77, 21);
 		panel_MakeRoom.add(lbl_RoomName_1_1_1);
-		
+
 		JSpinner spinner_userMax = new JSpinner();
 		spinner_userMax.setModel(new SpinnerNumberModel(1, 1, 10, 1));
-		spinner_userMax.setBounds(101, 352, 45, 22);
+		spinner_userMax.setBounds(101, 321, 45, 22);
 		panel_MakeRoom.add(spinner_userMax);
-		
+
 		JButton btn_RoomMaker = new JButton("방생성");
 		btn_RoomMaker.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		btn_RoomMaker.setBounds(245, 258, 97, 40);
 		panel_MakeRoom.add(btn_RoomMaker);
-		
+
 		JButton btn_Cancle = new JButton("취소");
 		btn_Cancle.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		btn_Cancle.setBounds(283, 460, 77, 29);
 		panel_MakeRoom.add(btn_Cancle);
-		
+
 		JLabel lblNewLabel = new JLabel(image);
 		lblNewLabel.setBounds(34, 10, 308, 160);
 		panel_MakeRoom.add(lblNewLabel);
-		
-		JCheckBox chckbxNewCheckBox = new JCheckBox("비밀번호 사용");
-		chckbxNewCheckBox.setBackground(new Color(135, 206, 250));
-		chckbxNewCheckBox.setBounds(245, 320, 115, 23);
-		panel_MakeRoom.add(chckbxNewCheckBox);
-		
+
 		// ==> 룸 취소 기능 구현 <==
 		btn_Cancle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,52 +117,29 @@ public class FrameMakeRoom extends R{
 		btn_RoomMaker.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String title = textField_RoomName.getText();
-				String password = passwordField.getText();
-				int sipnerCount = ( int )spinner_userMax.getValue();
+				int sipnerCount = (int) spinner_userMax.getValue();
 				String userCount = String.valueOf(sipnerCount);
-				String subject = ( String )comboBox_RoomTopic.getSelectedItem();
-				int condition = chckbxNewCheckBox.isSelected() ? 1 : 0;
-				if(title.length() == 0) {
+				String subject = (String) comboBox_RoomTopic.getSelectedItem();
+				if (title.length() == 0) {
 					JOptionPane.showMessageDialog(btn_Confirm, "제목을 입력해주세요");
 				} else {
-					if(condition == 1 && password.length()==0) {
-						JOptionPane.showMessageDialog(btn_Confirm, "비밀번호를 입력해주세요.");
-					} else if (condition == 1 && password.length() != 0) {
-						String line = title+ "%" +password+"%"+userCount+"%"+ subject+"%"+condition;
-						pw.println(Protocol.ROOMMAKE + "|" + line);
-						pw.flush();
-						
-						frameChattingRoom.start();
-						frameDown();
-						
-						textField_RoomName.setText("");
-						passwordField.setText("");
-						spinner_userMax.setValue(4);
-						comboBox_RoomTopic.setSelectedItem(0);
-						chckbxNewCheckBox.setSelected(false);						
-					} else if ( condition == 0 ) {
-						String line = "";
-						line = title+"%"+userCount+"%"+subject+"%"+condition;
-						pw.println(Protocol.ROOMMAKE + "|" + line);
-						pw.flush();
-						
-						frameChattingRoom.start();
-						frameDown();
-						
-						textField_RoomName.setText("");
-						passwordField.setText("");
-						spinner_userMax.setValue(4);
-						comboBox_RoomTopic.setSelectedItem(0);
-						chckbxNewCheckBox.setSelected(false);	
-						
-					}
-					
+
+					String line = "";
+					line = title + "%" + userCount + "%" + subject;
+					pw.println(Protocol.ROOMMAKE + "|" + line);
+					pw.flush();
+
+					frameChattingRoom.start();
+					frameDown();
+
+					textField_RoomName.setText("");
+					spinner_userMax.setValue(4);
+					comboBox_RoomTopic.setSelectedItem(0);
 				}
-				
-				
 			}
 		});
 	}
+
 	private void frameDown() {
 		this.setVisible(false);
 	}
