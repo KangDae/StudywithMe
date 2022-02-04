@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 import Resource.R;
+import Server.Client;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -25,8 +26,8 @@ public class FrameStart extends R{
 	 * Create the application.
 	 * @return 
 	 */
-	
-	public JButton loginBtn, btnSingUp, btnExit;
+	public Client client;
+//	public JButton start_btn_loginBtn, start_btn_SingUp, btnExit;
 	
 	public FrameStart(){
 		initialize();
@@ -37,7 +38,7 @@ public class FrameStart extends R{
 	}
 
 	private void initialize() {
-		network();
+		client = new Client();
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -53,49 +54,24 @@ public class FrameStart extends R{
 		MainLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 40));
 		panel.add(MainLabel);
 		
-		loginBtn = new JButton("로그인 하기");
-		loginBtn.setBackground(new Color(255, 255, 255));
-		loginBtn.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		loginBtn.setBounds(134, 333, 122, 32);
-		panel.add(loginBtn);
+		accemble.start_btn_loginBtn = new JButton("로그인 하기");
+		accemble.start_btn_loginBtn.setBackground(new Color(255, 255, 255));
+		accemble.start_btn_loginBtn.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		accemble.start_btn_loginBtn.setBounds(134, 333, 122, 32);
+		panel.add(accemble.start_btn_loginBtn);
 		
-		btnSingUp = new JButton("회 원 가 입");
-		btnSingUp.setBackground(Color.WHITE);
-		btnSingUp.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		btnSingUp.setBounds(134, 406, 122, 32);
-		panel.add(btnSingUp);
+		accemble.start_btn_SingUp = new JButton("회 원 가 입");
+		accemble.start_btn_SingUp.setBackground(Color.WHITE);
+		accemble.start_btn_SingUp.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		accemble.start_btn_SingUp.setBounds(134, 406, 122, 32);
+		panel.add(accemble.start_btn_SingUp);
 		
-		btnExit = new JButton("종료");
-		btnExit.setForeground(new Color(0, 0, 0));
-		btnExit.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		btnExit.setBackground(Color.WHITE);
-		btnExit.setBounds(288, 519, 84, 32);
-		panel.add(btnExit);
-		
-		
-		
-		
-		// ==> 로그인 버튼 기능 구현 <==
-		loginBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameDown();
-				frameLogin.start();
-			}
-		});
-		// ==> 회원가입 버튼 기능 구현 <==
-		btnSingUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameDown();
-				frameSignup.start(); 
-			}
-		});
-		// ==>  Exit버튼 기능 구현 <==
-		btnExit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-				
-			}
-		});
+		accemble.btnExit = new JButton("종료");
+		accemble.btnExit.setForeground(new Color(0, 0, 0));
+		accemble.btnExit.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		accemble.btnExit.setBackground(Color.WHITE);
+		accemble.btnExit.setBounds(288, 519, 84, 32);
+		panel.add(accemble.btnExit);
 		
 	}
 	public void frameDown() {
