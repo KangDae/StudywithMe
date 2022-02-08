@@ -1,4 +1,4 @@
-package Action;
+package ButtonAction;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

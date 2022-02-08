@@ -1,4 +1,4 @@
-package Action;
+package ButtonAction;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
