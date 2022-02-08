@@ -47,8 +47,7 @@ public class MainHandler extends Thread {
 
 	private Room priRoom; // 사용자가 있는 방
 	private String fileName;
-	String path = System.getProperty("user.dir"); 
-	
+	String path = System.getProperty("user.dir");
 
 	// MainHandler 생성자
 	public MainHandler(Socket socket, ArrayList<MainHandler> allUserList, ArrayList<MainHandler> waitUserList,
@@ -99,11 +98,10 @@ public class MainHandler extends Thread {
 					pstmt.setString(5, userContent[4]); // eamil
 					pstmt.setString(6, userContent[5]); // phone
 					pstmt.setString(7, sql);
-					String Roompath = path+"\\userFolder\\"
-							+ userContent[0];
-					
+					String Roompath = path + "\\userFolder\\" + userContent[0];
+
 					File folder = new File(Roompath);
-					
+
 					File RoomList = new File(Roompath + "\\Roomlist.txt");
 
 					if (folder.exists()) {// exists-> 파일폴더가 존재하는지.
@@ -187,42 +185,60 @@ public class MainHandler extends Thread {
 						pw.flush();
 					}
 
-				}   else if (line[0].compareTo(Protocol.PWSEARCH) == 0) // PW 찾기
-            {
-                System.out.println("PW찾기");
-                String userContent[] = line[1].split("%");
-                
-                System.out.println(line[1]);
-                System.out.println("\n" + userContent[0] + "유저컨텐츠0");
+				} else if (line[0].compareTo(Protocol.PWSEARCH) == 0) { // PW 찾기
 
-                String sql = "select * from UserContent where (IDNAME = '" + userContent[0] + "')";
+					System.out.println("PW찾기");
+					String userContent[] = line[1].split("%");
 
-                pstmt = conn.prepareStatement(sql);
-                ResultSet rs = pstmt.executeQuery(sql);
-                String id = null;
-                String name = null;
-                
-                int count = 0;
-                while (rs.next()) {
-                   id = rs.getString("IDNAME");
-                   name = rs.getString("NAME");
-                   if (id.equals(userContent[0])) {
-                      count++;
-                   }
-                }
-                System.out.println("\n" + userContent[1] + "유저컨텐츠1");
-                System.out.println("\n" + count + "카운트");
+					System.out.println(line[1]);
+					System.out.println("\n" + userContent[0] + "유저컨텐츠0");
 
-                if (count == 0) // 기존의 ID가 없음
-                {
-                   pw.println(Protocol.PWSEARCH_NO + "|" + "등록되어있는 정보가 없습니다.");
-                   pw.flush();
-                } else { // 기존의 ID 찾음
-                   pw.println(Protocol.PWSEARCH_OK + "|" + "정보가 확인되었습니다.");
-                   pw.flush();
-                }
+					String sql = "select * from UserContent where (IDNAME = '" + userContent[0] + "')";
 
-             }else if (line[0].compareTo(Protocol.ENTERLOGIN) == 0) // 로그인
+					pstmt = conn.prepareStatement(sql);
+					ResultSet rs = pstmt.executeQuery(sql);
+					String id = null;
+					String name = null;
+
+					int count = 0;
+					while (rs.next()) {
+						id = rs.getString("IDNAME");
+						name = rs.getString("NAME");
+						if (id.equals(userContent[0])) {
+							count++;
+						}
+					}
+					System.out.println("\n" + userContent[1] + "유저컨텐츠1");
+					System.out.println("\n" + count + "카운트");
+
+					if (count == 0) // 기존의 ID가 없음
+					{
+						pw.println(Protocol.PWSEARCH_NO + "|" + "등록되어있는 정보가 없습니다.");
+						pw.flush();
+					} else { // 기존의 ID 찾음
+						pw.println(Protocol.PWSEARCH_OK + "|" + "정보가 확인되었습니다.");
+						pw.flush();
+					}
+
+				} else if(line[0].compareTo(Protocol.PWRESET_OK) == 0) { // 비밀번호 재설정
+					String PWRESET[] = line[1].split("|");
+					String updateSql = "update usercontent set password=? where IDNAME=?";
+					
+					System.out.println("line[0] = "+line[0]);
+					System.out.println("line[1] = "+line[1]);
+					
+					pstmt = conn.prepareStatement(updateSql);
+
+					
+					pstmt.setString(1, line[1]);
+					pstmt.setString(2, line[2]);
+					pstmt.executeUpdate();
+					
+					
+					
+					
+					
+				} else if (line[0].compareTo(Protocol.ENTERLOGIN) == 0) // 로그인
 				{
 					boolean con = true;
 					System.out.println("login");
@@ -370,8 +386,7 @@ public class MainHandler extends Thread {
 					String sql = "";
 					String updateSql = "";
 					Room tempRoom = new Room();
-					String userpath = path+"\\userFolder\\"
-							+ user.getIdName() + "\\Roomlist.txt";
+					String userpath = path + "\\userFolder\\" + user.getIdName() + "\\Roomlist.txt";
 					if (userContent.length == 5) { // 비공개방
 						sql = "Insert into Room values(nextval(num),?,?,?,?,?,?)";
 						pstmt = conn.prepareStatement(sql);
@@ -499,8 +514,7 @@ public class MainHandler extends Thread {
 						waitUserList.get(i).pw.flush();
 					}
 
-					String Roompath = path+"\\roomFolder\\"
-							+ priNumber;
+					String Roompath = path + "\\roomFolder\\" + priNumber;
 					File folder = new File(Roompath);
 
 					if (folder.exists()) {// exists-> 파일폴더가 존재하는지.
@@ -525,8 +539,7 @@ public class MainHandler extends Thread {
 
 					String sql = "select * from UserContent where IDNAME = '" + this.user.getIdName() + "'";
 					String updateSql = "update usercontent set RoomList=? where IDNAME=?";
-					String userpath = path+"userFolder\\"
-							+ this.user.getIdName() + "\\Roomlist.txt";
+					String userpath = path + "userFolder\\" + this.user.getIdName() + "\\Roomlist.txt";
 
 					int roomid = Integer.parseInt(line[1]); // 룸ID
 
@@ -542,35 +555,28 @@ public class MainHandler extends Thread {
 						}
 					}
 
+					ResultSet rs = pstmt.executeQuery(sql);
+					while (rs.next()) {
+						RoomListArr = rs.getString("RoomList").split("%");// DB 사용자 방 리스트
+						userid = rs.getString("IDNAME");
+					}
+					String RoomNum = priRoom.getrID() + "";
 
-						
-						ResultSet rs = pstmt.executeQuery(sql);
-						while (rs.next()) {
-							RoomListArr = rs.getString("RoomList").split("%");// DB 사용자 방 리스트
-							userid = rs.getString("IDNAME");
-						}
-						String RoomNum = priRoom.getrID() + "";
-						
-						if(!Arrays.asList(RoomListArr).contains(RoomNum)){
-						  System.out.println("방에 속해있지 않습니다.");
-						  
-						  fw = new BufferedWriter(new FileWriter(userpath, true));
-						  fw.write(priRoom.getrID() + "%");
-						  fw.flush();
-						  pstmt = conn.prepareStatement(updateSql);
-						  String roomId = Files.readString(Paths.get(userpath));
-						  pstmt.setString(1, roomId);
-						  pstmt.setString(2, user.getIdName());
-						  pstmt.executeUpdate();
-						  
-						  
-						}else if(Arrays.asList(RoomListArr).contains(RoomNum)) {
-							System.out.println("방에 이미 들어가있습니다.");
-						}
+					if (!Arrays.asList(RoomListArr).contains(RoomNum)) {
+						System.out.println("방에 속해있지 않습니다.");
 
-						
-						
-					
+						fw = new BufferedWriter(new FileWriter(userpath, true));
+						fw.write(priRoom.getrID() + "%");
+						fw.flush();
+						pstmt = conn.prepareStatement(updateSql);
+						String roomId = Files.readString(Paths.get(userpath));
+						pstmt.setString(1, roomId);
+						pstmt.setString(2, user.getIdName());
+						pstmt.executeUpdate();
+
+					} else if (Arrays.asList(RoomListArr).contains(RoomNum)) {
+						System.out.println("방에 이미 들어가있습니다.");
+					}
 
 					String roomListMessage = "";
 					for (int i = 0; i < roomtotalList.size(); i++) {
@@ -601,8 +607,7 @@ public class MainHandler extends Thread {
 
 					// ----------------------------------------파일
 					// 보류--------------------------------------
-					String folder = path+"\\roomFolder\\"
-							+ priRoom.getrID() + "\\";
+					String folder = path + "\\roomFolder\\" + priRoom.getrID() + "\\";
 					System.out.println(folder);
 					// 폴더명으로 파일객체 생성
 					File file = new File(folder);
@@ -733,8 +738,7 @@ public class MainHandler extends Thread {
 						roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw.flush();
 					}
 					System.out.println("현재 작업 경로: " + path);
-					String Path = path+"\\roomFolder\\"
-							+ priRoom.getrID() + "\\ChattingLog.txt";
+					String Path = path + "\\roomFolder\\" + priRoom.getrID() + "\\ChattingLog.txt";
 					fw = new BufferedWriter(new FileWriter(Path, true));
 
 					System.out.println("[" + user.getIdName() + "] : " + line[1]);
@@ -757,8 +761,7 @@ public class MainHandler extends Thread {
 					InputStream is = socket.getInputStream();
 
 					// 저장할 파일출력스트림 객체 생성
-					String filepath = path+"\\roomFolder\\"
-							+ priRoom.getrID() + "\\" + fileName;
+					String filepath = path + "\\roomFolder\\" + priRoom.getrID() + "\\" + fileName;
 					// FileOutputStream-> 데이터를 파일에 바이트 스트림으로 저장하기 위해 사용한다.
 					FileOutputStream fos = new FileOutputStream(filepath);
 
@@ -780,8 +783,7 @@ public class MainHandler extends Thread {
 					fos.close();
 					System.out.println("파일 다운로드 끝 !!!");
 
-					String folder = path+"\\roomFolder\\"
-							+ priRoom.getrID() + "\\";
+					String folder = path + "\\roomFolder\\" + priRoom.getrID() + "\\";
 					// 폴더명으로 파일객체 생성
 					File file = new File(folder);
 
@@ -809,8 +811,7 @@ public class MainHandler extends Thread {
 
 				} else if (line[0].compareTo(Protocol.CHATTINGFILEDOWNLOAD_SYN) == 0) // 파일 다운로드 보냄
 				{
-					String folder = path+"\\roomFolder\\"
-							+ priRoom.getrID() + "\\";
+					String folder = path + "\\roomFolder\\" + priRoom.getrID() + "\\";
 					// 폴더명으로 파일객체 생성
 					File file = new File(folder);
 
@@ -860,7 +861,7 @@ public class MainHandler extends Thread {
 			pw.close();
 			socket.close();
 
-		} catch (IOException io) {			
+		} catch (IOException io) {
 			io.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
