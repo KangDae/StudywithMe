@@ -453,6 +453,7 @@ public class MainHandler extends Thread {
 						tempRoom.roomInUserList.add(this);
 						roomtotalList.add(tempRoom);
 						priRoom = tempRoom; // 현재 룸을 지정함
+						
 					}
 
 					fw = new BufferedWriter(new FileWriter(userpath, true));
