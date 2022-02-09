@@ -274,6 +274,7 @@ public class EnterFrame extends JFrame implements ActionListener, Runnable, List
 						+ (String) menbersShipF.emailC.getSelectedItem();
 				System.out.println(emailString);
 				sNumber = String.valueOf(SendMail_update.SendMail(emailString));
+				System.out.println(sNumber);
 			}
 
 		} else if (e.getSource() == menbersShipF.emeilokB) { // 회원가입 페이지 -----------> 인증번호확인
