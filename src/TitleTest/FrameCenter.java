@@ -38,19 +38,19 @@ public class FrameCenter extends R {
 //		this.setUndecorated(true);
 	}
 
-	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_name;
-	private JTextField textField_ID;
-	private JTextField textField_email;
-	private JPasswordField passwordField_pw;
-	public JPanel centerPane;
+	public JTextField Center_textField_Message;
+	public JTextField textField_name;
+	public JTextField textField_ID;
+	public JTextField textField_email;
+	public JPasswordField passwordField_pw;
+	public JPanel Center_centerPane;
+	public JComboBox<String> Center_comboBox_List;
 
 	public PanelRoomList[] panelRoomList;
 
-	PrintWriter pw;
+	public JButton Center_button_MakeRoom, Center_button_SearchRoom, Center_btn_update, Center_btn_Logout, Center_btn_Send;
 	BufferedReader br;
-
+	PrintWriter pw;
 	/**
 	 * Create the application.
 	 */
@@ -63,8 +63,8 @@ public class FrameCenter extends R {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		pw = Client_network.pw;
 		br = Client_network.br;
+		pw = Client_network.pw;
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(null);
@@ -127,11 +127,11 @@ public class FrameCenter extends R {
 		lbl_email.setBounds(24, 362, 71, 15);
 		panel_Myinfomation.add(lbl_email);
 
-		JButton btn_update = new JButton("수정하기");
-		btn_update.setBackground(Color.WHITE);
-		btn_update.setForeground(Color.BLACK);
-		btn_update.setBounds(262, 451, 98, 34);
-		panel_Myinfomation.add(btn_update);
+		Center_btn_update = new JButton("수정하기");
+		Center_btn_update.setBackground(Color.WHITE);
+		Center_btn_update.setForeground(Color.BLACK);
+		Center_btn_update.setBounds(262, 451, 98, 34);
+		panel_Myinfomation.add(Center_btn_update);
 
 		passwordField_pw = new JPasswordField();
 		passwordField_pw.setEditable(false);
@@ -142,11 +142,11 @@ public class FrameCenter extends R {
 		lbl_StudyWithMe.setBounds(38, 26, 294, 153);
 		panel_Myinfomation.add(lbl_StudyWithMe);
 		
-		JButton btn_Logout = new JButton("로그아웃");
-		btn_Logout.setForeground(Color.BLACK);
-		btn_Logout.setBackground(Color.WHITE);
-		btn_Logout.setBounds(26, 451, 98, 34);
-		panel_Myinfomation.add(btn_Logout);
+		Center_btn_Logout = new JButton("로그아웃");
+		Center_btn_Logout.setForeground(Color.BLACK);
+		Center_btn_Logout.setBackground(Color.WHITE);
+		Center_btn_Logout.setBounds(26, 451, 98, 34);
+		panel_Myinfomation.add(Center_btn_Logout);
 		tabbedPane_Freinds.setBackgroundAt(0, new Color(128, 128, 128));
 
 		JPanel panel_MyFriends = new JPanel();
@@ -164,65 +164,76 @@ public class FrameCenter extends R {
 		tabbedPane_Option.addTab("대기자 채팅방", null, panel_Waitting, null);
 		panel_Waitting.setLayout(null);
 
-		JButton btnNewButton = new JButton("전송");
-		btnNewButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		btnNewButton.setBounds(289, 464, 73, 29);
-		panel_Waitting.add(btnNewButton);
+		Center_btn_Send = new JButton("전송");
+		Center_btn_Send.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		Center_btn_Send.setBounds(289, 464, 73, 29);
+		panel_Waitting.add(Center_btn_Send);
 
 		JScrollPane scrollPane_ChattBord = new JScrollPane();
 		scrollPane_ChattBord.setBounds(12, 10, 350, 444);
 		panel_Waitting.add(scrollPane_ChattBord);
 
-		JTextArea textArea_Chatting = new JTextArea();
-		textArea_Chatting.setEnabled(false);
-		textArea_Chatting.setEditable(false);
-		textArea_Chatting.setLineWrap(true);
-		textArea_Chatting.setWrapStyleWord(true);
-		textArea_Chatting.setText("안녕하세여");
-		textArea_Chatting.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		scrollPane_ChattBord.setViewportView(textArea_Chatting);
+		JTextArea Center_textArea_Chatting = new JTextArea();
+		Center_textArea_Chatting.setEnabled(false);
+		Center_textArea_Chatting.setEditable(false);
+		Center_textArea_Chatting.setLineWrap(true);
+		Center_textArea_Chatting.setWrapStyleWord(true);
+		Center_textArea_Chatting.setText("안녕하세여");
+		Center_textArea_Chatting.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		scrollPane_ChattBord.setViewportView(Center_textArea_Chatting);
 
-		textField = new JTextField();
-		textField.setFont(new Font("Gulim", Font.PLAIN, 12));
-		textField.setBounds(12, 464, 265, 28);
-		panel_Waitting.add(textField);
-		textField.setColumns(10);
+		Center_textField_Message = new JTextField();
+		Center_textField_Message.setFont(new Font("Gulim", Font.PLAIN, 12));
+		Center_textField_Message.setBounds(12, 464, 265, 28);
+		panel_Waitting.add(Center_textField_Message);
+		Center_textField_Message.setColumns(10);
+		
+		JPanel panel_Waituser = new JPanel();
+		tabbedPane_Option.addTab("대기실 인원", null, panel_Waituser, null);
+		panel_Waituser.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 5, 350, 488);
+		panel_Waituser.add(scrollPane);
+		
+		JTextArea textArea_Waituser = new JTextArea();
+		scrollPane.setViewportView(textArea_Waituser);
 
 		JPanel panel_RoomJoin = new JPanel();
 		panel_RoomJoin.setBackground(new Color(135, 206, 250));
 		tabbedPane_Option.addTab("방 참가하기", null, panel_RoomJoin, null);
 		panel_RoomJoin.setLayout(null);
 
-		centerPane = new JPanel(new GridLayout(100, 2, 10, 10));
+		Center_centerPane = new JPanel(new GridLayout(100, 2, 10, 10));
 
 		for (int i = 0; i < 100; i++) {
 			panelRoomList[i] = new PanelRoomList(br, pw);
-			centerPane.add(panelRoomList[i]);
+			Center_centerPane.add(panelRoomList[i]);
 		}
 
-		JScrollPane scrollPane_RoomList = new JScrollPane(centerPane);
+		JScrollPane scrollPane_RoomList = new JScrollPane(Center_centerPane);
 		scrollPane_RoomList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane_RoomList.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane_RoomList.getVerticalScrollBar().setValue(scrollPane_RoomList.getVerticalScrollBar().getMaximum());
 		scrollPane_RoomList.setBounds(12, 49, 350, 444);
 		panel_RoomJoin.add(scrollPane_RoomList);
 
-		JButton button_SearchRoom = new JButton("방 검색");
-		button_SearchRoom.setBackground(new Color(255, 255, 255));
-		button_SearchRoom.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		button_SearchRoom.setBounds(15, 10, 88, 29);
-		panel_RoomJoin.add(button_SearchRoom);
+		Center_button_SearchRoom = new JButton("방 검색");
+		Center_button_SearchRoom.setBackground(new Color(255, 255, 255));
+		Center_button_SearchRoom.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		Center_button_SearchRoom.setBounds(15, 10, 88, 29);
+		panel_RoomJoin.add(Center_button_SearchRoom);
 
-		JButton button_MakeRoom = new JButton("방 생성");
-		button_MakeRoom.setBackground(new Color(255, 255, 255));
-		button_MakeRoom.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		button_MakeRoom.setBounds(115, 10, 88, 29);
-		panel_RoomJoin.add(button_MakeRoom);
+		Center_button_MakeRoom = new JButton("방 생성");
+		Center_button_MakeRoom.setBackground(new Color(255, 255, 255));
+		Center_button_MakeRoom.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		Center_button_MakeRoom.setBounds(115, 10, 88, 29);
+		panel_RoomJoin.add(Center_button_MakeRoom);
 
-		JComboBox comboBox_List = new JComboBox(roomTopic);
-		comboBox_List.setBackground(new Color(255, 255, 255));
-		comboBox_List.setBounds(274, 10, 88, 29);
-		panel_RoomJoin.add(comboBox_List);
+		Center_comboBox_List = new JComboBox<String>(roomTopicFilter);
+		Center_comboBox_List.setBackground(new Color(255, 255, 255));
+		Center_comboBox_List.setBounds(274, 10, 88, 29);
+		panel_RoomJoin.add(Center_comboBox_List);
 
 		JLabel Label_Filter = new JLabel("필터 : ");
 		Label_Filter.setFont(new Font("맑은 고딕", Font.BOLD, 15));
@@ -274,83 +285,10 @@ public class FrameCenter extends R {
 		panel_Developer.add(lblNewLabel_1_5);
 		tabbedPane_FriendsPanel.setBackgroundAt(2, new Color(0, 191, 255));
 
-		
-		// ==> 로그아웃 <==
-		btn_Logout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				/*
-				 *  protocol 사용해서 서버쪽으로 신호 보내서 client log를 초기화시켜준다.
-				 *  아직 미구현
-				 */
-				frameDown();
-				frameLogin.start();
-				
-				pw.println(Protocol.EXITCHATTINGROOM + "|" + "message");
-				pw.flush();
-			}
-		});
-		// ==> 수정하기 버튼 <==
-		btn_update.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				/*
-				 * 아직 미구현 
-				 * 새로운 프레임 만들어서 update구현
-				 */
-				textField_ID.setEditable(true);
-				textField_name.setEditable(true);
-				passwordField_pw.setEditable(true);
-				textField_email.setEditable(true);
-
-			}
-		});
-		// ==> 메세지 전송 <==
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String line = textField.getText();
-				if (textField.getText().length() != 0) {
-					pw.println(Protocol.SENDMESSAGE + "|" + line);
-					pw.flush();
-					textField.setText("");
-				}
-			}
-		});
-		// ==> 이름으로 방검색 <==
-		button_SearchRoom.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				/*
-				 * 아직 미구현
-				 * 새로운 JOptionPane inputMessageBox 사용해서 String 받아서 
-				 * 찾는방식
-				 */
-			}
-		});
-		// ==> 콤보박스 필터 <==
-		comboBox_List.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				/*
-				 * 콤보박스 에 뽑은 String 을 바탕으로
-				 * subject 의 값과 비교해서
-				 * 가져온다.
-				 */
-				String subject = (String) comboBox_List.getSelectedItem();
-
-			}
-		});
-
-		// ==> 방 생성 부분 <==
-		button_MakeRoom.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameMakeRoom.start();
-				frameDown();
-			}
-		});
 	}
 
-	private void frameDown() {
+	public void frameDown() {
 		this.setVisible(false);
 	}
 }

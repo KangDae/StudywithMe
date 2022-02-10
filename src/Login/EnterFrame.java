@@ -720,9 +720,10 @@ public class EnterFrame extends JFrame implements ActionListener, Runnable, List
 					}
 					RoomF.usertxt.setText(userlist);
 
-				} else if (line[0].compareTo(Protocol.SENDMESSAGE_ACK) == 0) // 서버로 메세지 받음 [대기실]
-				{
+				} else if (line[0].compareTo(Protocol.SENDMESSAGE_ACK) == 0){ // 서버로 메세지 받음 [대기실]
+				
 					RoomF.chatarea.append("[" + line[1] + "] :" + line[2] + '\n');
+
 
 				} else if (line[0].compareTo(Protocol.ROOMSORT) == 0) { //방정렬
 
@@ -733,8 +734,7 @@ public class EnterFrame extends JFrame implements ActionListener, Runnable, List
 						System.out.println("비어있습니다.");
 						RoomF.repaint();
 						RoomF.containPanelClear();
-						
-					} else {
+				    }else {
 
 						String roomList[] = line[1].split("-"); // 방세부
 
