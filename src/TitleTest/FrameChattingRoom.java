@@ -20,11 +20,18 @@ import Server.Client_network;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
@@ -33,7 +40,7 @@ import javax.swing.JList;
  * 		프레임입니다.
  */
 public class FrameChattingRoom extends R{
-	//cnrk
+	public File file, folder;
 	private JTextField chatting_textField_message;
 	PrintWriter pw;
 	BufferedReader br;
@@ -127,5 +134,27 @@ public class FrameChattingRoom extends R{
 	}
 	public void frameDown() {
 		this.setVisible(false);
+	}
+
+	public void listUpload() {
+		String fileName = folder.getName();
+		String fileExtention = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+		File[] contents = folder.listFiles();
+
+		if (contents != null) {
+			for (int i = 0; i < contents.length; i++) {
+				contents[i].getName();
+				// model.addElement(file.getName());
+				// System.out.println(contents[i].getName());
+			}
+		} else {
+			System.out.println("파일이 없습니다.");
+		}
+
+	}
+
+	public void fileDelete() {
+		model.remove(list.getSelectedIndex());
+
 	}
 }

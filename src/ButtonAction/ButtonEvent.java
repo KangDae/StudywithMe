@@ -73,6 +73,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		frameChattingRoom.chatting_btn_ExitButton.addActionListener(this);  // 대화방 나가기
 		frameChattingRoom.chatting_btn_FileTab.addActionListener(this);     // 대화방 파일탭 
 		frameChattingRoom.chatting_btn_Dismantling.addActionListener(this); // 대화방 모임해체
+		
 	}
 
 	@Override
@@ -101,11 +102,6 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			} else if (frameSignup.textField_ID.getText().length() < 8) {
 				JOptionPane.showMessageDialog(btn_Confirm, "아이디는 8글자 이상으로 입력해주세요");
 			} else {
-				/*
-				 * 조건에 부합한지 마지막확인 db에 중복되는 아이디가 있을경우 Client부분에서 처리
-				 */
-				JOptionPane.showMessageDialog(btn_Confirm, "사용가능한 아이디입니다.");
-				// ㄴ 테스트 하고 지울 것.
 				pw.println(Protocol.IDSEARCHCHECK + "|" + frameSignup.textField_ID.getText());
 				pw.flush();
 			}
@@ -165,11 +161,11 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			String emailCheck = frameSignup.textField_auth.getText();
 
 			if (name.length() == 0 || id.length() == 0 || password.length() == 0 || email1.length() == 0
-					|| emailCheck.length() == 0) { // emailCheck.length()==0
+					|| emailCheck.length() == 0 || emailCheck.length()==0) { // 
 				JOptionPane.showMessageDialog(btn_Confirm, "빈칸을 입력해 주세요");
 			} else if (condition_Email && condition_ID) {
 				String line = "";
-				line += (id + "%" + password + "%" + name + "%" + ageYear + "." + ageMonnth + "." + ageDay + "%"
+				line += (id + "%" + password + "%" + name + "%" + ageYear + ageMonnth + ageDay + "%"
 						+ email1 + "@" + email2);
 				pw.println(Protocol.REGISTER + "|" + line);
 				pw.flush();
@@ -503,7 +499,9 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		// ================== 채팅방 부분 ==================
 		// ==> 파일탭 <== *********세부 프레임 미구현 
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_FileTab)) {
-
+			frameChattingRoom.listUpload();
+			pw.println(Protocol.CHATTINGFILESEND_SYN + "|" + frameChattingRoom.file.getName());
+			pw.flush();
 		} 
 		// ==> 방나가기 <==
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_ExitButton)) {

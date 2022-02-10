@@ -63,7 +63,7 @@ public class RoomFrame extends JFrame {
 		dp = new DetailPanel[100];
 		upP = new JPanel(new FlowLayout());
 		la6 = new JLabel("정렬 :  ");
-		sortCB = new JComboBox<String>(com);
+		sortCB = new JComboBox<String>();
 		sortCB.setPreferredSize(new Dimension(200, 30));
 		makeB = new JButton("방만들기");
 		makeB.setPreferredSize(new Dimension(400, 30));
