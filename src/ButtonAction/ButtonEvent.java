@@ -11,14 +11,14 @@ import javax.swing.JOptionPane;
 
 import DTO.Protocol;
 import FunctionTest.Email.SendMail_update;
-import Server.Client;
+import Server.Client_network;
 
 public class ButtonEvent extends ButtonAccemble implements ActionListener, MouseListener{
 	PrintWriter pw;
 	BufferedReader br;
 	public ButtonEvent() {
-		pw = Client.pw;
-		br = Client.br;
+		pw = Client_network.pw;
+		br = Client_network.br;
 		event();
 	}
 	public void event() {

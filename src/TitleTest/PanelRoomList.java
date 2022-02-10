@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import DTO.Protocol;
 import Resource.R;
-import Server.Client;
+import Server.Client_network;
 
 public class PanelRoomList extends JPanel implements ActionListener{
 	public static String labelName[] = { "방 번호: ", "     ", "방 주제 : ", "     ", "인원 수 : ", "     "
@@ -29,8 +29,8 @@ public class PanelRoomList extends JPanel implements ActionListener{
 		this.pw = pw;
 	}
 	public void init() {
-		br = Client.br;
-		pw = Client.pw;
+		br = Client_network.br;
+		pw = Client_network.pw;
 		this.setLayout(new GridLayout(5, 2, 1, 1));
 		labelArray = new JLabel[labelName.length];
 		

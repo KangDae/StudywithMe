@@ -1,16 +1,15 @@
-package TitleTest;
+package Server;
 
 import Resource.R;
-import Server.Client;
 
-public class TestMain {
+public class Client_Main {
 	public R startF = new R();
-	public TestMain() {
+	public Client_Main() {
 		startF.frameStart.start();
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		new TestMain();
+		new Client_Main();
 		
 		
 	}

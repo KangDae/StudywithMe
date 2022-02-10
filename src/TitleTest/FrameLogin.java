@@ -7,7 +7,7 @@ import javax.swing.JTextField;
 
 import DTO.Protocol;
 import Resource.R;
-import Server.Client;
+import Server.Client_network;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

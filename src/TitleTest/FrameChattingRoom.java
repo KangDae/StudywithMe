@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 import DTO.Protocol;
 import Resource.R;
-import Server.Client;
+import Server.Client_network;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -50,8 +50,8 @@ public class FrameChattingRoom extends R{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		pw = Client.pw;
-		br = Client.br;
+		pw = Client_network.pw;
+		br = Client_network.br;
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

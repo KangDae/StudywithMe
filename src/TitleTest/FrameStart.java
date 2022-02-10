@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 import Resource.R;
-import Server.Client;
+import Server.Client_network;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -26,7 +26,7 @@ public class FrameStart extends R{
 	 * Create the application.
 	 * @return 
 	 */
-	public Client client;
+	public Client_network client;
 //	public JButton start_btn_loginBtn, start_btn_SingUp, btnExit;
 	
 	public FrameStart(){
@@ -38,7 +38,7 @@ public class FrameStart extends R{
 	}
 
 	private void initialize() {
-		client = new Client();
+		client = new Client_network();
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

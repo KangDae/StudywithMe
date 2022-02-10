@@ -8,11 +8,12 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client {
+public class Client_network {
 	public static BufferedReader br;
 	public static PrintWriter pw;
 	public static Socket socket; 
-	public Client(){
+	
+	public Client_network(){
 		network();
 	}
 	public void network() {

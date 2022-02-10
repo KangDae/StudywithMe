@@ -17,7 +17,7 @@ import javax.swing.border.Border;
 import DTO.Protocol;
 import FunctionTest.Email.SendMail_update;
 import Resource.R;
-import Server.Client;
+import Server.Client_network;
 
 import java.awt.event.ActionListener;
 import java.io.PrintWriter;

@@ -10,7 +10,7 @@ import ButtonAction.ButtonAccemble;
 import DTO.Protocol;
 import FunctionTest.Email.SendMail_update;
 import Resource.R;
-import Server.Client;
+import Server.Client_network;
 
 import javax.swing.BorderFactory;
 
