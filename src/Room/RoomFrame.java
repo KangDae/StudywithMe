@@ -35,13 +35,13 @@ import Room.RoomMake;
  */
 public class RoomFrame extends JFrame {
 	public JButton makeB, exitB, sendB, enterB;
-	private JComboBox<String> sortCB;
+	public JComboBox<String> sortCB;
 	public JPanel upP, chatP, chatP1, listP, list1P, list2P, roomP, roomP1, sumP, centerPanel;
 	private JPanel[] sortrm;
 	public JTextArea chatarea, usertxt;
 	public JTextField chattxt, tx1, tx2, tx3, tx4, tx5, tx6, tx7, tx8;
 	private JLabel la1, la2, la3, la4, la5, la6;
-	private String[] com = { "경영지원", "마케팅", "고객관리", "개발", "디자인" };
+	private String[] com = { "모두", "경영", "마케팅", "고객관리", "개발", "디자인" };
 	private JList<String> entlist, frlist;
 	private EtchedBorder eb;
 	private JList<DetailPanel> list;

@@ -372,6 +372,25 @@ public class MainHandler extends Thread {
 					user.setPhoneNumber("");
 					user.setEmail("");
 
+				} else if (line[0].compareTo(Protocol.ROOMSORT) == 0) { // 방정렬				
+					String userContent[] = line[1].split("%"); // 0번지에는 = subject 1번지 = usingID
+					String subject = userContent[0]; // subject = subject
+					String roomListMessage = "";
+					if (subject.equals("모두")) {
+						for (int i = 0; i < roomtotalList.size(); i++) {
+							roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle()
+									+ "%" + roomtotalList.get(i).getrPassword() + "%"
+									+ roomtotalList.get(i).getUserCount() + "%" + roomtotalList.get(i).getMasterName()
+									+ "%" + roomtotalList.get(i).getSubject() + "%"
+									+ roomtotalList.get(i).getCondtionP() + "%"
+									+ roomtotalList.get(i).roomInUserList.size() + "-");
+						}
+					} else {
+						roomListMessage = roomSearch(subject);
+					}
+					// 신호를 보낸 user
+					pw.println(Protocol.ROOMSORT + "|" + roomListMessage);
+					pw.flush();
 				} else if (line[0].compareTo(Protocol.SENDMESSAGE) == 0) { // 대기실방에서 메세지보내기
 
 					for (int i = 0; i < waitUserList.size(); i++) {
@@ -382,6 +401,9 @@ public class MainHandler extends Thread {
 				} else if (line[0].compareTo(Protocol.ROOMMAKE) == 0) { // 방만들기
 
 					String userContent[] = line[1].split("%");
+					for(int i=0;i<userContent.length;i++) {
+						System.out.println(userContent[i]);
+					}
 
 					String sql = "";
 					String updateSql = "";
@@ -425,6 +447,7 @@ public class MainHandler extends Thread {
 						tempRoom.setMasterName(user.getIdName());
 						tempRoom.setSubject(userContent[2]);
 						tempRoom.setCondtionP(Integer.parseInt(userContent[3]));
+						System.out.println(tempRoom.toString()); 
 
 						sql = "select * from Room where title = '" + userContent[0] + "' and  userCount= '"
 								+ userContent[1] + "' and  admin= '" + user.getIdName() + "' and  subject= '"
@@ -867,5 +890,18 @@ public class MainHandler extends Thread {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	private String roomSearch(String subject) {
+		String roomListMessage = "";
+		for (int i = 0; i < roomtotalList.size(); i++) {
+			if (roomtotalList.get(i).getSubject().equals(subject)) {
+				roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle() + "%"
+						+ roomtotalList.get(i).getrPassword() + "%" + roomtotalList.get(i).getUserCount() + "%"
+						+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject() + "%"
+						+ roomtotalList.get(i).getCondtionP() + "%" + roomtotalList.get(i).roomInUserList.size() + "-");
+			}
+		}
+
+		return roomListMessage;
 	}
 }

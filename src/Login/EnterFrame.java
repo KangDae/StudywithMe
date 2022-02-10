@@ -53,6 +53,7 @@ public class EnterFrame extends JFrame implements ActionListener, Runnable, List
 	CoprocessFrame chattingF;
 	Newpassword newpasswordF; // 비밀번호 재설정창
 
+	private String subject = "모두";
 	private String sNumber = "><^^"; // default 시크릿넘버
 	private boolean condition_S = true; // 이메일 인증확인
 	private boolean condition_Id = false; // ID 중복체크
@@ -146,6 +147,7 @@ public class EnterFrame extends JFrame implements ActionListener, Runnable, List
 
 		// ----------------------방 관련 ------------------------------------
 		RoomF.makeB.addActionListener(this);
+		RoomF.sortCB.addActionListener(this);
 		rMakeF.makeB.addActionListener(this);
 		rMakeF.canB.addActionListener(this);
 		chattingF.exitB.addActionListener(this);
@@ -524,9 +526,15 @@ public class EnterFrame extends JFrame implements ActionListener, Runnable, List
 			}
 
 		} else if (e.getSource() == RoomF.makeB) {
+			
 			RoomF.setVisible(false);
 			rMakeF.setVisible(true);
-		} else if (e.getSource() == rMakeF.makeB) { // 방만들기 페이지 -----> 방만들기 버튼
+		} else if (e.getSource() == RoomF.sortCB){
+			subject = (String)RoomF.sortCB.getSelectedItem();
+			pw.println(Protocol.ROOMSORT + "|" + subject );
+			pw.flush();
+			
+		}else if (e.getSource() == rMakeF.makeB) { // 방만들기 페이지 -----> 방만들기 버튼
 			String title = rMakeF.tf.getText();
 			String rPassword = rMakeF.pf.getText();
 			String userCount = (String) rMakeF.combo1.getSelectedItem();
@@ -543,6 +551,7 @@ public class EnterFrame extends JFrame implements ActionListener, Runnable, List
 
 					String line = "";
 					line += (title + "%" + rPassword + "%" + userCount + "%" + subject + "%" + condition);
+					
 					pw.println(Protocol.ROOMMAKE + "|" + line);
 					pw.flush();
 
@@ -561,6 +570,7 @@ public class EnterFrame extends JFrame implements ActionListener, Runnable, List
 				{
 					String line = "";
 					line += (title + "%" + userCount + "%" + subject + "%" + condition);
+
 					pw.println(Protocol.ROOMMAKE + "|" + line);
 					pw.flush();
 
@@ -716,6 +726,40 @@ public class EnterFrame extends JFrame implements ActionListener, Runnable, List
 				{
 					RoomF.chatarea.append("[" + line[1] + "] :" + line[2] + '\n');
 
+				} else if(line[0].compareTo(Protocol.ROOMSORT) == 0) {
+					String roomListDetail[];
+					if(line.length==1) {
+						System.out.println("아모고토없죠?");
+						
+						// RoomF.containPanelClear(); 디테일팬 초기화부분						
+					} else {
+						RoomF.containPanelClear();
+						String roomList[] = line[1].split("-"); // 방 갯수
+						for (int i = 0; i < roomList.length; i++) {
+							RoomF.dp[i].init(); // 방리스트를 받은거로 다시 생성해주고
+							roomListDetail = roomList[i].split("%");
+							String userNumber = "";
+							if (roomListDetail.length == 8) // 비공개방
+							{
+								userNumber += (roomListDetail[7] + "/" + roomListDetail[3]);
+
+								RoomF.dp[i].labelArray[1].setText(roomListDetail[0]); // 방번호
+								RoomF.dp[i].labelArray[3].setText(roomListDetail[5]); // 방주제
+								RoomF.dp[i].labelArray[5].setText(userNumber); // 인원수
+								RoomF.dp[i].labelArray[7].setText(roomListDetail[1]); // 방제목
+								RoomF.dp[i].labelArray[8].setText("개설자 : " + roomListDetail[4]); // 개설자
+							} else if (roomListDetail.length == 7) // 공개방
+							{
+								userNumber += (roomListDetail[6] + "/" + roomListDetail[2]);
+								RoomF.dp[i].labelArray[1].setText(roomListDetail[0]); // 방번호
+								RoomF.dp[i].labelArray[3].setText(roomListDetail[5]); // 방주제
+								RoomF.dp[i].labelArray[5].setText(userNumber); // 인원수
+								RoomF.dp[i].labelArray[7].setText(roomListDetail[1]); // 방제목
+								RoomF.dp[i].labelArray[8].setText("개설자 : " + roomListDetail[3]); // 개설자
+							}
+						}
+						
+					}
 				} else if (line[0].compareTo(Protocol.ROOMMAKE_OK) == 0) // 방만들어짐
 				{
 					

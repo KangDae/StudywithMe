@@ -40,7 +40,7 @@ public class MainServer {
 	private String url = String.format("%s%s:%s/%s", protocol,ip,port,db);
 	private String user = "root";
 
-	private String password = "7984";
+	private String password = "1234";
 
 	/*
 	 *  class. forname. driver
