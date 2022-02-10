@@ -67,9 +67,9 @@ public class ClientHandler extends R implements Runnable{
 				} else if (line[0].compareTo(Protocol.PWSEARCH_NO) == 0) // PW가 없음
 				{
 					JOptionPane.showMessageDialog(this, line[1]);
-					searchpwF.setVisible(true);
-					newpasswordF.setVisible(false);
-					this.setVisible(false);
+					frameSearchPW.start();
+					framePassWordCheck.frameDown();
+					frameLogin.frameDown();
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN_OK) == 0) // 로그인 성공
 				{
 					frameLogin.frameDown();
@@ -175,31 +175,32 @@ public class ClientHandler extends R implements Runnable{
 						System.out.println("userNumber : " + userNumber);
 
 					}
-					chattingF.area.setText("");
-					chattingF.area1.setText("");
-					rMakeF.setVisible(false); // 대기방 화면 끄고
+					frameChattingRoom.Chatting_textArea_chatting.setText("");
+					frameChattingRoom.Chatting_textarea_Inuserlist.setText("");
+					frameCenter.frameDown(); // 대기방 화면 끄고
 
 				} else if (line[0].compareTo(Protocol.ROOMMAKE_OK1) == 0) // 방만들어짐 (만든 당사자) // 입장
 				{
 					System.out.println("방장 입장화면 변환");
-					rMakeF.setVisible(false); // 대기방 화면 끄고
+					frameMakeRoom.frameDown(); // 대기방 화면 끄고
 
-					chattingF.area.setText("");
-					chattingF.setVisible(true);
-					chattingF.partList.setText(line[1] + "\n");
+					frameChattingRoom.Chatting_textArea_chatting.setText("");
+					frameChattingRoom.setVisible(true);
+					frameChattingRoom.list.setText(line[1] + "\n");
 
 				} else if (line[0].compareTo(Protocol.ENTERROOM_OK1) == 0) // 방입장 입장하는 당사자
 				{
 					System.out.println("입장화면 변환");
-					frameCenter.setVisible(false);
-					chattingF.area1.setText("");
-					chattingF.area.setText("");
-					chattingF.setVisible(true);
+					frameCenter.frameDown();
+					
+					frameChattingRoom.area1.setText("");
+					frameChattingRoom.area.setText("");
+					frameChattingRoom.setVisible(true);
 //					System.out.println(line[2]);
 //					String roomMember[] = line[2].split("%");//룸에 들어온사람들
-//					chattingF.partList.append(line[1]); //자기 추가해주고
+//					frameChattingRoom.partList.append(line[1]); //자기 추가해주고
 //					for (int i = 0; i < roomMember.length; i++) {
-//						chattingF.partList.append(roomMember[i] + "\n");
+//						frameChattingRoom.partList.append(roomMember[i] + "\n");
 //					}
 
 				} else if (line[0].compareTo(Protocol.ENTERROOM_USERLISTSEND) == 0) // 채팅방 리스트 새로고침
@@ -211,29 +212,29 @@ public class ClientHandler extends R implements Runnable{
 						lineList += (roomMember[i] + "\n");
 					}
 
-					chattingF.partList.setText(lineList);
-					chattingF.area1.append(line[2] + "\n");
+					frameChattingRoom.partList.setText(lineList);
+					frameChattingRoom.area1.append(line[2] + "\n");
 
 					if (line.length == 4) {
 						String fileList[] = line[3].split("%");
-						chattingF.model.removeAllElements();
+						frameChattingRoom.model.removeAllElements();
 						for (int i = 0; i < fileList.length; i++) {
-							chattingF.model.addElement(fileList[i]);
+							frameChattingRoom.model.addElement(fileList[i]);
 						}
 					}
 
 				} else if (line[0].compareTo(Protocol.CHATTINGSENDMESSAGE_OK) == 0) {
-					chattingF.area1.append("[" + line[1] + "] :" + line[2] + "\n");
-				} else if (line[0].compareTo(Protocol.CHATTINGFILESEND_SYNACK) == 0) {
+					frameChattingRoom.Chatting_textArea_chatting.append("[" + line[1] + "] :" + line[2] + "\n");
+				} else if (line[0].compareTo(Protocol.frameChattingRoomILESEND_SYNACK) == 0) {
 
-					pw.println(Protocol.CHATTINGFILESEND_FILE + "|" + chattingF.file.length());
+					pw.println(Protocol.frameChattingRoomILESEND_FILE + "|" + frameChattingRoom.file.length());
 					pw.flush();
 
 					OutputStream os = socket.getOutputStream();
 
 					System.out.println("파일 보내기 시작 !!!");
 					// 보낼 파일의 입력 스트림 객체 생성
-					FileInputStream fis = new FileInputStream(chattingF.file.getAbsoluteFile());
+					FileInputStream fis = new FileInputStream(frameChattingRoom.file.getAbsoluteFile());
 
 					// 파일의 내용을 보낸다
 
@@ -246,17 +247,17 @@ public class ClientHandler extends R implements Runnable{
 					}
 
 					// 소켓에서 보낼 출력 스트림을 구한다.
-				} else if (line[0].compareTo(Protocol.CHATTINGFILESEND_FILEACK) == 0) {
+				} else if (line[0].compareTo(Protocol.frameChattingRoomILESEND_FILEACK) == 0) {
 
 					String[] fileList = line[1].split("%");
 
-					chattingF.model.removeAllElements();
+					frameChattingRoom.model.removeAllElements();
 					for (int i = 0; i < fileList.length; i++) {
-						chattingF.model.addElement(fileList[i]);
+						frameChattingRoom.model.addElement(fileList[i]);
 					}
 
-				} else if (line[0].compareTo(Protocol.CHATTINGFILEDOWNLOAD_SEND) == 0) { // 파일을 받음
-					String path = chattingF.file.getAbsolutePath();
+				} else if (line[0].compareTo(Protocol.frameChattingRoomILEDOWNLOAD_SEND) == 0) { // 파일을 받음
+					String path = frameChattingRoom.file.getAbsolutePath();
 
 					FileOutputStream fos = new FileOutputStream(path);
 					InputStream is = socket.getInputStream();

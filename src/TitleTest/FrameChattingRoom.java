@@ -40,6 +40,7 @@ public class FrameChattingRoom extends R{
 	public JButton chatting_btn_Dismantling, chatting_btn_MessageSend, chatting_btn_FileTab, chatting_btn_ExitButton;
 	public DefaultListModel<String> model;
 	public JList<String> list;
+	public JTextArea Chatting_textArea_chatting, Chatting_textarea_Inuserlist;
 
 	public FrameChattingRoom(){
 		initialize();
@@ -69,7 +70,7 @@ public class FrameChattingRoom extends R{
 		tabbedPane_Chatting.addTab("채팅", null, panel_Chatting, null);
 		panel_Chatting.setLayout(null);
 		
-		JTextArea Chatting_textArea_chatting = new JTextArea();
+		Chatting_textArea_chatting = new JTextArea();
 		Chatting_textArea_chatting.setEditable(false);
 		Chatting_textArea_chatting.setEnabled(false);
 		Chatting_textArea_chatting.setBounds(12, 10, 355, 417);
@@ -106,7 +107,7 @@ public class FrameChattingRoom extends R{
 		scrollPane.setBounds(26, 10, 326, 200);
 		panel_ParticipantList.add(scrollPane);
 		
-		JTextArea Chatting_textarea_Inuserlist = new JTextArea();
+		Chatting_textarea_Inuserlist = new JTextArea();
 		scrollPane.setViewportView(Chatting_textarea_Inuserlist);
 		
 		chatting_btn_Dismantling = new JButton("모임해체");
@@ -123,28 +124,6 @@ public class FrameChattingRoom extends R{
 		model = (DefaultListModel<String>) list.getModel();
 		
 		scrollPane_1.setViewportView(list);
-		// ==> 파일 버튼 <==
-		chatting_btn_FileTab.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		// ==> 나가기 버튼 <==
-		chatting_btn_ExitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameCenter.start();
-				frameDown();
-			}
-		});
-		// ==> 전송 버튼 <==
-		chatting_btn_MessageSend.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String line = chatting_textField_message.getText();
-				pw.println(Protocol.SENDMESSAGE + "|" + line);
-				pw.flush();
-				chatting_textField_message.setText("");
-			}
-		});
 	}
 	public void frameDown() {
 		this.setVisible(false);
