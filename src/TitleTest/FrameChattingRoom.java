@@ -33,7 +33,7 @@ import javax.swing.JList;
  * 		프레임입니다.
  */
 public class FrameChattingRoom extends R{
-
+	//cnrk
 	private JTextField chatting_textField_message;
 	PrintWriter pw;
 	BufferedReader br;
