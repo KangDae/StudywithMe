@@ -74,7 +74,7 @@ public class CoprocessFrame extends JFrame {
 		JPanel epanel = new JPanel(new BorderLayout());
 		JPanel p1 = new JPanel();
 		JLabel user = new JLabel("                                   참여 인원");
-		p1.add(user);
+//		p1.add(user);
 
 		partList = new JTextArea();
 		partList.setEditable(true);
@@ -87,7 +87,7 @@ public class CoprocessFrame extends JFrame {
 		JPanel epanel1 = new JPanel(new BorderLayout());
 		JPanel p2 = new JPanel();
 		JLabel file = new JLabel("                               업로드한 파일");
-		p2.add(file);
+//		p2.add(file);
 		list2 = new JList<String>(new DefaultListModel<String>());
 		list2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -107,7 +107,7 @@ public class CoprocessFrame extends JFrame {
 
 		JPanel p3 = new JPanel();
 		JLabel chat = new JLabel("                                        채 팅");
-		p3.add(chat);
+//		p3.add(chat);
 
 		area1 = new JTextArea();
 		JScrollPane scroll3 = new JScrollPane(area1);
