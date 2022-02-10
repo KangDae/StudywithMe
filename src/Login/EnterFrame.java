@@ -730,8 +730,7 @@ public class EnterFrame extends JFrame implements ActionListener, Runnable, List
 					String roomListDetail[];
 					if(line.length==1) {
 						System.out.println("아모고토없죠?");
-						
-						// RoomF.containPanelClear(); 디테일팬 초기화부분						
+						RoomF.containPanelClear(); // 디테일팬 초기화부분						
 					} else {
 						RoomF.containPanelClear();
 						String roomList[] = line[1].split("-"); // 방 갯수

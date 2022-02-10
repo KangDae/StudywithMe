@@ -35,7 +35,7 @@ public class FrameSearchPW extends R {
 		initialize();
 	}
 	public JComboBox comboBox_Email = new JComboBox<String>(R.email);
-	public JTextField textField_Name, textField_ID, textField_Email, textField_auth, textField_EmailCheck;
+	public JTextField textField_Name, textField_ID, textField_Email, textField_auth;
 	public JPasswordField passwordField_PW;
 
 	/**

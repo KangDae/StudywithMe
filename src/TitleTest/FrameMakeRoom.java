@@ -31,8 +31,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JCheckBox;
 
 public class FrameMakeRoom extends R {
-
-	private JTextField textField_RoomName;
+	public JComboBox<String> roomMake_comboBox_RoomTopic;
+	public JTextField roomMake_textField_RoomName;
+	public JSpinner roomMake_spinner_userMax;
+	public JButton roomMake_btn_RoomMaker, roomMake_btn_Cancle;
 	PrintWriter pw;
 	BufferedReader br;
 
@@ -68,58 +70,58 @@ public class FrameMakeRoom extends R {
 		lbl_RoomName.setBounds(34, 256, 77, 21);
 		panel_MakeRoom.add(lbl_RoomName);
 
-		textField_RoomName = new JTextField();
-		textField_RoomName.setBounds(101, 259, 116, 21);
-		panel_MakeRoom.add(textField_RoomName);
-		textField_RoomName.setColumns(10);
+		roomMake_textField_RoomName = new JTextField();
+		roomMake_textField_RoomName.setBounds(101, 259, 116, 21);
+		panel_MakeRoom.add(roomMake_textField_RoomName);
+		roomMake_textField_RoomName.setColumns(10);
 
 		JLabel lbl_RoomName_1_1 = new JLabel("방 주제 : ");
 		lbl_RoomName_1_1.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		lbl_RoomName_1_1.setBounds(34, 287, 77, 21);
 		panel_MakeRoom.add(lbl_RoomName_1_1);
 		//
-		JComboBox comboBox_RoomTopic = new JComboBox<String>();
-		comboBox_RoomTopic.setBounds(101, 290, 116, 23);
-		panel_MakeRoom.add(comboBox_RoomTopic);
+		roomMake_comboBox_RoomTopic = new JComboBox<String>(roomTopic);
+		roomMake_comboBox_RoomTopic.setBounds(101, 290, 116, 23);
+		panel_MakeRoom.add(roomMake_comboBox_RoomTopic);
 
 		JLabel lbl_RoomName_1_1_1 = new JLabel("허용인원 : ");
 		lbl_RoomName_1_1_1.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		lbl_RoomName_1_1_1.setBounds(23, 318, 77, 21);
 		panel_MakeRoom.add(lbl_RoomName_1_1_1);
 
-		JSpinner spinner_userMax = new JSpinner();
-		spinner_userMax.setModel(new SpinnerNumberModel(1, 1, 10, 1));
-		spinner_userMax.setBounds(101, 321, 45, 22);
-		panel_MakeRoom.add(spinner_userMax);
+		roomMake_spinner_userMax = new JSpinner();
+		roomMake_spinner_userMax.setModel(new SpinnerNumberModel(1, 1, 10, 1));
+		roomMake_spinner_userMax.setBounds(101, 321, 45, 22);
+		panel_MakeRoom.add(roomMake_spinner_userMax);
 
-		JButton btn_RoomMaker = new JButton("방생성");
-		btn_RoomMaker.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		btn_RoomMaker.setBounds(245, 258, 97, 40);
-		panel_MakeRoom.add(btn_RoomMaker);
+		roomMake_btn_RoomMaker = new JButton("방생성");
+		roomMake_btn_RoomMaker.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		roomMake_btn_RoomMaker.setBounds(245, 258, 97, 40);
+		panel_MakeRoom.add(roomMake_btn_RoomMaker);
 
-		JButton btn_Cancle = new JButton("취소");
-		btn_Cancle.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		btn_Cancle.setBounds(283, 460, 77, 29);
-		panel_MakeRoom.add(btn_Cancle);
+		roomMake_btn_Cancle = new JButton("취소");
+		roomMake_btn_Cancle.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		roomMake_btn_Cancle.setBounds(283, 460, 77, 29);
+		panel_MakeRoom.add(roomMake_btn_Cancle);
 
 		JLabel lblNewLabel = new JLabel(image);
 		lblNewLabel.setBounds(34, 10, 308, 160);
 		panel_MakeRoom.add(lblNewLabel);
 
 		// ==> 룸 취소 기능 구현 <==
-		btn_Cancle.addActionListener(new ActionListener() {
+		roomMake_btn_Cancle.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameCenter.start();
 				frameDown();
 			}
 		});
 		// ==> 방 만들기 기능 구현 <==
-		btn_RoomMaker.addActionListener(new ActionListener() {
+		roomMake_btn_RoomMaker.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String title = textField_RoomName.getText();
-				int sipnerCount = (int) spinner_userMax.getValue();
+				String title = roomMake_textField_RoomName.getText();
+				int sipnerCount = (int) roomMake_spinner_userMax.getValue();
 				String userCount = String.valueOf(sipnerCount);
-				String subject = (String) comboBox_RoomTopic.getSelectedItem();
+				String subject = (String) roomMake_comboBox_RoomTopic.getSelectedItem();
 				if (title.length() == 0) {
 					JOptionPane.showMessageDialog(btn_Confirm, "제목을 입력해주세요");
 				} else {
@@ -132,15 +134,15 @@ public class FrameMakeRoom extends R {
 					frameChattingRoom.start();
 					frameDown();
 
-					textField_RoomName.setText("");
-					spinner_userMax.setValue(4);
-					comboBox_RoomTopic.setSelectedItem(0);
+					roomMake_textField_RoomName.setText("");
+					roomMake_spinner_userMax.setValue(4);
+					roomMake_comboBox_RoomTopic.setSelectedItem(0);
 				}
 			}
 		});
 	}
 
-	private void frameDown() {
+	public void frameDown() {
 		this.setVisible(false);
 	}
 }

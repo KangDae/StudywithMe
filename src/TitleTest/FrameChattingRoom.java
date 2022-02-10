@@ -11,11 +11,13 @@ import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import DTO.Protocol;
 import Resource.R;
 import Server.Client_network;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
@@ -25,15 +27,19 @@ import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
+import javax.swing.JList;
 /*
  * 		방만들기 이후 입장해서 보이게되는 화면의
  * 		프레임입니다.
  */
 public class FrameChattingRoom extends R{
 
-	private JTextField textField;
+	private JTextField chatting_textField_message;
 	PrintWriter pw;
 	BufferedReader br;
+	public JButton chatting_btn_Dismantling, chatting_btn_MessageSend, chatting_btn_FileTab, chatting_btn_ExitButton;
+	public DefaultListModel<String> model;
+	public JList<String> list;
 
 	public FrameChattingRoom(){
 		initialize();
@@ -50,8 +56,6 @@ public class FrameChattingRoom extends R{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		pw = Client_network.pw;
-		br = Client_network.br;
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -65,33 +69,33 @@ public class FrameChattingRoom extends R{
 		tabbedPane_Chatting.addTab("채팅", null, panel_Chatting, null);
 		panel_Chatting.setLayout(null);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setEditable(false);
-		textArea.setEnabled(false);
-		textArea.setBounds(12, 10, 355, 417);
-		panel_Chatting.add(textArea);
+		JTextArea Chatting_textArea_chatting = new JTextArea();
+		Chatting_textArea_chatting.setEditable(false);
+		Chatting_textArea_chatting.setEnabled(false);
+		Chatting_textArea_chatting.setBounds(12, 10, 355, 417);
+		panel_Chatting.add(Chatting_textArea_chatting);
 		
-		textField = new JTextField();
-		textField.setBounds(12, 437, 260, 30);
-		panel_Chatting.add(textField);
-		textField.setColumns(10);
+		chatting_textField_message = new JTextField();
+		chatting_textField_message.setBounds(12, 437, 260, 30);
+		panel_Chatting.add(chatting_textField_message);
+		chatting_textField_message.setColumns(10);
 		
-		JButton btn_MessageSend = new JButton("전송");
-		btn_MessageSend.setBackground(new Color(255, 255, 255));
-		btn_MessageSend.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		btn_MessageSend.setBounds(291, 437, 76, 30);
-		panel_Chatting.add(btn_MessageSend);
+		chatting_btn_MessageSend = new JButton("전송");
+		chatting_btn_MessageSend.setBackground(new Color(255, 255, 255));
+		chatting_btn_MessageSend.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		chatting_btn_MessageSend.setBounds(291, 437, 76, 30);
+		panel_Chatting.add(chatting_btn_MessageSend);
 		
-		JButton btn_ExitButton = new JButton("나가기");
-		btn_ExitButton.setBackground(new Color(255, 255, 255));
-		btn_ExitButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
-		btn_ExitButton.setBounds(255, 477, 112, 39);
-		panel_Chatting.add(btn_ExitButton);
+		chatting_btn_ExitButton = new JButton("나가기");
+		chatting_btn_ExitButton.setBackground(new Color(255, 255, 255));
+		chatting_btn_ExitButton.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		chatting_btn_ExitButton.setBounds(255, 477, 112, 39);
+		panel_Chatting.add(chatting_btn_ExitButton);
 		
-		JButton btn_FileTab = new JButton("파일");
-		btn_FileTab.setBackground(new Color(255, 255, 255));
-		btn_FileTab.setBounds(12, 477, 97, 39);
-		panel_Chatting.add(btn_FileTab);
+		chatting_btn_FileTab = new JButton("파일");
+		chatting_btn_FileTab.setBackground(new Color(255, 255, 255));
+		chatting_btn_FileTab.setBounds(12, 477, 97, 39);
+		panel_Chatting.add(chatting_btn_FileTab);
 		
 		JPanel panel_ParticipantList = new JPanel();
 		panel_ParticipantList.setBackground(new Color(135, 206, 250));
@@ -99,37 +103,50 @@ public class FrameChattingRoom extends R{
 		panel_ParticipantList.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(26, 42, 326, 447);
+		scrollPane.setBounds(26, 10, 326, 200);
 		panel_ParticipantList.add(scrollPane);
 		
-		JPanel panel = new JPanel();
-		scrollPane.setViewportView(panel);
+		JTextArea Chatting_textarea_Inuserlist = new JTextArea();
+		scrollPane.setViewportView(Chatting_textarea_Inuserlist);
 		
+		chatting_btn_Dismantling = new JButton("모임해체");
+		chatting_btn_Dismantling.setBounds(226, 479, 126, 37);
+		panel_ParticipantList.add(chatting_btn_Dismantling);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(22, 261, 330, 208);
+		panel_ParticipantList.add(scrollPane_1);
+		
+		list = new JList<String>(new DefaultListModel<String>());
+		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		model = (DefaultListModel<String>) list.getModel();
+		
+		scrollPane_1.setViewportView(list);
 		// ==> 파일 버튼 <==
-		btn_FileTab.addActionListener(new ActionListener() {
+		chatting_btn_FileTab.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 			}
 		});
 		// ==> 나가기 버튼 <==
-		btn_ExitButton.addActionListener(new ActionListener() {
+		chatting_btn_ExitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frameCenter.start();
 				frameDown();
 			}
 		});
 		// ==> 전송 버튼 <==
-		btn_MessageSend.addActionListener(new ActionListener() {
+		chatting_btn_MessageSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String line = textField.getText();
+				String line = chatting_textField_message.getText();
 				pw.println(Protocol.SENDMESSAGE + "|" + line);
 				pw.flush();
-				textField.setText("");
+				chatting_textField_message.setText("");
 			}
 		});
 	}
-	private void frameDown() {
+	public void frameDown() {
 		this.setVisible(false);
 	}
 }
