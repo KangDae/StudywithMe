@@ -31,8 +31,9 @@ public class Client_network {
 			e.printStackTrace();
 			System.exit(0);
 		}
-		Thread client = new ClientHandler();
-		client.start();
+		Runnable client = new ClientHandler();
+		Thread startThread = new Thread(client);
+		startThread.start();
 		
 	}
 		

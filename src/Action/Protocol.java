@@ -1,9 +1,9 @@
 package Action;
 
 public class Protocol {
-	public static final String REGISTER = "100"; // 회원가입(request)
+	public static final String REGISTER = "100"; // 회원가입(request) 나
 
-	public static final String IDSEARCH = "110"; // ID찾기 Join (request)
+	public static final String IDSEARCH = "110"; // ID찾기 Join (request) 대준님
 
 	public static final String IDSEARCH_OK = "111"; // ID찾기 (기존에 있는거) (ACK)
 
@@ -15,13 +15,13 @@ public class Protocol {
 
 	public static final String IDSEARCHCHECK_NO = "115"; // (using 회원가입)ID 중복확인 (사용 불가능) (NACK)
 
-	public static final String ENTERLOGIN = "120"; // 로그인(request)
+	public static final String ENTERLOGIN = "120"; // 로그인(request) 대준님
 
 	public static final String ENTERLOGIN_OK = "121"; // 로그인 성공(ACK)
 
 	public static final String ENTERLOGIN_NO = "122"; // 로그인 실패(NACK)
 
-	public static final String PWSEARCH = "130"; // PW찾기
+	public static final String PWSEARCH = "130"; // PW찾기 대준님
 	
 	public static final String PWSEARCH_OK = "131"; // PW찾기 (정보가 존재함)
 	
@@ -31,19 +31,19 @@ public class Protocol {
 	
 	public static final String PWRESET_NO = "134"; // PW 재설정 실패
 
-	public static final String ROOMMAKE = "200"; // 방만들기
+	public static final String ROOMMAKE = "200"; // 방만들기 나
 
 	public static final String ROOMMAKE_OK = "201"; // 방만들기_ACK
 
 	public static final String ROOMMAKE_OK1 = "202"; // 방만들기_ACK(만든사람에게)
 
-	public static final String ROOMSORT = "210"; // 방정렬
+	public static final String ROOMSORT = "210"; // 방정렬 나
 
-	public static final String EXITWAITROOM = "220"; // 대기방 나가기(= logout)
+	public static final String EXITWAITROOM = "220"; // 대기방 나가기(= logout) 
 
 	public static final String SENDWAITROOM = "250"; // 대기방 메세지
 
-	public static final String ENTERROOM = "300"; // 방입장
+	public static final String ENTERROOM = "300"; // 방입장 나
 
 	public static final String ENTERROOM_OK = "301"; // 방입장 성공
 
