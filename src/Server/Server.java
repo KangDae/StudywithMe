@@ -18,8 +18,8 @@ public class Server {
 	 * 		방 리스트
 	 */
 	private ServerSocket serverSocket;
-	private ArrayList<Handler> allUserList;
-	private ArrayList<Handler> waitUserList;
+	private ArrayList<ServerHandler> allUserList;
+	private ArrayList<ServerHandler> waitUserList;
 	private ArrayList<Room> roomtotalList;
 	/*
 	 * 		protocol, ip, port, db
@@ -51,8 +51,8 @@ public class Server {
 			 * 		각 리스트에 담아준다.
 			 * 		룸 리스트 저장
 			 */
-			allUserList = new ArrayList<Handler>();
-			waitUserList = new ArrayList<Handler>();
+			allUserList = new ArrayList<ServerHandler>();
+			waitUserList = new ArrayList<ServerHandler>();
 			roomtotalList = new ArrayList<Room>();
 			
 			while(true) {
@@ -60,7 +60,7 @@ public class Server {
 				 * 		소켓 
 				 */
 				Socket socket = serverSocket.accept();
-				Handler handler = new Handler(socket, allUserList, waitUserList, roomtotalList, conn);
+				ServerHandler handler = new ServerHandler(socket, allUserList, waitUserList, roomtotalList, conn);
 				handler.start();
 				allUserList.add(handler);
 			}

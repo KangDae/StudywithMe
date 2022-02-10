@@ -2,7 +2,7 @@ package DTO;
 
 import java.util.ArrayList;
 
-import Server.Handler;
+import Server.ServerHandler;
 
 public class Room {
 	private int rID;
@@ -13,7 +13,7 @@ public class Room {
 	private String subject;
 	private int conditionP;
 	
-	public ArrayList<Handler> roomInUserList;
+	public ArrayList<ServerHandler> roomInUserList;
 	
 	public Room() {
 		this.rID = 0;
@@ -24,7 +24,7 @@ public class Room {
 		this.subject = "";
 		this.conditionP = 0;
 		
-		roomInUserList = new ArrayList<Handler>();
+		roomInUserList = new ArrayList<ServerHandler>();
 	}
 
 	public int getrID() {
@@ -83,11 +83,11 @@ public class Room {
 		this.conditionP = conditionP;
 	}
 
-	public ArrayList<Handler> getRoomInUserList() {
+	public ArrayList<ServerHandler> getRoomInUserList() {
 		return roomInUserList;
 	}
 
-	public void setRoomInUserList(ArrayList<Handler> roomInUserList) {
+	public void setRoomInUserList(ArrayList<ServerHandler> roomInUserList) {
 		this.roomInUserList = roomInUserList;
 	}
 

@@ -16,7 +16,7 @@ import DTO.Protocol;
 import DTO.Room;
 import DTO.User;
 
-public class Handler extends Thread{
+public class ServerHandler extends Thread{
 	private BufferedReader br;
 	private PrintWriter pw;
 	private Socket socket;
@@ -25,14 +25,14 @@ public class Handler extends Thread{
 	private Connection conn;
 	private PreparedStatement pstmt;
 	
-	private ArrayList<Handler> allUserList; // 전체 사용자
-	private ArrayList<Handler> waitUserList;// 대기실 사용자
+	private ArrayList<ServerHandler> allUserList; // 전체 사용자
+	private ArrayList<ServerHandler> waitUserList;// 대기실 사용자
 	private ArrayList<Room> roomtotalLsit;  // 전체 방 리스트
 	
 	private Room priRoom;
 	private String fileName;
 	
-	public Handler(Socket socket, ArrayList<Handler> allUserList, ArrayList<Handler> waitUserList,
+	public ServerHandler(Socket socket, ArrayList<ServerHandler> allUserList, ArrayList<ServerHandler> waitUserList,
 			ArrayList<Room> roomtotalList, Connection conn) throws IOException {
 		this.user = new User();
 		this.priRoom = new Room();
@@ -71,7 +71,9 @@ public class Handler extends Thread{
 					}
 					
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN) == 0) {
-					System.out.println(line[1]);
+					System.out.println("서버 부분");
+					pw.println(Protocol.ENTERLOGIN + "|" + "확인했습니다.");
+					pw.flush();
 				}
 			}
 			

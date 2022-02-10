@@ -25,10 +25,16 @@ public class Client_network {
 			// TODO Auto-generated catch block
 			System.out.println("서버를 찾을 수 없습니다.");
 			e.printStackTrace();
+			System.exit(0);
 		} catch (IOException e) {
 			System.out.println("서버와 연결이 안되었습니다.");
 			e.printStackTrace();
 			System.exit(0);
 		}
+		Thread client = new ClientHandler();
+		client.start();
+		
 	}
+		
+	
 }

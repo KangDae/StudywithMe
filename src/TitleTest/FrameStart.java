@@ -26,7 +26,6 @@ public class FrameStart extends R{
 	 * Create the application.
 	 * @return 
 	 */
-	public Client_network client;
 //	public JButton start_btn_loginBtn, start_btn_SingUp, btnExit;
 	
 	public FrameStart(){
@@ -38,7 +37,7 @@ public class FrameStart extends R{
 	}
 
 	private void initialize() {
-		client = new Client_network();
+		new Client_network();
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -72,6 +71,7 @@ public class FrameStart extends R{
 		accemble.btnExit.setBackground(Color.WHITE);
 		accemble.btnExit.setBounds(288, 519, 84, 32);
 		panel.add(accemble.btnExit);
+		
 		
 	}
 	public void frameDown() {
