@@ -220,24 +220,19 @@ public class MainHandler extends Thread {
 						pw.flush();
 					}
 
-				} else if(line[0].compareTo(Protocol.PWRESET_OK) == 0) { // 비밀번호 재설정
+				} else if (line[0].compareTo(Protocol.PWRESET_OK) == 0) { // 비밀번호 재설정
 					String PWRESET[] = line[1].split("|");
 					String updateSql = "update usercontent set password=? where IDNAME=?";
-					
-					System.out.println("line[0] = "+line[0]);
-					System.out.println("line[1] = "+line[1]);
-					
+
+					System.out.println("line[0] = " + line[0]);
+					System.out.println("line[1] = " + line[1]);
+
 					pstmt = conn.prepareStatement(updateSql);
 
-					
 					pstmt.setString(1, line[1]);
 					pstmt.setString(2, line[2]);
 					pstmt.executeUpdate();
-					
-					
-					
-					
-					
+
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN) == 0) // 로그인
 				{
 					boolean con = true;
@@ -372,12 +367,15 @@ public class MainHandler extends Thread {
 					user.setPhoneNumber("");
 					user.setEmail("");
 
-				} else if (line[0].compareTo(Protocol.ROOMSORT) == 0) { // 방정렬				
-					String userContent[] = line[1].split("%"); // 0번지에는 = subject 1번지 = usingID
-					String subject = userContent[0]; // subject = subject
+				} else if (line[0].compareTo(Protocol.ROOMSORT) == 0) { // 방정렬
+
+					System.out.println(line[1]);
 					String roomListMessage = "";
-					if (subject.equals("모두")) {
-						for (int i = 0; i < roomtotalList.size(); i++) {
+
+					for (int i = 0; i < roomtotalList.size(); i++) {
+
+						if (roomtotalList.get(i).getSubject().equals(line[1])) {
+
 							roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle()
 									+ "%" + roomtotalList.get(i).getrPassword() + "%"
 									+ roomtotalList.get(i).getUserCount() + "%" + roomtotalList.get(i).getMasterName()
@@ -385,12 +383,22 @@ public class MainHandler extends Thread {
 									+ roomtotalList.get(i).getCondtionP() + "%"
 									+ roomtotalList.get(i).roomInUserList.size() + "-");
 						}
-					} else {
-						roomListMessage = roomSearch(subject);
+
+						else if (line[1].equals("모두")) {
+							roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle()
+									+ "%" + roomtotalList.get(i).getrPassword() + "%"
+									+ roomtotalList.get(i).getUserCount() + "%" + roomtotalList.get(i).getMasterName()
+									+ "%" + roomtotalList.get(i).getSubject() + "%"
+									+ roomtotalList.get(i).getCondtionP() + "%"
+									+ roomtotalList.get(i).roomInUserList.size() + "-");
+						}
 					}
+
 					// 신호를 보낸 user
+
 					pw.println(Protocol.ROOMSORT + "|" + roomListMessage);
 					pw.flush();
+
 				} else if (line[0].compareTo(Protocol.SENDMESSAGE) == 0) { // 대기실방에서 메세지보내기
 
 					for (int i = 0; i < waitUserList.size(); i++) {
@@ -401,7 +409,7 @@ public class MainHandler extends Thread {
 				} else if (line[0].compareTo(Protocol.ROOMMAKE) == 0) { // 방만들기
 
 					String userContent[] = line[1].split("%");
-					for(int i=0;i<userContent.length;i++) {
+					for (int i = 0; i < userContent.length; i++) {
 						System.out.println(userContent[i]);
 					}
 
@@ -447,7 +455,7 @@ public class MainHandler extends Thread {
 						tempRoom.setMasterName(user.getIdName());
 						tempRoom.setSubject(userContent[2]);
 						tempRoom.setCondtionP(Integer.parseInt(userContent[3]));
-						System.out.println(tempRoom.toString()); 
+						System.out.println(tempRoom.toString());
 
 						sql = "select * from Room where title = '" + userContent[0] + "' and  userCount= '"
 								+ userContent[1] + "' and  admin= '" + user.getIdName() + "' and  subject= '"
@@ -476,7 +484,7 @@ public class MainHandler extends Thread {
 						tempRoom.roomInUserList.add(this);
 						roomtotalList.add(tempRoom);
 						priRoom = tempRoom; // 현재 룸을 지정함
-						
+
 					}
 
 					fw = new BufferedWriter(new FileWriter(userpath, true));
@@ -891,6 +899,7 @@ public class MainHandler extends Thread {
 			e.printStackTrace();
 		}
 	}
+
 	private String roomSearch(String subject) {
 		String roomListMessage = "";
 		for (int i = 0; i < roomtotalList.size(); i++) {
