@@ -38,34 +38,32 @@ public class ClientHandler extends R implements Runnable{
 					System.exit(0);
 				} else if (line[0].compareTo(Protocol.IDSEARCHCHECK_OK) == 0) { // 회원가입 ID 중복 안됨
 					JOptionPane.showMessageDialog(this, "사용가능");
-					condition_Id = true;
-					
+					R.condition_ID = true;
 				} else if (line[0].compareTo(Protocol.IDSEARCHCHECK_NO) == 0) { // 회원가입 ID 중복 됨
 					JOptionPane.showMessageDialog(this, "사용 불가능");
-					condition_Id = false;
+					R.condition_ID = false;
 				} else if (line[0].compareTo(Protocol.IDSEARCH_OK) == 0) { // ID 찾기 기존에 있음
 					JOptionPane.showMessageDialog(this, line[1]);
-					searchF.setVisible(false);
-					this.setVisible(true);
+					frameSearchID.frameDown();
+					frameLogin.start();
 				} else if (line[0].compareTo(Protocol.IDSEARCH_NO) == 0) { // ID가 없음
 					JOptionPane.showMessageDialog(this, line[1]);
-					searchF.setVisible(false);
-					this.setVisible(true);
+					frameSearchID.frameDown();
+					frameStart.start();;
 				} else if (line[0].compareTo(Protocol.PWRESET_OK) == 0) { // PW 재설정창 확인
 					JOptionPane.showMessageDialog(this, line[1]);
 					System.out.println("재설정 버튼");
-					searchpwF.setVisible(false);
-					this.setVisible(false);
+					frameSearchPW.frameDown();
+					frameLogin.start();
 				} else if (line[0].compareTo(Protocol.PWRESET_NO) == 0) // PW가 없음
 				{
 					JOptionPane.showMessageDialog(this, line[1]);
-					searchpwF.setVisible(false);
-					this.setVisible(true);
+					frameSearchPW.frameDown();
+					frameLogin.start();
 				} else if (line[0].compareTo(Protocol.PWSEARCH_OK) == 0) // PW 찾기 기존에 있음
 				{
 					JOptionPane.showMessageDialog(this, line[1]);
-					newpasswordF.setVisible(true);
-					// this.setVisible(true);
+					framePassWordCheck.start();
 				} else if (line[0].compareTo(Protocol.PWSEARCH_NO) == 0) // PW가 없음
 				{
 					JOptionPane.showMessageDialog(this, line[1]);
@@ -74,16 +72,16 @@ public class ClientHandler extends R implements Runnable{
 					this.setVisible(false);
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN_OK) == 0) // 로그인 성공
 				{
-					this.setVisible(false);
-					RoomF.setVisible(true);
-					RoomF.chatarea.append(line[1] + line[2] + '\n');
+					frameLogin.frameDown();
+					frameCenter.start();
+					frameCenter.Center_textArea_Chatting.append(line[1] + line[2] + '\n');
 
 					String text[] = line[3].split(":");
 					String userlist = "";
 					for (int i = 0; i < text.length; i++) {
 						userlist += (text[i] + "\n");
 					}
-					RoomF.usertxt.setText(userlist);
+					frameCenter.textArea_Waituser.setText(userlist);
 
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN_NO) == 0) // 로그인 실패
 				{
@@ -91,20 +89,17 @@ public class ClientHandler extends R implements Runnable{
 					System.out.println("로그인실패");
 				} else if (line[0].compareTo(Protocol.EXITWAITROOM) == 0) // 로그아웃 [대기실 -> 로그인페이지]
 				{
-					RoomF.chatarea.append(line[1] + line[2] + '\n');
+					frameCenter.Center_textArea_Chatting.append(line[1] + line[2] + '\n');
 
 					String text[] = line[3].split(":");
 					String userlist = "";
 					for (int i = 0; i < text.length; i++) {
 						userlist += (text[i] + "\n");
 					}
-					RoomF.usertxt.setText(userlist);
+					frameCenter.textArea_Waituser.setText(userlist);
 
 				} else if (line[0].compareTo(Protocol.SENDMESSAGE_ACK) == 0){ // 서버로 메세지 받음 [대기실]
-				
-					RoomF.chatarea.append("[" + line[1] + "] :" + line[2] + '\n');
-
-
+					frameCenter.Center_textArea_Chatting.append("[" + line[1] + "] :" + line[2] + '\n');
 				} else if (line[0].compareTo(Protocol.ROOMSORT) == 0) { //방정렬
 
 					System.out.println(line[0] + "엔터프레임 라인0");
@@ -112,30 +107,30 @@ public class ClientHandler extends R implements Runnable{
 
 					if (line.length == 1) {
 						System.out.println("비어있습니다.");
-						RoomF.repaint();
-						RoomF.containPanelClear();
+						frameCenter.repaint();
+						frameCenter.containPanelClear();
 				    }else {
 
 						String roomList[] = line[1].split("-"); // 방세부
 
 						String roomListDetail[];
 
-						RoomF.containPanelClear(); // 룸 프레임에 컨테이너를 비워주고
+						frameCenter.containPanelClear(); // 룸 프레임에 컨테이너를 비워주고
 						for (int i = 0; i < roomList.length; i++) {
 							System.out.println(roomList[i].toString() + "룸리스트i 투스트링부분");
 							roomListDetail = roomList[i].split("%");
 							System.out.println(roomListDetail.length);
-
-							RoomF.dp[i].init(); // 방리스트를 받은거로 다시 생성해주고
+							
+							frameCenter.panelRoomList[i].init(); // 방리스트를 받은거로 다시 생성해주고
 							String userNumber = "";
 							if (roomListDetail.length == 8) // 공개방
 							{
 								userNumber += (roomListDetail[7] + "/" + roomListDetail[3]);
-								RoomF.dp[i].labelArray[1].setText(roomListDetail[0]); // 방번호
-								RoomF.dp[i].labelArray[3].setText(roomListDetail[5]); // 방주제
-								RoomF.dp[i].labelArray[5].setText(userNumber); // 인원수
-								RoomF.dp[i].labelArray[7].setText(roomListDetail[1]); // 방제목
-								RoomF.dp[i].labelArray[8].setText("개설자 : " + roomListDetail[4]); // 개설자
+								frameCenter.panelRoomList[i].labelArray[1].setText(roomListDetail[0]); // 방번호
+								frameCenter.panelRoomList[i].labelArray[3].setText(roomListDetail[5]); // 방주제
+								frameCenter.panelRoomList[i].labelArray[5].setText(userNumber); // 인원수
+								frameCenter.panelRoomList[i].labelArray[7].setText(roomListDetail[1]); // 방제목
+								frameCenter.panelRoomList[i].labelArray[8].setText("개설자 : " + roomListDetail[4]); // 개설자
 							}
 							System.out.println("userNumber : " + userNumber);
 						}
@@ -152,10 +147,10 @@ public class ClientHandler extends R implements Runnable{
 					String roomListDetail[]; // 방세부
 					System.out.println("RoomList size : " + roomList.length);
 
-					RoomF.containPanelClear(); // 룸 프레임에 컨테이너를 비워주고
+					frameCenter.containPanelClear(); // 룸 프레임에 컨테이너를 비워주고
 					for (int i = 0; i < roomList.length; i++) {
 
-						RoomF.dp[i].init(); // 방리스트를 받은거로 다시 생성해주고
+						frameCenter.panelRoomList[i].init(); // 방리스트를 받은거로 다시 생성해주고
 						roomListDetail = roomList[i].split("%");
 						String userNumber = "";
 
@@ -163,19 +158,19 @@ public class ClientHandler extends R implements Runnable{
 						{
 							userNumber += (roomListDetail[7] + "/" + roomListDetail[3]);
 
-							RoomF.dp[i].labelArray[1].setText(roomListDetail[0]); // 방번호
-							RoomF.dp[i].labelArray[3].setText(roomListDetail[5]); // 방주제
-							RoomF.dp[i].labelArray[5].setText(userNumber); // 인원수
-							RoomF.dp[i].labelArray[7].setText(roomListDetail[1]); // 방제목
-							RoomF.dp[i].labelArray[8].setText("개설자 : " + roomListDetail[4]); // 개설자
+							frameCenter.panelRoomList[i].labelArray[1].setText(roomListDetail[0]); // 방번호
+							frameCenter.panelRoomList[i].labelArray[3].setText(roomListDetail[5]); // 방주제
+							frameCenter.panelRoomList[i].labelArray[5].setText(userNumber); // 인원수
+							frameCenter.panelRoomList[i].labelArray[7].setText(roomListDetail[1]); // 방제목
+							frameCenter.panelRoomList[i].labelArray[8].setText("개설자 : " + roomListDetail[4]); // 개설자
 						} else if (roomListDetail.length == 7) // 공개방
 						{
 							userNumber += (roomListDetail[6] + "/" + roomListDetail[2]);
-							RoomF.dp[i].labelArray[1].setText(roomListDetail[0]); // 방번호
-							RoomF.dp[i].labelArray[3].setText(roomListDetail[5]); // 방주제
-							RoomF.dp[i].labelArray[5].setText(userNumber); // 인원수
-							RoomF.dp[i].labelArray[7].setText(roomListDetail[1]); // 방제목
-							RoomF.dp[i].labelArray[8].setText("개설자 : " + roomListDetail[3]); // 개설자
+							frameCenter.panelRoomList[i].labelArray[1].setText(roomListDetail[0]); // 방번호
+							frameCenter.panelRoomList[i].labelArray[3].setText(roomListDetail[5]); // 방주제
+							frameCenter.panelRoomList[i].labelArray[5].setText(userNumber); // 인원수
+							frameCenter.panelRoomList[i].labelArray[7].setText(roomListDetail[1]); // 방제목
+							frameCenter.panelRoomList[i].labelArray[8].setText("개설자 : " + roomListDetail[3]); // 개설자
 						}
 						System.out.println("userNumber : " + userNumber);
 
@@ -196,7 +191,7 @@ public class ClientHandler extends R implements Runnable{
 				} else if (line[0].compareTo(Protocol.ENTERROOM_OK1) == 0) // 방입장 입장하는 당사자
 				{
 					System.out.println("입장화면 변환");
-					RoomF.setVisible(false);
+					frameCenter.setVisible(false);
 					chattingF.area1.setText("");
 					chattingF.area.setText("");
 					chattingF.setVisible(true);

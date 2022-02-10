@@ -9,6 +9,7 @@ import javax.swing.border.MatteBorder;
 
 import DTO.Protocol;
 import Resource.R;
+import Room.DetailPanel;
 import Server.Client_network;
 
 import javax.swing.JList;
@@ -45,7 +46,7 @@ public class FrameCenter extends R {
 	public JPasswordField passwordField_pw;
 	public JPanel Center_centerPane;
 	public JComboBox<String> Center_comboBox_List;
-
+	public JTextArea Center_textArea_Chatting, textArea_Waituser;
 	public PanelRoomList[] panelRoomList;
 
 	public JButton Center_button_MakeRoom, Center_button_SearchRoom, Center_btn_update, Center_btn_Logout, Center_btn_Send;
@@ -173,7 +174,7 @@ public class FrameCenter extends R {
 		scrollPane_ChattBord.setBounds(12, 10, 350, 444);
 		panel_Waitting.add(scrollPane_ChattBord);
 
-		JTextArea Center_textArea_Chatting = new JTextArea();
+		Center_textArea_Chatting = new JTextArea();
 		Center_textArea_Chatting.setEnabled(false);
 		Center_textArea_Chatting.setEditable(false);
 		Center_textArea_Chatting.setLineWrap(true);
@@ -196,7 +197,7 @@ public class FrameCenter extends R {
 		scrollPane.setBounds(12, 5, 350, 488);
 		panel_Waituser.add(scrollPane);
 		
-		JTextArea textArea_Waituser = new JTextArea();
+		textArea_Waituser = new JTextArea();
 		scrollPane.setViewportView(textArea_Waituser);
 
 		JPanel panel_RoomJoin = new JPanel();
@@ -285,6 +286,15 @@ public class FrameCenter extends R {
 		panel_Developer.add(lblNewLabel_1_5);
 		tabbedPane_FriendsPanel.setBackgroundAt(2, new Color(0, 191, 255));
 
+
+	}
+	public void containPanelClear() {
+
+		Center_centerPane.removeAll();
+		for (int i = 0; i < 100; i++) {
+			panelRoomList[i] = new PanelRoomList(br, pw);
+			Center_centerPane.add(panelRoomList[i]);
+		}
 
 	}
 
