@@ -1,10 +1,8 @@
 package Action;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -13,8 +11,7 @@ import java.util.ArrayList;
 import DO.Room;
 
 public class MainServer {
-	private ServerSocket ss;
-	private InetSocketAddress isa;
+	private ServerSocket ss; 
 	private ArrayList<MainHandler> allUserList; //전체 사용자
 	private ArrayList<MainHandler> WaitUserList;//대기실 사용자
 	private ArrayList<Room> roomtotalList;//전체방리스트
@@ -39,9 +36,7 @@ public class MainServer {
 	private String driver = "org.mariadb.jdbc.Driver";
 	private String url = String.format("%s%s:%s/%s", protocol,ip,port,db);
 	private String user = "root";
-
-	private String password = "7984";
-
+	private String password = "7540";
 	/*
 	 *  class. forname. driver
 	 *  conn = url, user, password
@@ -52,15 +47,13 @@ public class MainServer {
 	 *  여기서의 user리스트는 현재 접속중인 user
 	 *  Thread를 사용중인 프로세스의 개수를 의미한다.
 	 */
-	public MainServer() {
+	public MainServer() {//생성자
 
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, user, password);
 
-			ss = new ServerSocket();
-			isa = new InetSocketAddress("127.0.0.1", 9500);
-            ss.bind(isa);
+			ss = new ServerSocket(9500);
 			System.out.println("서버실행");
 
 			allUserList = new ArrayList<MainHandler>();  //전체 사용자

@@ -17,7 +17,7 @@ import FunctionTest.Email.SendMail_update;
 
 public class SearchidB extends JFrame  {
 	private JLabel nameL, emailL, emailadductionL, emailcomL, ageL, ageYearL, ageMonthL, ageDayL, phoneL;
-	JButton okpwB, joinB, cancelB, emailokB, emailB;
+	JButton okpwB, joinB, cancelB, emeilokB, emailB;
 	JTextField newpwT, okpwT, nameT, idT, emailT, emailadductionT, tel2T, tel3T;
 	JComboBox<String> telC, emailC, ageYearC, ageMonthC, ageDayC;
 
@@ -81,11 +81,11 @@ public class SearchidB extends JFrame  {
 
 		emailadductionL = new JLabel("인증번호");// email-인증번호
 		emailadductionT = new JTextField(10);
-		emailokB = new JButton("확인");
+		emeilokB = new JButton("확인");
 		JPanel p5 = new JPanel();
 		p5.add(emailadductionL);
 		p5.add(emailadductionT);
-		p5.add(emailokB);
+		p5.add(emeilokB);
 
 		joinB = new JButton("확인");
 		cancelB = new JButton("취소");

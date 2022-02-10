@@ -1,13 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk-17.0.1">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="C:/Users/Administrator/Documents/GitHub/StudyWithMe/lib/jakarta.activation.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Administrator/Documents/GitHub/StudyWithMe/lib/javax.mail.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Administrator/Documents/GitHub/StudyWithMe/lib/mariadb-java-client-2.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/activation-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/commons-codec-1.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/commons-collections4-4.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/commons-compress-1.18.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/commons-math3-3.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/curvesapi-1.06.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/icepdf-core-4.3.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/icepdf-viewer.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/jaxb-api-2.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/jaxb-core-2.3.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/jaxb-impl-2.3.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/mail-1.4.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/mariadb-java-client-2.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/ojdbc7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/poi-3.0-rc4-20070503.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/poi-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/poi-contrib-3.0-rc4-20070503.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/poi-examples-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/poi-excelant-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/poi-ooxml-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/poi-ooxml-schemas-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/poi-scratchpad-3.0-rc4-20070503.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/poi-scratchpad-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/servlet-api-2.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/유미/eclipse-workspace/lib/xmlbeans-3.1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

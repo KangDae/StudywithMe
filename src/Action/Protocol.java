@@ -22,14 +22,6 @@ public class Protocol {
 	public static final String ENTERLOGIN_NO = "122"; // 로그인 실패(NACK)
 
 	public static final String PWSEARCH = "130"; // PW찾기
-	
-	public static final String PWSEARCH_OK = "131"; // PW찾기 (정보가 존재함)
-	
-	public static final String PWSEARCH_NO = "132"; // PW찾기 (정보가 존재하지않음)
-	
-	public static final String PWRESET_OK = "133"; // PW 재설정 완료
-	
-	public static final String PWRESET_NO = "134"; // PW 재설정 실패
 
 	public static final String ROOMMAKE = "200"; // 방만들기
 
@@ -62,6 +54,12 @@ public class Protocol {
 	public static final String CHATTINGSENDMESSAGE = "420"; // 채팅방에서 메세지 보내기 (Request)
 
 	public static final String CHATTINGSENDMESSAGE_OK = "430"; // 채팅방에서 메세지 보내기 (Request)
+	
+	public static final String CHATTINGROOMOUT = "440"; // 방장이 채팅방 강퇴
+	
+	public static final String CHATTINGROOMOUT_USER = "448";//방장이 아닐때 나가기 버튼
+	
+	public static final String OLDCHATTINGOUT = "450";//기존에 있던 방 나가기 
 
 	public static final String CHATTINGFILESEND_SYN = "500"; // 파일전송1
 

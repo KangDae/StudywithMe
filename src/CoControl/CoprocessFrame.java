@@ -19,17 +19,21 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+/**
+ * @author ����
+ * @category �� ���γ���
+ *
+ */
 
 public class CoprocessFrame extends JFrame {
 
-	public JButton openB, saveB, loadB, deleteB, exitB, sendB;
+	public JButton openB, saveB, loadB, deleteB, exitB, sendB, cross_btn_exit;
 	public JTextArea area, area1, partList;
 	public JTextField field;
 
@@ -38,6 +42,7 @@ public class CoprocessFrame extends JFrame {
 	private BufferedReader br;
 	private ArrayList<String> arr;
 	public DefaultListModel<String> model;
+	public Object roomMember;
 
 	public CoprocessFrame() {
 
@@ -55,6 +60,9 @@ public class CoprocessFrame extends JFrame {
 		wpanel.add(openB);
 		wpanel.add(saveB);
 		wpanel.add(loadB);
+		
+		cross_btn_exit = new JButton("그냥 나가기");
+		wpanel.add(cross_btn_exit);
 		wpanel.add(exitB);
 
 		JPanel wpanel1 = new JPanel();
@@ -74,7 +82,7 @@ public class CoprocessFrame extends JFrame {
 		JPanel epanel = new JPanel(new BorderLayout());
 		JPanel p1 = new JPanel();
 		JLabel user = new JLabel("                                   참여 인원");
-		p1.add(user);
+//		p1.add(user);
 
 		partList = new JTextArea();
 		partList.setEditable(true);
@@ -87,7 +95,8 @@ public class CoprocessFrame extends JFrame {
 		JPanel epanel1 = new JPanel(new BorderLayout());
 		JPanel p2 = new JPanel();
 		JLabel file = new JLabel("                               업로드한 파일");
-		p2.add(file);
+//		p2.add(file);
+
 		list2 = new JList<String>(new DefaultListModel<String>());
 		list2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -107,7 +116,7 @@ public class CoprocessFrame extends JFrame {
 
 		JPanel p3 = new JPanel();
 		JLabel chat = new JLabel("                                        채 팅");
-		p3.add(chat);
+//		p3.add(chat);
 
 		area1 = new JTextArea();
 		JScrollPane scroll3 = new JScrollPane(area1);
@@ -134,7 +143,7 @@ public class CoprocessFrame extends JFrame {
 		c.add("East", totepanel);
 
 		setResizable(false);
-		setBounds(400, 200, 1000, 800);
+		setBounds(400, 200, 1000, 600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
 	}// 생성자

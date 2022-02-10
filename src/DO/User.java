@@ -87,5 +87,4 @@ public class User {
 		return "User [pryNumber=" + pryNumber + ", idName=" + idName + ", password=" + password + ", name=" + name
 				+ ", age=" + age + ", email=" + email + ", phoneNumber=" + phoneNumber + "]";
 	}
-
 }

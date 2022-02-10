@@ -17,7 +17,7 @@ public class DetailPanel extends JPanel implements ActionListener {
 
 	public static String labelName[] = { "방번호 : ", "      ", "방주제 :", "      ", "인원수 : ", "      ", "방제목 : ",
 			"      ", "      " };
-	public JLabel labelArray[]; // 1(���ȣ),3(������),5(�ο���),7(������)
+	public JLabel labelArray[]; 
 	private JButton enterButton;
 
 	private BufferedReader br;
@@ -43,24 +43,23 @@ public class DetailPanel extends JPanel implements ActionListener {
 		this.add(enterButton);
 		enterButton.addActionListener(this);
 	}
-
+	
+	//입장버튼 이벤트
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("입장버튼 ");
+		
 		if (e.getSource() == enterButton) {
-
 			String count[] = labelArray[5].getText().split("/");
-
+			
 			if (count[0].compareTo(count[1]) == 0) {
 				JOptionPane.showMessageDialog(this, "인원수 초과로 들어갈수 없습니다.");
 			} else {
-				// ������ �����û -> �� ID
 				String line = "";
-				line += (Protocol.ENTERROOM + "|" + labelArray[1].getText()); // Pro + ���ȣ
+				line += (Protocol.ENTERROOM + "|" + labelArray[1].getText()); 
 				pw.println(line);
 				pw.flush();
 			}
 		}
 	}
-
 }
