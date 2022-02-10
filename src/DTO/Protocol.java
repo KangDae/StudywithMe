@@ -22,6 +22,14 @@ public class Protocol {
 	public static final String ENTERLOGIN_NO = "122"; // 로그인 실패(NACK)
 
 	public static final String PWSEARCH = "130"; // PW찾기
+	
+	public static final String PWSEARCH_OK = "131"; // PW찾기 (정보가 존재함)
+	
+	public static final String PWSEARCH_NO = "132"; // PW찾기 (정보가 존재하지않음)
+	
+	public static final String PWRESET_OK = "133"; // PW 재설정 완료
+	
+	public static final String PWRESET_NO = "134"; // PW 재설정 실패
 
 	public static final String ROOMMAKE = "200"; // 방만들기
 
