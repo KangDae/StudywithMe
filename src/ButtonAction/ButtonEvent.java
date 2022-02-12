@@ -8,12 +8,14 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import DTO.Protocol;
 import FunctionTest.Email.SendMail_update;
 import Server.Client_network;
 
-public class ButtonEvent extends ButtonAccemble implements ActionListener, MouseListener {
+public class ButtonEvent extends ButtonAccemble implements ActionListener, MouseListener, ListSelectionListener{
 	PrintWriter pw;
 	BufferedReader br;
 	String pLine = "";
@@ -522,7 +524,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		// ================== 채팅방 부분 ==================
 		// ==> 파일탭 <== *********세부 프레임 미구현 
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_FileTab)) {
-			frameChattingRoom.listUpload();
+			frameChattingRoom.openDialog();
 			pw.println(Protocol.CHATTINGFILESEND_SYN + "|" + frameChattingRoom.file.getName());
 			pw.flush();
 		} 
@@ -533,7 +535,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			
 			
 			
-//			frameChattingRoom.model.removeAllElements();
+			
 			
 		} 
 		// ==> 채팅방 메세지 보내기 <==
@@ -546,6 +548,17 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		// ==> 방해체 <==
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_Dismantling)) {
 
+		}
+	}
+	@Override
+	public void valueChanged(ListSelectionEvent arg0) {
+		System.out.println("Listlistioner");
+		for (int i = 0; i < frameChattingRoom.model.getSize(); i++) {
+			if (frameChattingRoom.list.isSelectedIndex(i)) {
+				frameChattingRoom.fileSave();
+				pw.println(Protocol.CHATTINGFILEDOWNLOAD_SYN + "|" + frameChattingRoom.list.getSelectedValue());
+				pw.flush();
+			}
 		}
 	}
 

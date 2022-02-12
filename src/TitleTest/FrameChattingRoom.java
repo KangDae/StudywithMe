@@ -79,7 +79,6 @@ public class FrameChattingRoom extends R{
 		
 		Chatting_textArea_chatting = new JTextArea();
 		Chatting_textArea_chatting.setEditable(false);
-		Chatting_textArea_chatting.setEnabled(false);
 		Chatting_textArea_chatting.setBounds(12, 10, 355, 417);
 		panel_Chatting.add(Chatting_textArea_chatting);
 		
@@ -115,6 +114,7 @@ public class FrameChattingRoom extends R{
 		panel_ParticipantList.add(scrollPane);
 		
 		Chatting_textarea_Inuserlist = new JTextArea();
+		Chatting_textarea_Inuserlist.setEditable(false);
 		scrollPane.setViewportView(Chatting_textarea_Inuserlist);
 		
 		chatting_btn_Dismantling = new JButton("모임해체");
@@ -144,13 +144,30 @@ public class FrameChattingRoom extends R{
 		if (contents != null) {
 			for (int i = 0; i < contents.length; i++) {
 				contents[i].getName();
-				// model.addElement(file.getName());
-				// System.out.println(contents[i].getName());
+				model.addElement(file.getName());
+				System.out.println(contents[i].getName());
 			}
 		} else {
 			System.out.println("파일이 없습니다.");
 		}
 
+	}
+	public void openDialog() {
+
+		JFileChooser chooser = new JFileChooser();
+		int result = chooser.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			file = chooser.getSelectedFile();
+		} else if (result != JFileChooser.APPROVE_OPTION) {
+			
+		}
+	}
+	public void fileSave() {
+		JFileChooser chooser = new JFileChooser();
+		int result = chooser.showSaveDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			file = chooser.getSelectedFile();
+		}
 	}
 
 	public void fileDelete() {
