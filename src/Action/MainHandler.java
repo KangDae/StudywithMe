@@ -314,7 +314,7 @@ public class MainHandler extends Thread {
 							// roomtotalList의 정보들을 console로 알려줌.
 							for (int i = 0; i < roomtotalList.size(); i++) {
 								roomListMessage += (roomtotalList.get(i).getrID() + "%"
-										+ roomtotalList.get(i).getTitle() + "%" + roomtotalList.get(i).getrPassword()
+										+ roomtotalList.get(i).getTitle() + "%"
 										+ "%" + roomtotalList.get(i).getUserCount() + "%"
 										+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject()
 										+ "%" + roomtotalList.get(i).getCondtionP() + "%"

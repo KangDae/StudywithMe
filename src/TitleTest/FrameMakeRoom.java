@@ -108,38 +108,6 @@ public class FrameMakeRoom extends R {
 		lblNewLabel.setBounds(34, 10, 308, 160);
 		panel_MakeRoom.add(lblNewLabel);
 
-		// ==> 룸 취소 기능 구현 <==
-		roomMake_btn_Cancle.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frameCenter.start();
-				frameDown();
-			}
-		});
-		// ==> 방 만들기 기능 구현 <==
-		roomMake_btn_RoomMaker.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String title = roomMake_textField_RoomName.getText();
-				int sipnerCount = (int) roomMake_spinner_userMax.getValue();
-				String userCount = String.valueOf(sipnerCount);
-				String subject = (String) roomMake_comboBox_RoomTopic.getSelectedItem();
-				if (title.length() == 0) {
-					JOptionPane.showMessageDialog(btn_Confirm, "제목을 입력해주세요");
-				} else {
-
-					String line = "";
-					line = title + "%" + userCount + "%" + subject;
-					pw.println(Protocol.ROOMMAKE + "|" + line);
-					pw.flush();
-
-					frameChattingRoom.start();
-					frameDown();
-
-					roomMake_textField_RoomName.setText("");
-					roomMake_spinner_userMax.setValue(4);
-					roomMake_comboBox_RoomTopic.setSelectedItem(0);
-				}
-			}
-		});
 	}
 
 	public void frameDown() {

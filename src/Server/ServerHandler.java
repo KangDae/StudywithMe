@@ -30,24 +30,24 @@ import DTO.Protocol;
 import DTO.Room;
 import DTO.User;
 
-public class ServerHandler extends Thread{
+public class ServerHandler extends Thread {
 	private BufferedReader br;
 	private PrintWriter pw;
 	private Socket socket;
 	private User user;
 	private BufferedWriter fw;
-	
+
 	private Connection conn;
 	private PreparedStatement pstmt;
-	
+
 	private ArrayList<ServerHandler> allUserList; // 전체 사용자
 	private ArrayList<ServerHandler> waitUserList;// 대기실 사용자
-	private ArrayList<Room> roomtotalList;  // 전체 방 리스트
-	
+	private ArrayList<Room> roomtotalList; // 전체 방 리스트
+
 	private Room priRoom;
 	private String fileName;
 	String path = System.getProperty("user.dir");
-	
+
 	public ServerHandler(Socket socket, ArrayList<ServerHandler> allUserList, ArrayList<ServerHandler> waitUserList,
 			ArrayList<Room> roomtotalList, Connection conn) throws IOException {
 		this.user = new User();
@@ -57,26 +57,25 @@ public class ServerHandler extends Thread{
 		this.waitUserList = waitUserList;
 		this.roomtotalList = roomtotalList;
 		this.conn = conn;
-		
+
 		br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-		
+
 		this.fileName = "";
 	}
-	
+
 	@Override
 	public void run() {
-		
+
 		try {
 			OutputStream out = null;
 			String[] line = null;
-			while(true) {
+			while (true) {
 				line = br.readLine().split("\\|");
 				if (line == null) {
 					break;
 				}
 
-				
 				// REGISTER가 true일때
 				if (line[0].compareTo(Protocol.REGISTER) == 0) // [회원가입]
 				{
@@ -146,13 +145,11 @@ public class ServerHandler extends Thread{
 					String userContent[] = line[1].split("%");
 
 					System.out.println(userContent[0]);// ID
-					System.out.println(userContent[1]);// PW
-					System.out.println(userContent[2]);// NAME
-					System.out.println(userContent[3]);// AGE
+					System.out.println(userContent[1]);// AGE
+					System.out.println(userContent[2]);// EMAIL
 
 					String sql = "select * from UserContent where (NAME = '" + userContent[0] + "' and age = '"
-							+ userContent[1] + "' and email ='" + userContent[2] + "' and phoneNumber1 = '"
-							+ userContent[3] + "')";
+							+ userContent[1] + "' and email ='" + userContent[2] + "')";
 
 					pstmt = conn.prepareStatement(sql);
 					ResultSet rs = pstmt.executeQuery(sql);
@@ -188,18 +185,18 @@ public class ServerHandler extends Thread{
 					System.out.println(line[1]);
 					System.out.println("\n" + userContent[0] + "유저컨텐츠0");
 
-					String sql = "select * from UserContent where (IDNAME = '" + userContent[0] + "')";
+					String sql = "select * from UserContent where (IDNAME = '" + userContent[1] + "')";
 
 					pstmt = conn.prepareStatement(sql);
 					ResultSet rs = pstmt.executeQuery(sql);
 					String id = null;
 					String name = null;
-
+					
 					int count = 0;
 					while (rs.next()) {
 						id = rs.getString("IDNAME");
 						name = rs.getString("NAME");
-						if (id.equals(userContent[0])) {
+						if (id.equals(userContent[1])) {
 							count++;
 						}
 					}
@@ -211,22 +208,20 @@ public class ServerHandler extends Thread{
 						pw.println(Protocol.PWSEARCH_NO + "|" + "등록되어있는 정보가 없습니다.");
 						pw.flush();
 					} else { // 기존의 ID 찾음
+						String updateSql = "update usercontent set password=? where IDNAME=?";
+
+						System.out.println("line[0] = " + userContent[0]);
+						System.out.println("line[1] = " + userContent[1]);
+
+						pstmt = conn.prepareStatement(updateSql);
+
+						pstmt.setString(1, userContent[2]);
+						pstmt.setString(2, userContent[1]);
+						pstmt.executeUpdate();
+						
 						pw.println(Protocol.PWSEARCH_OK + "|" + "정보가 확인되었습니다.");
 						pw.flush();
 					}
-
-				} else if (line[0].compareTo(Protocol.PWRESET_OK) == 0) { // 비밀번호 재설정
-					String PWRESET[] = line[1].split("|");
-					String updateSql = "update usercontent set password=? where IDNAME=?";
-
-					System.out.println("line[0] = " + line[0]);
-					System.out.println("line[1] = " + line[1]);
-
-					pstmt = conn.prepareStatement(updateSql);
-
-					pstmt.setString(1, line[1]);
-					pstmt.setString(2, line[2]);
-					pstmt.executeUpdate();
 
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN) == 0) // 로그인
 				{
@@ -307,11 +302,11 @@ public class ServerHandler extends Thread{
 							// roomtotalList의 정보들을 console로 알려줌.
 							for (int i = 0; i < roomtotalList.size(); i++) {
 								roomListMessage += (roomtotalList.get(i).getrID() + "%"
-										+ roomtotalList.get(i).getTitle() + "%" + roomtotalList.get(i).getrPassword()
+										+ roomtotalList.get(i).getTitle() + "%" 
 										+ "%" + roomtotalList.get(i).getUserCount() + "%"
 										+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject()
 										+ "%" + roomtotalList.get(i).roomInUserList.size() + "-");
-										
+
 							}
 
 							System.out.println(roomListMessage);
@@ -369,7 +364,7 @@ public class ServerHandler extends Thread{
 						if (roomtotalList.get(i).getSubject().equals(line[1])) {
 
 							roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle()
-									+ "%" + roomtotalList.get(i).getrPassword() + "%"
+									+ "%" 
 									+ roomtotalList.get(i).getUserCount() + "%" + roomtotalList.get(i).getMasterName()
 									+ "%" + roomtotalList.get(i).getSubject() + "%"
 									+ roomtotalList.get(i).roomInUserList.size() + "-");
@@ -377,7 +372,7 @@ public class ServerHandler extends Thread{
 
 						else if (line[1].equals("모두")) {
 							roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle()
-									+ "%" + roomtotalList.get(i).getrPassword() + "%"
+									+ "%" 
 									+ roomtotalList.get(i).getUserCount() + "%" + roomtotalList.get(i).getMasterName()
 									+ "%" + roomtotalList.get(i).getSubject() + "%"
 									+ roomtotalList.get(i).roomInUserList.size() + "-");
@@ -407,50 +402,25 @@ public class ServerHandler extends Thread{
 					String updateSql = "";
 					Room tempRoom = new Room();
 					String userpath = path + "\\userFolder\\" + user.getIdName() + "\\Roomlist.txt";
-					if (userContent.length == 5) { // 비공개방
-						sql = "Insert into Room values(nextval(num),?,?,?,?,?,?)";
-						pstmt = conn.prepareStatement(sql);
 
-						// roomDB
-						pstmt.setString(1, userContent[0]); // title
-						pstmt.setString(2, userContent[1]); // password
-						pstmt.setString(3, userContent[2]); // Usercount
-						pstmt.setString(4, user.getIdName()); // admin
-						pstmt.setString(5, userContent[3]); // subject
-						pstmt.setString(6, userContent[4]); // conditionP(현재 몇명있는지)
+					sql = "Insert into Room values(nextval(num),?,?,?,?)";
+					pstmt = conn.prepareStatement(sql);
 
-						tempRoom.setTitle(userContent[0]);
-						tempRoom.setrPassword(userContent[1]);
-						tempRoom.setUserCount(userContent[2]);
-						tempRoom.setMasterName(user.getIdName());
-						tempRoom.setSubject(userContent[3]);
+					pstmt.setString(1, userContent[0]); // title
+					pstmt.setString(2, userContent[1]); // count
+					pstmt.setString(3, user.getIdName()); // admin
+					pstmt.setString(4, userContent[2]); // subject
 
-						sql = "select * from Room where title = '" + userContent[0] + "' and password = '"
-								+ userContent[1] + "' and  userCount= '" + userContent[2] + "' and  admin= '"
-								+ user.getIdName() + "' and  subject= '" + userContent[3] + "'";
+					tempRoom.setTitle(userContent[0]);
+					tempRoom.setUserCount(userContent[1]);
+					tempRoom.setMasterName(user.getIdName());
+					tempRoom.setSubject(userContent[2]);
+					System.out.println(tempRoom.toString());
 
-					} else { // 공개방
-						sql = "Insert into Room values(nextval(num),?,'',?,?,?,?)";
-						pstmt = conn.prepareStatement(sql);
+					sql = "select * from Room where title = '" + userContent[0] + "' and  userCount= '" + userContent[1]
+							+ "' and  admin= '" + user.getIdName() + "' and  subject= '" + userContent[2] + "'";
 
-						pstmt.setString(1, userContent[0]); // title
-						pstmt.setString(2, userContent[1]); // count
-						pstmt.setString(3, user.getIdName()); // admin
-						pstmt.setString(4, userContent[2]); // subject
-						pstmt.setString(5, userContent[3]); // condition 0;
-
-						tempRoom.setTitle(userContent[0]);
-						tempRoom.setUserCount(userContent[1]);
-						tempRoom.setMasterName(user.getIdName());
-						tempRoom.setSubject(userContent[2]);
-						System.out.println(tempRoom.toString());
-
-						sql = "select * from Room where title = '" + userContent[0] + "' and  userCount= '"
-								+ userContent[1] + "' and  admin= '" + user.getIdName() + "' and  subject= '"
-								+ userContent[2] + "'";
-
-						updateSql = "update usercontent set RoomList=? where IDNAME=?";
-					}
+					updateSql = "update usercontent set RoomList=? where IDNAME=?";
 
 					int su = pstmt.executeUpdate(); // 항상 몇개를 실행(CRUD)한지 갯수를 return
 
@@ -497,10 +467,9 @@ public class ServerHandler extends Thread{
 					// 룸리스트 정보
 					for (int i = 0; i < roomtotalList.size(); i++) {
 						roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle() + "%"
-								+ roomtotalList.get(i).getrPassword() + "%" + roomtotalList.get(i).getUserCount() + "%"
+								 + roomtotalList.get(i).getUserCount() + "%"
 								+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject() + "%"
-								+ roomtotalList.get(i).roomInUserList.size()
-								+ "-");
+								+ roomtotalList.get(i).roomInUserList.size() + "-");
 					}
 
 					System.out.println(roomListMessage);
@@ -559,7 +528,7 @@ public class ServerHandler extends Thread{
 
 					String sql = "select * from UserContent where IDNAME = '" + this.user.getIdName() + "'";
 					String updateSql = "update usercontent set RoomList=? where IDNAME=?";
-					String userpath = path + "userFolder\\" + this.user.getIdName() + "\\Roomlist.txt";
+					String userpath = path + "\\userFolder\\" + this.user.getIdName() + "\\Roomlist.txt";
 
 					int roomid = Integer.parseInt(line[1]); // 룸ID
 
@@ -601,10 +570,9 @@ public class ServerHandler extends Thread{
 					String roomListMessage = "";
 					for (int i = 0; i < roomtotalList.size(); i++) {
 						roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle() + "%"
-								+ roomtotalList.get(i).getrPassword() + "%" + roomtotalList.get(i).getUserCount() + "%"
+								 + roomtotalList.get(i).getUserCount() + "%"
 								+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject() + "%"
-								+ roomtotalList.get(i).roomInUserList.size()
-								+ "-");
+								+ roomtotalList.get(i).roomInUserList.size() + "-");
 					}
 
 					String roomMember = "";
@@ -720,10 +688,8 @@ public class ServerHandler extends Thread{
 						roomListMessage = "";
 						for (int i = 0; i < roomtotalList.size(); i++) {
 							roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle()
-									+ "%" + roomtotalList.get(i).getrPassword() + "%"
-									+ roomtotalList.get(i).getUserCount() + "%" + roomtotalList.get(i).getMasterName()
-									+ "%" + roomtotalList.get(i).getSubject() + "%"
-									+ roomtotalList.get(i).roomInUserList.size() + "-");
+									+ "%" + roomtotalList.get(i).getUserCount() + "%" + roomtotalList.get(i).getMasterName()
+									+ "%" + roomtotalList.get(i).getSubject() + "%"	+ roomtotalList.get(i).roomInUserList.size() + "-");
 						}
 					} else {
 						roomListMessage = "-";

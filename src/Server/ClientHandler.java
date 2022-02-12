@@ -14,15 +14,17 @@ import javax.swing.JOptionPane;
 import DTO.Protocol;
 import Resource.R;
 
-public class ClientHandler extends R implements Runnable{
+public class ClientHandler extends R implements Runnable {
 	BufferedReader br;
 	PrintWriter pw;
 	Socket socket;
-	public ClientHandler(){
+
+	public ClientHandler() {
 		br = Client_network.br;
 		pw = Client_network.pw;
 		socket = Client_network.socket;
 	}
+
 	@Override
 	public void run() {
 		// 받는쪽
@@ -49,7 +51,8 @@ public class ClientHandler extends R implements Runnable{
 				} else if (line[0].compareTo(Protocol.IDSEARCH_NO) == 0) { // ID가 없음
 					JOptionPane.showMessageDialog(this, line[1]);
 					frameSearchID.frameDown();
-					frameStart.start();;
+					frameStart.start();
+					;
 				} else if (line[0].compareTo(Protocol.PWRESET_OK) == 0) { // PW 재설정창 확인
 					JOptionPane.showMessageDialog(this, line[1]);
 					System.out.println("재설정 버튼");
@@ -98,18 +101,17 @@ public class ClientHandler extends R implements Runnable{
 					}
 					frameCenter.textArea_Waituser.setText(userlist);
 
-				} else if (line[0].compareTo(Protocol.SENDMESSAGE_ACK) == 0){ // 서버로 메세지 받음 [대기실]
+				} else if (line[0].compareTo(Protocol.SENDMESSAGE_ACK) == 0) { // 서버로 메세지 받음 [대기실]
 					frameCenter.Center_textArea_Chatting.append("[" + line[1] + "] :" + line[2] + '\n');
-				} else if (line[0].compareTo(Protocol.ROOMSORT) == 0) { //방정렬
+				} else if (line[0].compareTo(Protocol.ROOMSORT) == 0) { // 방정렬
 
 					System.out.println(line[0] + "엔터프레임 라인0");
-					
 
 					if (line.length == 1) {
 						System.out.println("비어있습니다.");
 						frameCenter.repaint();
 						frameCenter.containPanelClear();
-				    }else {
+					} else {
 
 						String roomList[] = line[1].split("-"); // 방세부
 
@@ -120,18 +122,17 @@ public class ClientHandler extends R implements Runnable{
 							System.out.println(roomList[i].toString() + "룸리스트i 투스트링부분");
 							roomListDetail = roomList[i].split("%");
 							System.out.println(roomListDetail.length);
-							
+
 							frameCenter.panelRoomList[i].init(); // 방리스트를 받은거로 다시 생성해주고
 							String userNumber = "";
-							if (roomListDetail.length == 8) // 공개방
-							{
-								userNumber += (roomListDetail[7] + "/" + roomListDetail[3]);
-								frameCenter.panelRoomList[i].labelArray[1].setText(roomListDetail[0]); // 방번호
-								frameCenter.panelRoomList[i].labelArray[3].setText(roomListDetail[5]); // 방주제
-								frameCenter.panelRoomList[i].labelArray[5].setText(userNumber); // 인원수
-								frameCenter.panelRoomList[i].labelArray[7].setText(roomListDetail[1]); // 방제목
-								frameCenter.panelRoomList[i].labelArray[8].setText("개설자 : " + roomListDetail[4]); // 개설자
-							}
+
+							userNumber += (roomListDetail[5] + "/" + roomListDetail[2]);
+							frameCenter.panelRoomList[i].labelArray[1].setText(roomListDetail[0]); // 방번호
+							frameCenter.panelRoomList[i].labelArray[3].setText(roomListDetail[4]); // 방주제
+							frameCenter.panelRoomList[i].labelArray[5].setText(userNumber); // 인원수
+							frameCenter.panelRoomList[i].labelArray[7].setText(roomListDetail[1]); // 방제목
+							frameCenter.panelRoomList[i].labelArray[8].setText("개설자 : " + roomListDetail[3]); // 개설자
+
 							System.out.println("userNumber : " + userNumber);
 						}
 					}
@@ -154,24 +155,13 @@ public class ClientHandler extends R implements Runnable{
 						roomListDetail = roomList[i].split("%");
 						String userNumber = "";
 
-						if (roomListDetail.length == 8) // 비공개방
-						{
-							userNumber += (roomListDetail[7] + "/" + roomListDetail[3]);
-
-							frameCenter.panelRoomList[i].labelArray[1].setText(roomListDetail[0]); // 방번호
-							frameCenter.panelRoomList[i].labelArray[3].setText(roomListDetail[5]); // 방주제
-							frameCenter.panelRoomList[i].labelArray[5].setText(userNumber); // 인원수
-							frameCenter.panelRoomList[i].labelArray[7].setText(roomListDetail[1]); // 방제목
-							frameCenter.panelRoomList[i].labelArray[8].setText("개설자 : " + roomListDetail[4]); // 개설자
-						} else if (roomListDetail.length == 7) // 공개방
-						{
-							userNumber += (roomListDetail[6] + "/" + roomListDetail[2]);
-							frameCenter.panelRoomList[i].labelArray[1].setText(roomListDetail[0]); // 방번호
-							frameCenter.panelRoomList[i].labelArray[3].setText(roomListDetail[5]); // 방주제
-							frameCenter.panelRoomList[i].labelArray[5].setText(userNumber); // 인원수
-							frameCenter.panelRoomList[i].labelArray[7].setText(roomListDetail[1]); // 방제목
-							frameCenter.panelRoomList[i].labelArray[8].setText("개설자 : " + roomListDetail[3]); // 개설자
-						}
+						userNumber += (roomListDetail[5] + "/" + roomListDetail[2]);
+						frameCenter.panelRoomList[i].labelArray[1].setText(roomListDetail[0]); // 방번호
+						frameCenter.panelRoomList[i].labelArray[3].setText(roomListDetail[4]); // 방주제
+						frameCenter.panelRoomList[i].labelArray[5].setText(userNumber); // 인원수
+						frameCenter.panelRoomList[i].labelArray[7].setText(roomListDetail[1]); // 방제목
+						frameCenter.panelRoomList[i].labelArray[8].setText("개설자 : " + roomListDetail[3]); // 개설자
+						
 						System.out.println("userNumber : " + userNumber);
 
 					}
@@ -192,7 +182,7 @@ public class ClientHandler extends R implements Runnable{
 				{
 					System.out.println("입장화면 변환");
 					frameCenter.frameDown();
-					
+
 					frameChattingRoom.Chatting_textArea_chatting.setText("");
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText("");
 					frameChattingRoom.setVisible(true);
@@ -225,7 +215,7 @@ public class ClientHandler extends R implements Runnable{
 
 				} else if (line[0].compareTo(Protocol.CHATTINGSENDMESSAGE_OK) == 0) {
 					frameChattingRoom.Chatting_textArea_chatting.append("[" + line[1] + "] :" + line[2] + "\n");
-				} 
+				}
 //				else if (line[0].compareTo(Protocol.frameChattingRoomILESEND_SYNACK) == 0) {
 //
 //					pw.println(Protocol.frameChattingRoomILESEND_FILE + "|" + frameChattingRoom.file.length());
@@ -286,8 +276,7 @@ public class ClientHandler extends R implements Runnable{
 //					System.out.println("파일 다운로드 끝 !!!");
 //				}
 
-			} 
-			catch (IOException io) {
+			} catch (IOException io) {
 				io.printStackTrace();
 			}
 

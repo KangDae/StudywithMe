@@ -41,7 +41,7 @@ import javax.swing.JList;
  */
 public class FrameChattingRoom extends R{
 	public File file, folder;
-	private JTextField chatting_textField_message;
+	public JTextField chatting_textField_message;
 	PrintWriter pw;
 	BufferedReader br;
 	public JButton chatting_btn_Dismantling, chatting_btn_MessageSend, chatting_btn_FileTab, chatting_btn_ExitButton;
