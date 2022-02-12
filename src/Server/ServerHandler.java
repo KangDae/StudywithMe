@@ -585,7 +585,7 @@ public class ServerHandler extends Thread {
 						// 방들어가는 사람에게는 바로 채팅화면으로
 						// thisName = 대기실 인원중 내 ID
 						if (waitUserList.get(i).user.getIdName().compareTo(thisName) == 0) {
-							waitUserList.get(i).pw.println(Protocol.ENTERROOM_OK1 + "|" + "message");
+							waitUserList.get(i).pw.println(Protocol.ENTERROOM_OK1 + "|" + user.getIdName());
 							waitUserList.get(i).pw.flush();
 						} else { // 채팅방들어가면 대기방에서 제외되므로 새로고침
 							waitUserList.get(i).pw.println(Protocol.ROOMMAKE_OK + "|" + roomListMessage); // 룸리스트 새로고침

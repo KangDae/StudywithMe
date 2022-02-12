@@ -178,7 +178,7 @@ public class FrameCenter extends R {
 		Center_textArea_Chatting.setEditable(false);
 		Center_textArea_Chatting.setLineWrap(true);
 		Center_textArea_Chatting.setWrapStyleWord(true);
-		Center_textArea_Chatting.setText("안녕하세여");
+		Center_textArea_Chatting.setText("안녕하세여\n");
 		Center_textArea_Chatting.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		scrollPane_ChattBord.setViewportView(Center_textArea_Chatting);
 

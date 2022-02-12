@@ -99,6 +99,7 @@ public class FrameSignup extends R {
 		
 		comboBox_Year = new JComboBox<String>(R.ageYear);
 		comboBox_Year.setBounds(12, 19, 87, 23);
+		comboBox_Year.setSelectedItem(18);
 		layout_DateOfBird.add(comboBox_Year);
 
 		comboBox_Moonth = new JComboBox<String>(R.ageMonth);
@@ -111,8 +112,8 @@ public class FrameSignup extends R {
 		layout_DateOfBird.add(lblNewLabel_Year);
 
 		comboBox_Day = new JComboBox<String>(R.ageDay);
-		comboBox_Day.setBackground(new Color(255, 255, 255));
 		comboBox_Day.setBounds(241, 19, 72, 23);
+		
 		layout_DateOfBird.add(comboBox_Day);
 
 		JLabel lblNewLabel_Moonth = new JLabel("월");
@@ -192,6 +193,7 @@ public class FrameSignup extends R {
 		accemble.signup_btn_Cancle.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		accemble.signup_btn_Cancle.setBounds(27, 507, 116, 40);
 		getContentPane().add(accemble.signup_btn_Cancle);
+		
 		
 
 		

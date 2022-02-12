@@ -89,8 +89,13 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			frameLogin.start();
 		} // ==> 회원가입 으로가는 버튼 기능 구현 <==
 		else if (e.getSource().equals(start_btn_SingUp)) {
+			
 			frameStart.frameDown();
 			frameSignup.start();
+			frameSignup.comboBox_Year.setSelectedIndex(19);
+			frameSignup.comboBox_Moonth.setSelectedIndex(0);
+			frameSignup.comboBox_Day.setSelectedIndex(5);
+			
 		} // ==> Exit버튼 기능 구현 <==
 		else if (e.getSource().equals(btnExit)) {
 			System.exit(0);
@@ -136,9 +141,9 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			frameSignup.textField_Name.setText("");
 			frameSignup.textField_ID.setText("");
 			frameSignup.passwordField_PW.setText("");
-			frameSignup.comboBox_Year.setSelectedIndex(0);
+			frameSignup.comboBox_Year.setSelectedIndex(19);
 			frameSignup.comboBox_Moonth.setSelectedIndex(0);
-			frameSignup.comboBox_Day.setSelectedIndex(0);
+			frameSignup.comboBox_Day.setSelectedIndex(5);
 			frameSignup.textField_Email.setText("");
 			frameSignup.comboBox_Email.setSelectedIndex(0);
 			frameSignup.textField_auth.setText("");
@@ -230,6 +235,10 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			frameLogin.textField_ID.setText("");
 			frameLogin.passwordField_PW.setText("");
 
+			frameSearchID.comboBox_Year.setSelectedIndex(19);
+			frameSearchID.comboBox_Moonth.setSelectedIndex(0);
+			frameSearchID.comboBox_Day.setSelectedIndex(5);
+			
 			frameLogin.frameDown();
 			frameSearchID.start();
 		}
@@ -471,6 +480,10 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			
 			frameCenter.frameDown();
 			frameLogin.start();
+			
+			pw.println(Protocol.EXITWAITROOM + "|" + "message");
+			pw.flush();
+			
 		}
 		// ==> 대기실 채팅 기능 <==
 		else if (e.getSource().equals(frameCenter.Center_btn_Send)) {
