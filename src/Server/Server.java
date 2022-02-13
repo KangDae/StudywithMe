@@ -27,7 +27,7 @@ public class Server {
 	String protocol = "jdbc:mariadb://";
 	String ip = "127.0.0.1";
 	String port = "3306";
-	String db = "userinfo";
+	String db = "studywithme";
 	/*
 	 * 		mariaDB와 연동, driver org.Driver
 	 * 		protocol url, id, pw

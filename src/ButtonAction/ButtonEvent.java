@@ -8,14 +8,18 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 
 import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import DTO.Protocol;
 import FunctionTest.Email.SendMail_update;
 import Server.Client_network;
 
-public class ButtonEvent extends ButtonAccemble implements ActionListener, MouseListener {
+public class ButtonEvent extends ButtonAccemble implements ActionListener, MouseListener, ListSelectionListener{
 	PrintWriter pw;
 	BufferedReader br;
+	String pLine = "";
+	String subject = "모두";
 
 	public ButtonEvent() {
 		pw = Client_network.pw;
@@ -73,6 +77,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		frameChattingRoom.chatting_btn_ExitButton.addActionListener(this);  // 대화방 나가기
 		frameChattingRoom.chatting_btn_FileTab.addActionListener(this);     // 대화방 파일탭 
 		frameChattingRoom.chatting_btn_Dismantling.addActionListener(this); // 대화방 모임해체
+		
 	}
 
 	@Override
@@ -84,8 +89,13 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			frameLogin.start();
 		} // ==> 회원가입 으로가는 버튼 기능 구현 <==
 		else if (e.getSource().equals(start_btn_SingUp)) {
+			
 			frameStart.frameDown();
 			frameSignup.start();
+			frameSignup.comboBox_Year.setSelectedIndex(19);
+			frameSignup.comboBox_Moonth.setSelectedIndex(0);
+			frameSignup.comboBox_Day.setSelectedIndex(5);
+			
 		} // ==> Exit버튼 기능 구현 <==
 		else if (e.getSource().equals(btnExit)) {
 			System.exit(0);
@@ -101,11 +111,6 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			} else if (frameSignup.textField_ID.getText().length() < 8) {
 				JOptionPane.showMessageDialog(btn_Confirm, "아이디는 8글자 이상으로 입력해주세요");
 			} else {
-				/*
-				 * 조건에 부합한지 마지막확인 db에 중복되는 아이디가 있을경우 Client부분에서 처리
-				 */
-				JOptionPane.showMessageDialog(btn_Confirm, "사용가능한 아이디입니다.");
-				// ㄴ 테스트 하고 지울 것.
 				pw.println(Protocol.IDSEARCHCHECK + "|" + frameSignup.textField_ID.getText());
 				pw.flush();
 			}
@@ -136,9 +141,9 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			frameSignup.textField_Name.setText("");
 			frameSignup.textField_ID.setText("");
 			frameSignup.passwordField_PW.setText("");
-			frameSignup.comboBox_Year.setSelectedIndex(0);
+			frameSignup.comboBox_Year.setSelectedIndex(19);
 			frameSignup.comboBox_Moonth.setSelectedIndex(0);
-			frameSignup.comboBox_Day.setSelectedIndex(0);
+			frameSignup.comboBox_Day.setSelectedIndex(5);
 			frameSignup.textField_Email.setText("");
 			frameSignup.comboBox_Email.setSelectedIndex(0);
 			frameSignup.textField_auth.setText("");
@@ -165,11 +170,11 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			String emailCheck = frameSignup.textField_auth.getText();
 
 			if (name.length() == 0 || id.length() == 0 || password.length() == 0 || email1.length() == 0
-					|| emailCheck.length() == 0) { // emailCheck.length()==0
+					|| emailCheck.length() == 0 || emailCheck.length()==0) { // 
 				JOptionPane.showMessageDialog(btn_Confirm, "빈칸을 입력해 주세요");
 			} else if (condition_Email && condition_ID) {
 				String line = "";
-				line += (id + "%" + password + "%" + name + "%" + ageYear + "." + ageMonnth + "." + ageDay + "%"
+				line += (id + "%" + password + "%" + name + "%" + ageYear + ageMonnth + ageDay + "%"
 						+ email1 + "@" + email2);
 				pw.println(Protocol.REGISTER + "|" + line);
 				pw.flush();
@@ -224,14 +229,16 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			/*
 			 * client부분에서 받아 setVisible
 			 */
-			frameLogin.frameDown();
-			frameCenter.start();
 		}
 		// ==> 아이디 찾기 버튼 구현 <==
 		else if (e.getSource().equals(login_btn_SearchID)) {
 			frameLogin.textField_ID.setText("");
 			frameLogin.passwordField_PW.setText("");
 
+			frameSearchID.comboBox_Year.setSelectedIndex(19);
+			frameSearchID.comboBox_Moonth.setSelectedIndex(0);
+			frameSearchID.comboBox_Day.setSelectedIndex(5);
+			
 			frameLogin.frameDown();
 			frameSearchID.start();
 		}
@@ -363,6 +370,8 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			frameSearchPW.textField_ID.setText("");
 			frameSearchPW.textField_Email.setText("");
 			frameSearchPW.textField_auth.setText("");
+			frameSearchPW.comboBox_Email.setSelectedIndex(0);
+
 
 			frameSearchPW.frameDown();
 			frameLogin.start();
@@ -377,7 +386,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			 */
 			String name = frameSearchPW.textField_Name.getText();
 			String id = frameSearchPW.textField_ID.getText();
-			String line = name + "%" + id;
+			pLine = name + "%" + id;
 			if (name.length() == 0) {
 				JOptionPane.showMessageDialog(btn_Confirm, "이름을 입력해주세요.");
 			} else if (id.length() == 0) {
@@ -418,7 +427,8 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		else if (e.getSource().equals(reset_btn_Cancle)) {
 			framePassWordCheck.passwordField_pw1.setText("");
 			framePassWordCheck.passwordField_pw2.setText("");
-
+			
+			pLine = "";
 			condition_PW = false;
 			condition_Email = false;
 			newPassword = "";
@@ -432,16 +442,14 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 				JOptionPane.showMessageDialog(btn_Confirm, "비밀번호 확인을 해주세요");
 			} else {
 				newPassword = framePassWordCheck.newPassworld2;
-				String name = frameSearchPW.textField_Name.getText();
-				String id = frameSearchPW.textField_ID.getText();
 				String line = "";
-				line += (name + "%" + id + "%" + newPassword);
+				line += (pLine + "%" + newPassword);
 				/*
 				 * 서버 부분 구현 이름과 아이디가 일치하며 (현재 있는 아이디일경우) 비밀번호를 set 해주고. 그렇지 않을경우 옵션팬으로 안된다고
 				 * 알려준다.
 				 */
 				pw.println(Protocol.PWSEARCH + "|" + line);
-
+				pw.flush();
 				System.out.println(line);
 
 				framePassWordCheck.passwordField_pw1.setText("");
@@ -461,7 +469,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		// ==================== 센터 프레임 부분 ====================
 		// ==> 방(이름으로) 검색 버튼 <==**********미구현
 		else if (e.getSource().equals(frameCenter.Center_button_SearchRoom)) {
-
+			
 		}
 		// ==> 내정보 수정 버튼 <== *************미구현
 		else if (e.getSource().equals(frameCenter.Center_btn_update)) {
@@ -472,6 +480,10 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			
 			frameCenter.frameDown();
 			frameLogin.start();
+			
+			pw.println(Protocol.EXITWAITROOM + "|" + "message");
+			pw.flush();
+			
 		}
 		// ==> 대기실 채팅 기능 <==
 		else if (e.getSource().equals(frameCenter.Center_btn_Send)) {
@@ -484,7 +496,9 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		}
 		// ==> 방 필터 기능 <==
 		else if (e.getSource().equals(frameCenter.Center_comboBox_List)) {
-
+			subject = (String) frameCenter.Center_comboBox_List.getSelectedItem();
+			pw.println(Protocol.ROOMSORT + "|" + subject);
+			pw.flush();
 		} 
 		// ==> 방 만들기 기능 <==
 		else if (e.getSource().equals(frameCenter.Center_button_MakeRoom)) {
@@ -494,28 +508,70 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		// ================== 방 만들기 부분 ==================
 		// ==> 방만들기 취소 <==
 		else if (e.getSource().equals(frameMakeRoom.roomMake_btn_Cancle)) {
-
+			frameCenter.start();
+			frameMakeRoom.frameDown();
 		} 
 		// ==> 방만들기 확인 <==
 		else if (e.getSource().equals(frameMakeRoom.roomMake_btn_RoomMaker)) {
+			String title = frameMakeRoom.roomMake_textField_RoomName.getText();
+			int sipnerCount = (int) frameMakeRoom.roomMake_spinner_userMax.getValue();
+			String userCount = String.valueOf(sipnerCount);
+			String subject = (String) frameMakeRoom.roomMake_comboBox_RoomTopic.getSelectedItem();
+			if (title.length() == 0) {
+				JOptionPane.showMessageDialog(btn_Confirm, "제목을 입력해주세요");
+			} else {
 
+				String line = "";
+				line = title + "%" + userCount + "%" + subject;
+				pw.println(Protocol.ROOMMAKE + "|" + line);
+				pw.flush();
+
+				frameChattingRoom.start();
+				frameMakeRoom.frameDown();
+
+				frameMakeRoom.roomMake_textField_RoomName.setText("");
+				frameMakeRoom.roomMake_spinner_userMax.setValue(4);
+				frameMakeRoom.roomMake_comboBox_RoomTopic.setSelectedItem(0);
+			}
 		} 
 		// ================== 채팅방 부분 ==================
 		// ==> 파일탭 <== *********세부 프레임 미구현 
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_FileTab)) {
-
+			frameChattingRoom.openDialog();
+			pw.println(Protocol.CHATTINGFILESEND_SYN + "|" + frameChattingRoom.file.getName());
+			pw.flush();
 		} 
 		// ==> 방나가기 <==
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_ExitButton)) {
-
+			frameCenter.start();
+			frameChattingRoom.frameDown();
+			
+			
+			
+			
+			
 		} 
 		// ==> 채팅방 메세지 보내기 <==
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_MessageSend)) {
-
+			pw.println(Protocol.CHATTINGSENDMESSAGE + "|" + frameChattingRoom.chatting_textField_message.getText()); // 메세지를 보냄
+			pw.flush();
+			frameChattingRoom.chatting_textField_message.setText("");
+			
 		}
 		// ==> 방해체 <==
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_Dismantling)) {
 
+		}
+	}
+	@Override
+	public void valueChanged(ListSelectionEvent arg0) {
+		System.out.println("Listlistioner");
+		for (int i = 0; i < frameChattingRoom.model.getSize(); i++) {
+			if (frameChattingRoom.list.isSelectedIndex(i)) {
+				frameChattingRoom.fileSave();
+				pw.println(Protocol.CHATTINGFILEDOWNLOAD_SYN + "|" + frameChattingRoom.list.getSelectedValue());
+				pw.flush();
+			}
 		}
 	}
 

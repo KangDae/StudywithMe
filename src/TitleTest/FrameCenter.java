@@ -175,11 +175,10 @@ public class FrameCenter extends R {
 		panel_Waitting.add(scrollPane_ChattBord);
 
 		Center_textArea_Chatting = new JTextArea();
-		Center_textArea_Chatting.setEnabled(false);
 		Center_textArea_Chatting.setEditable(false);
 		Center_textArea_Chatting.setLineWrap(true);
 		Center_textArea_Chatting.setWrapStyleWord(true);
-		Center_textArea_Chatting.setText("안녕하세여");
+		Center_textArea_Chatting.setText("안녕하세여\n");
 		Center_textArea_Chatting.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		scrollPane_ChattBord.setViewportView(Center_textArea_Chatting);
 
@@ -198,6 +197,7 @@ public class FrameCenter extends R {
 		panel_Waituser.add(scrollPane);
 		
 		textArea_Waituser = new JTextArea();
+		textArea_Waituser.setEditable(false);
 		scrollPane.setViewportView(textArea_Waituser);
 
 		JPanel panel_RoomJoin = new JPanel();
@@ -298,6 +298,7 @@ public class FrameCenter extends R {
 
 	}
 
+	
 	public void frameDown() {
 		this.setVisible(false);
 	}

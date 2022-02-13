@@ -20,11 +20,18 @@ import Server.Client_network;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
@@ -33,8 +40,8 @@ import javax.swing.JList;
  * 		프레임입니다.
  */
 public class FrameChattingRoom extends R{
-	//cnrk
-	private JTextField chatting_textField_message;
+	public File file, folder;
+	public JTextField chatting_textField_message;
 	PrintWriter pw;
 	BufferedReader br;
 	public JButton chatting_btn_Dismantling, chatting_btn_MessageSend, chatting_btn_FileTab, chatting_btn_ExitButton;
@@ -72,7 +79,6 @@ public class FrameChattingRoom extends R{
 		
 		Chatting_textArea_chatting = new JTextArea();
 		Chatting_textArea_chatting.setEditable(false);
-		Chatting_textArea_chatting.setEnabled(false);
 		Chatting_textArea_chatting.setBounds(12, 10, 355, 417);
 		panel_Chatting.add(Chatting_textArea_chatting);
 		
@@ -108,6 +114,7 @@ public class FrameChattingRoom extends R{
 		panel_ParticipantList.add(scrollPane);
 		
 		Chatting_textarea_Inuserlist = new JTextArea();
+		Chatting_textarea_Inuserlist.setEditable(false);
 		scrollPane.setViewportView(Chatting_textarea_Inuserlist);
 		
 		chatting_btn_Dismantling = new JButton("모임해체");
@@ -127,5 +134,44 @@ public class FrameChattingRoom extends R{
 	}
 	public void frameDown() {
 		this.setVisible(false);
+	}
+
+	public void listUpload() {
+		String fileName = folder.getName();
+		String fileExtention = fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length());
+		File[] contents = folder.listFiles();
+
+		if (contents != null) {
+			for (int i = 0; i < contents.length; i++) {
+				contents[i].getName();
+				model.addElement(file.getName());
+				System.out.println(contents[i].getName());
+			}
+		} else {
+			System.out.println("파일이 없습니다.");
+		}
+
+	}
+	public void openDialog() {
+
+		JFileChooser chooser = new JFileChooser();
+		int result = chooser.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			file = chooser.getSelectedFile();
+		} else if (result != JFileChooser.APPROVE_OPTION) {
+			
+		}
+	}
+	public void fileSave() {
+		JFileChooser chooser = new JFileChooser();
+		int result = chooser.showSaveDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			file = chooser.getSelectedFile();
+		}
+	}
+
+	public void fileDelete() {
+		model.remove(list.getSelectedIndex());
+
 	}
 }
