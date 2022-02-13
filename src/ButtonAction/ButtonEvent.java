@@ -77,6 +77,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		frameChattingRoom.chatting_btn_ExitButton.addActionListener(this);  // 대화방 나가기
 		frameChattingRoom.chatting_btn_FileTab.addActionListener(this);     // 대화방 파일탭 
 		frameChattingRoom.chatting_btn_Dismantling.addActionListener(this); // 대화방 모임해체
+		frameChattingRoom.list.addListSelectionListener(this);
 		
 	}
 
@@ -543,6 +544,10 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		} 
 		// ==> 방나가기 <==
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_ExitButton)) {
+			
+			pw.println(Protocol.EXITCHATTINGROOM + "|"+"Message");
+			pw.flush();
+			
 			frameCenter.start();
 			frameChattingRoom.frameDown();
 			
@@ -560,6 +565,11 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		}
 		// ==> 방해체 <==
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_Dismantling)) {
+			pw.println(Protocol.DISMANTINGROOM +"|" +"message");
+			pw.flush();
+			
+			frameChattingRoom.frameDown();
+			frameCenter.start();
 
 		}
 	}

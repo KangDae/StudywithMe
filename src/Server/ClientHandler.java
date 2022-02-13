@@ -167,7 +167,7 @@ public class ClientHandler extends R implements Runnable {
 					}
 					frameChattingRoom.Chatting_textArea_chatting.setText("");
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText("");
-					frameCenter.frameDown(); // 대기방 화면 끄고
+				//	frameCenter.frameDown(); // 대기방 화면 끄고
 
 				} else if (line[0].compareTo(Protocol.ROOMMAKE_OK1) == 0) // 방만들어짐 (만든 당사자) // 입장
 				{
@@ -193,30 +193,15 @@ public class ClientHandler extends R implements Runnable {
 //						frameChattingRoom.partList.append(roomMember[i] + "\n");
 //					}
 
-				} else if (line[0].compareTo(Protocol.ENTERROOM_USERLISTSEND) == 0) // 채팅방 리스트 새로고침
-				{
-
-					String roomMember[] = line[1].split("%");// 룸에 들어온사람들
-					String lineList = "";
-					for (int i = 0; i < roomMember.length; i++) {
-						lineList += (roomMember[i] + "\n");
-					}
-
-					frameChattingRoom.Chatting_textarea_Inuserlist.setText(lineList);
-					frameChattingRoom.Chatting_textArea_chatting.append(line[2] + "\n");
-
-					if (line.length == 4) {
-						String fileList[] = line[3].split("%");
-						frameChattingRoom.model.removeAllElements();
-						for (int i = 0; i < fileList.length; i++) {
-							frameChattingRoom.model.addElement(fileList[i]);
-						}
-					}
-
-				} else if (line[0].compareTo(Protocol.CHATTINGSENDMESSAGE_OK) == 0) {
+				}else if(line[0].compareTo(Protocol.DISMANTINGROOM)==0){
+					frameChattingRoom.frameDown();
+					frameCenter.start();
+					
+					
+					
+				}else if (line[0].compareTo(Protocol.CHATTINGSENDMESSAGE_OK) == 0) {
 					frameChattingRoom.Chatting_textArea_chatting.append("[" + line[1] + "] :" + line[2] + "\n");
-				}
-				else if (line[0].compareTo(Protocol.CHATTINGFILESEND_SYNACK) == 0) {
+				}  else if (line[0].compareTo(Protocol.CHATTINGFILESEND_SYNACK) == 0) {
 
 					pw.println(Protocol.CHATTINGFILESEND_FILE + "|" + frameChattingRoom.file.length());
 					pw.flush();
@@ -248,6 +233,28 @@ public class ClientHandler extends R implements Runnable {
 						frameChattingRoom.model.addElement(fileList[i]);
 					}
 
+				} else if (line[0].compareTo(Protocol.ENTERROOM_USERLISTSEND) == 0) {
+				     
+				   System.out.println("enter room");
+					String roomMember[] = line[1].split("%");// 룸에 들어온사람들
+					String lineList = "";
+					for (int i = 0; i < roomMember.length; i++) {
+						lineList += (roomMember[i] + "\n");
+					}
+
+					frameChattingRoom.Chatting_textarea_Inuserlist.setText(lineList);
+					frameChattingRoom.Chatting_textArea_chatting.append(line[2] + "\n");
+
+					if (line.length == 4) {
+						String fileList[] = line[3].split("%");
+						frameChattingRoom.model.removeAllElements();
+						for (int i = 0; i < fileList.length; i++) {
+							frameChattingRoom.model.addElement(fileList[i]);
+						}
+					}
+				
+				
+				
 				} else if (line[0].compareTo(Protocol.CHATTINGFILEDOWNLOAD_SEND) == 0) { // 파일을 받음
 					String path = frameChattingRoom.file.getAbsolutePath();
 
