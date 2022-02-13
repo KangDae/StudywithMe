@@ -92,40 +92,40 @@ public class FrameCenter extends R {
 
 		textField_name = new JTextField();
 		textField_name.setEditable(false);
-		textField_name.setBounds(96, 231, 116, 21);
+		textField_name.setBounds(96, 179, 116, 21);
 		panel_Myinfomation.add(textField_name);
 		textField_name.setColumns(10);
 
 		JLabel lbl_Name = new JLabel("이 름 : ");
 		lbl_Name.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		lbl_Name.setBounds(38, 231, 57, 15);
+		lbl_Name.setBounds(38, 179, 57, 15);
 		panel_Myinfomation.add(lbl_Name);
 
 		textField_ID = new JTextField();
 		textField_ID.setEditable(false);
 		textField_ID.setColumns(10);
-		textField_ID.setBounds(96, 275, 116, 21);
+		textField_ID.setBounds(96, 224, 116, 21);
 		panel_Myinfomation.add(textField_ID);
 
 		JLabel lbl_ID = new JLabel("아이디 : ");
 		lbl_ID.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		lbl_ID.setBounds(26, 275, 58, 15);
+		lbl_ID.setBounds(26, 224, 58, 15);
 		panel_Myinfomation.add(lbl_ID);
 
 		JLabel lbl_pw = new JLabel("패스워드 : ");
 		lbl_pw.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		lbl_pw.setBounds(12, 319, 83, 15);
+		lbl_pw.setBounds(12, 268, 83, 15);
 		panel_Myinfomation.add(lbl_pw);
 
 		textField_email = new JTextField();
 		textField_email.setEditable(false);
 		textField_email.setColumns(10);
-		textField_email.setBounds(96, 362, 116, 21);
+		textField_email.setBounds(96, 311, 116, 21);
 		panel_Myinfomation.add(textField_email);
 
 		JLabel lbl_email = new JLabel("이메일 : ");
 		lbl_email.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		lbl_email.setBounds(24, 362, 71, 15);
+		lbl_email.setBounds(24, 311, 71, 15);
 		panel_Myinfomation.add(lbl_email);
 
 		Center_btn_update = new JButton("수정하기");
@@ -136,7 +136,7 @@ public class FrameCenter extends R {
 
 		passwordField_pw = new JPasswordField();
 		passwordField_pw.setEditable(false);
-		passwordField_pw.setBounds(96, 319, 116, 21);
+		passwordField_pw.setBounds(96, 268, 116, 21);
 		panel_Myinfomation.add(passwordField_pw);
 
 		JLabel lbl_StudyWithMe = new JLabel(image);
@@ -230,8 +230,8 @@ public class FrameCenter extends R {
 		Center_button_MakeRoom.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		Center_button_MakeRoom.setBounds(115, 10, 88, 29);
 		panel_RoomJoin.add(Center_button_MakeRoom);
-
-		Center_comboBox_List = new JComboBox<String>(roomTopicFilter);
+		//roomTopicFilter
+		Center_comboBox_List = new JComboBox<String>();
 		Center_comboBox_List.setBackground(new Color(255, 255, 255));
 		Center_comboBox_List.setBounds(274, 10, 88, 29);
 		panel_RoomJoin.add(Center_comboBox_List);
