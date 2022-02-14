@@ -194,18 +194,6 @@ public class ClientHandler extends R implements Runnable {
 //					}
 
 				}else if(line[0].compareTo(Protocol.DISMANTINGROOM)==0){
-					
-					JOptionPane.showMessageDialog(R.btn_Confirm, "강퇴되었습니다.");
-					
-					frameChattingRoom.frameDown();
-					frameCenter.start();
-					
-					
-					
-				}else if(line[0].compareTo(Protocol.DISMANTINGROOMMASTER)==0){
-					
-					JOptionPane.showMessageDialog(R.btn_Confirm, "모임을 해체했습니다.");
-					
 					frameChattingRoom.frameDown();
 					frameCenter.start();
 					
@@ -248,17 +236,26 @@ public class ClientHandler extends R implements Runnable {
 				} else if (line[0].compareTo(Protocol.ENTERROOM_USERLISTSEND) == 0) {
 				     
 				   System.out.println("enter room");
-					String roomMember[] = line[1].split("%");// 룸에 들어온사람들
+				   	String LinesTest[] = line[1].split(", ");
+					String roomMember[] = line[2].split("%");// 룸에 들어온사람들
+					String LinesTest1 = "";
 					String lineList = "";
+					
+					for (int i = 0; i < LinesTest.length; i++) {
+						LinesTest1 += (LinesTest[i] + "\n"); 
+						System.out.println(LinesTest[i] + "라인즈테스트 순서");						
+					}
+					
 					for (int i = 0; i < roomMember.length; i++) {
 						lineList += (roomMember[i] + "\n");
 					}
-
+					
+					frameChattingRoom.Chatting_textArea_chatting.setText(LinesTest1.replace("[","").replace("]",""));
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText(lineList);
-					frameChattingRoom.Chatting_textArea_chatting.append(line[2] + "\n");
+					frameChattingRoom.Chatting_textArea_chatting.append(line[3] + "\n");
 
 					if (line.length == 4) {
-						String fileList[] = line[3].split("%");
+						String fileList[] = line[4].split("%");
 						frameChattingRoom.model.removeAllElements();
 						for (int i = 0; i < fileList.length; i++) {
 							frameChattingRoom.model.addElement(fileList[i]);
