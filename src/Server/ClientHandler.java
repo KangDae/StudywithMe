@@ -255,7 +255,7 @@ public class ClientHandler extends R implements Runnable {
 					frameChattingRoom.Chatting_textArea_chatting.append(line[3] + "\n");
 
 					if (line.length == 4) {
-						String fileList[] = line[4].split("%");
+						String fileList[] = line[5].split("%");
 						frameChattingRoom.model.removeAllElements();
 						for (int i = 0; i < fileList.length; i++) {
 							frameChattingRoom.model.addElement(fileList[i]);
