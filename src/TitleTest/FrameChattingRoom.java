@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.awt.event.ActionEvent;
 import javax.swing.JList;
+import javax.swing.JLabel;
 /*
  * 		방만들기 이후 입장해서 보이게되는 화면의
  * 		프레임입니다.
@@ -110,7 +111,7 @@ public class FrameChattingRoom extends R{
 		panel_ParticipantList.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(26, 10, 326, 200);
+		scrollPane.setBounds(26, 39, 326, 171);
 		panel_ParticipantList.add(scrollPane);
 		
 		Chatting_textarea_Inuserlist = new JTextArea();
@@ -122,7 +123,7 @@ public class FrameChattingRoom extends R{
 		panel_ParticipantList.add(chatting_btn_Dismantling);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(22, 261, 330, 208);
+		scrollPane_1.setBounds(22, 265, 330, 171);
 		panel_ParticipantList.add(scrollPane_1);
 		
 		list = new JList<String>(new DefaultListModel<String>());
@@ -131,6 +132,14 @@ public class FrameChattingRoom extends R{
 		model = (DefaultListModel<String>) list.getModel();
 		
 		scrollPane_1.setViewportView(list);
+		
+		JLabel lbl_user = new JLabel("참가자");
+		lbl_user.setBounds(26, 10, 103, 19);
+		panel_ParticipantList.add(lbl_user);
+		
+		JLabel lbl_FileList = new JLabel("공유파일 목록");
+		lbl_FileList.setBounds(26, 236, 103, 19);
+		panel_ParticipantList.add(lbl_FileList);
 	}
 	public void frameDown() {
 		this.setVisible(false);

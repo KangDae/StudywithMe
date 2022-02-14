@@ -194,6 +194,18 @@ public class ClientHandler extends R implements Runnable {
 //					}
 
 				}else if(line[0].compareTo(Protocol.DISMANTINGROOM)==0){
+					
+					JOptionPane.showMessageDialog(R.btn_Confirm, "강퇴되었습니다.");
+					
+					frameChattingRoom.frameDown();
+					frameCenter.start();
+					
+					
+					
+				}else if(line[0].compareTo(Protocol.DISMANTINGROOMMASTER)==0){
+					
+					JOptionPane.showMessageDialog(R.btn_Confirm, "모임을 해체했습니다.");
+					
 					frameChattingRoom.frameDown();
 					frameCenter.start();
 					

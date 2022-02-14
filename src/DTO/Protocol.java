@@ -58,6 +58,8 @@ public class Protocol {
 	public static final String EXITCHATTINGROOM = "310"; // 방나가기 (채팅방 나가기)
 	
 	public static final String DISMANTINGROOM = "320";
+	
+	public static final String DISMANTINGROOMMASTER = "321";
 
 	public static final String SENDMESSAGE = "400"; // 메세지 보내기
 

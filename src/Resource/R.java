@@ -56,6 +56,7 @@ public class R extends JFrame{
 	public static ButtonEvent action = new ButtonEvent();
 	
 	public static JButton btn_Confirm = new JButton("확인");
+	public static JButton btn_roomOut = new JButton("나가기");
 	
 	
 

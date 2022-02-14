@@ -358,11 +358,11 @@ public class ServerHandler extends Thread {
 
 					System.out.println(line[1]);
 					String roomListMessage = "";
-
+					System.out.println(roomtotalList.size() + "방 사이즈 찾았냐?");
 					for (int i = 0; i < roomtotalList.size(); i++) {
-
+						
 						if (roomtotalList.get(i).getSubject().equals(line[1])) {
-
+							
 							roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle()
 									+ "%" + roomtotalList.get(i).getUserCount() + "%"
 									+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject()
@@ -747,7 +747,7 @@ public class ServerHandler extends Thread {
 								// 방 지우지말고 리스트 유지해야되므로 주석처리
 								roomtotalList.remove(priRoom);
 								System.out.println(roomtotalList);
-
+								pw.println(Protocol.DISMANTINGROOMMASTER + "|" + "모임을 해체했습니다.");
 								priRoom.roomInUserList.remove(this);
 								System.out.println("this=" + this.toString());
 
@@ -765,7 +765,7 @@ public class ServerHandler extends Thread {
 								}
 								priRoom = new Room();
 							}
-						}					
+						} 
 					}
 					
 					String roomListMessage = "";

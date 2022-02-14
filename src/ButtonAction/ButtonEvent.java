@@ -567,9 +567,6 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_Dismantling)) {
 			pw.println(Protocol.DISMANTINGROOM +"|" +"message");
 			pw.flush();
-			
-			frameChattingRoom.frameDown();
-			frameCenter.start();
 
 		}
 	}
