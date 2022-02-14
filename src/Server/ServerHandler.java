@@ -278,6 +278,14 @@ public class ServerHandler extends Thread {
 
 						} else { // 로그인 되었을때
 							waitUserList.add(this); // 대기방 인원수 추가
+
+							String userinfo = "";
+							userinfo += user.getName() + "%" + user.getIdName() + "%" + user.getPassword() + "%"
+									+ user.getEmail() + "%" + user.getAge();
+
+							pw.println(Protocol.ENTERLOGIN_OK_USERINFOMATION + "|" + userinfo);
+							pw.flush();
+
 							String userline = "";
 							for (int i = 0; i < waitUserList.size(); i++) {
 								userline += (waitUserList.get(i).user.getIdName() + ":");
@@ -360,9 +368,9 @@ public class ServerHandler extends Thread {
 					String roomListMessage = "";
 					System.out.println(roomtotalList.size() + "방 사이즈 찾았냐?");
 					for (int i = 0; i < roomtotalList.size(); i++) {
-						
+
 						if (roomtotalList.get(i).getSubject().equals(line[1])) {
-							
+
 							roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle()
 									+ "%" + roomtotalList.get(i).getUserCount() + "%"
 									+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject()
@@ -374,6 +382,9 @@ public class ServerHandler extends Thread {
 									+ "%" + roomtotalList.get(i).getUserCount() + "%"
 									+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject()
 									+ "%" + roomtotalList.get(i).roomInUserList.size() + "-");
+						} else if (line[1].equals("내방")) {
+							System.out.println("내방이다아아아");
+
 						}
 					}
 
@@ -765,9 +776,11 @@ public class ServerHandler extends Thread {
 								}
 								priRoom = new Room();
 							}
-						} 
+						} else {
+							System.out.println("권한이 없습니다.");
+						}
 					}
-					
+
 					String roomListMessage = "";
 
 					System.out.println(roomListMessage);
@@ -859,6 +872,16 @@ public class ServerHandler extends Thread {
 						roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw.flush();
 					}
 
+				} else if (line[0].compareTo(Protocol.ENTERLOGIN_USERINFOMATION_CHECK) == 0) {
+					String[] update = line[1].split("%");
+					if (user.getPassword().equals(update[0])) {
+						pw.println(Protocol.ENTERLOGIN_USERINFOMATION_CHECK + "|" + update[1]);
+						pw.flush();
+					} else {
+						pw.println(Protocol.ENTERLOGIN_USERINFOMATION_CHECK_NOT + "|" + update[1]);
+						pw.flush();
+					}
+
 				} else if (line[0].compareTo(Protocol.CHATTINGFILEDOWNLOAD_SYN) == 0) // 파일 다운로드 보냄
 				{
 					String folder = path + "\\roomFolder\\" + priRoom.getrID() + "\\";
@@ -904,6 +927,28 @@ public class ServerHandler extends Thread {
 						if (n >= filesize)
 							break;
 					}
+				} else if (line[0].compareTo(Protocol.UPDATE_NAME) == 0) {
+
+					System.out.println("이름 수정");
+
+					String updateSql = "update usercontent set name=? where IDNAME=?";
+
+					pstmt = conn.prepareStatement(updateSql);
+
+					pstmt.setString(1, line[1]);
+					pstmt.setString(2, user.getIdName());
+					pstmt.executeUpdate();
+
+				} else if (line[0].compareTo(Protocol.UPDATE_IDNAME) == 0) {
+					System.out.println("이름 수정");
+
+					String updateSql = "update usercontent set IDNAME=? where priNumber=?";
+
+					pstmt = conn.prepareStatement(updateSql);
+
+					pstmt.setString(1, line[1]);
+//					pstmt.setIn(2, user.getPryNumber());
+					pstmt.executeUpdate();
 				}
 			} // while
 

@@ -16,14 +16,28 @@ public class Protocol {
 	public static final String IDSEARCHCHECK_NO = "115"; // (using 회원가입)ID 중복확인 (사용 불가능) (NACK)
 
 	public static final String ENTERLOGIN = "120"; // 로그인(request) 대준님
-
+	
 	public static final String ENTERLOGIN_OK = "121"; // 로그인 성공(ACK)
 
 	public static final String ENTERLOGIN_NO = "122"; // 로그인 실패(NACK)
-
-
+	
+	public static final String ENTERLOGIN_OK_USERINFOMATION = "123"; // 유저 정보 가져옴(INFO)
+	
+	public static final String ENTERLOGIN_USERINFOMATION_CHECK = "124"; // 재차확인
+	
+	public static final String ENTERLOGIN_USERINFOMATION_CHECK_NOT = "125"; // 비밀번호 틀림
+	
+	public static final String UPDATE_NAME = "140"; // 이름변경
+	
+	public static final String UPDATE_PASSWORD = "141"; // 비번변경
+	
+	public static final String UPDATE_IDNAME = "142"; // 아디변경
+	
+	public static final String UPDATE_BIRTH = "143"; // 생일변경
+	
+	public static final String UPDATE_MAIL = "144"; // 생일변경
+	
 	public static final String PWSEARCH = "130"; // PW찾기 대준님
-
 	
 	public static final String PWSEARCH_OK = "131"; // PW찾기 (정보가 존재함)
 	

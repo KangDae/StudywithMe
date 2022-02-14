@@ -75,6 +75,7 @@ public class ClientHandler extends R implements Runnable {
 					frameLogin.frameDown();
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN_OK) == 0) // 로그인 성공
 				{
+					
 					frameLogin.frameDown();
 					frameCenter.start();
 					frameCenter.Center_textArea_Chatting.append(line[1] + line[2] + '\n');
@@ -85,6 +86,19 @@ public class ClientHandler extends R implements Runnable {
 						userlist += (text[i] + "\n");
 					}
 					frameCenter.textArea_Waituser.setText(userlist);
+					
+					
+
+				} else if (line[0].compareTo(Protocol.ENTERLOGIN_OK_USERINFOMATION) == 0) {
+					String[] userinfo = line[1].split("%");
+					for(int i=0; i<userinfo.length;i++) {
+						System.out.println(userinfo[i]);
+					}
+					frameCenter.lbl_userName.setText(userinfo[0]);
+					frameCenter.lbl_userId.setText(userinfo[1]);
+					frameCenter.lbl_userpw.setText(userinfo[2]);
+					frameCenter.lbl_userEmail.setText(userinfo[3]);
+					frameCenter.lbl_userBirth.setText(userinfo[4]);
 
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN_NO) == 0) // 로그인 실패
 				{
@@ -294,6 +308,25 @@ public class ClientHandler extends R implements Runnable {
 
 					fos.close();
 					System.out.println("파일 다운로드 끝 !!!");
+				} else if (line[0].compareTo(Protocol.ENTERLOGIN_USERINFOMATION_CHECK) == 0) { //비밀번호가 맞았을때
+					if(line[1].equals("이름")) {
+						frameUserPasswordCheck.frameDown();
+						frameUpdateName.start();
+					} else if(line[1].equals("아이디")) {
+						frameUserPasswordCheck.frameDown();
+						frameUpdateIdname.start();
+					} else if(line[1].equals("비밀번호")) {
+						frameUserPasswordCheck.frameDown();
+						frameUpdatePassword.start();
+					} else if(line[1].equals("이메일")) {
+						frameUserPasswordCheck.frameDown();
+						frameUpdateEmail.start();
+					} else if(line[1].equals("생년월일")) {
+						frameUserPasswordCheck.frameDown();
+						frameUpdateBirth.start();
+					} 
+				} else if (line[0].compareTo(Protocol.ENTERLOGIN_USERINFOMATION_CHECK_NOT) == 0) { //비밀번호가 틀렸을때
+					JOptionPane.showMessageDialog(R.btn_Confirm, "비밀번호가 틀렸습니다.");
 				}
 
 			} catch (IOException io) {

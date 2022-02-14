@@ -79,7 +79,7 @@ public class FrameMakeRoom extends R {
 		lbl_RoomName_1_1.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		lbl_RoomName_1_1.setBounds(34, 287, 77, 21);
 		panel_MakeRoom.add(lbl_RoomName_1_1);
-		//
+		//roomTopic
 		roomMake_comboBox_RoomTopic = new JComboBox<String>(roomTopic);
 		roomMake_comboBox_RoomTopic.setBounds(101, 290, 116, 23);
 		panel_MakeRoom.add(roomMake_comboBox_RoomTopic);
@@ -90,7 +90,7 @@ public class FrameMakeRoom extends R {
 		panel_MakeRoom.add(lbl_RoomName_1_1_1);
 
 		roomMake_spinner_userMax = new JSpinner();
-		roomMake_spinner_userMax.setModel(new SpinnerNumberModel(1, 1, 10, 1));
+		roomMake_spinner_userMax.setModel(new SpinnerNumberModel(2, 2, 30, 1));
 		roomMake_spinner_userMax.setBounds(101, 321, 45, 22);
 		panel_MakeRoom.add(roomMake_spinner_userMax);
 
