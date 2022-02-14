@@ -226,7 +226,7 @@ public class ClientHandler extends R implements Runnable {
 
 					// 파일의 내용을 보낸다
 
-					byte[] b = new byte[471000];
+					byte[] b = new byte[104857600];
 
 					int n;
 					while ((n = fis.read(b, 0, b.length)) > 0) {
@@ -277,7 +277,7 @@ public class ClientHandler extends R implements Runnable {
 
 					// 보내온 파일 내용을 파일에 저장
 
-					byte[] b = new byte[471000];
+					byte[] b = new byte[104857600];
 
 					int n = 0;
 					long filesize = Long.parseLong(line[1]);

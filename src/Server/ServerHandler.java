@@ -818,7 +818,7 @@ public class ServerHandler extends Thread {
 					System.out.println("파일 다운로드 시작 !!!");
 
 					// 보내온 파일 내용을 파일에 저장
-					byte[] b = new byte[471000];
+					byte[] b = new byte[104857600];
 
 					int n = 0;
 					while ((n = is.read(b, 0, b.length)) > 0) {
@@ -895,7 +895,7 @@ public class ServerHandler extends Thread {
 					long filesize = selectedFile.length();
 
 					// 파일의 내용을 보낸다
-					byte[] b = new byte[471000];
+					byte[] b = new byte[104857600];
 					int n;
 					while ((n = fis.read(b, 0, b.length)) > 0) {
 						os.write(b, 0, n);
