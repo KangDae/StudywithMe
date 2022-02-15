@@ -54,6 +54,8 @@ public class Protocol {
 	public static final String ENTERROOM_USERLISTSEND = "305"; // 방에 유저들을 보내줌
 
 	public static final String EXITCHATTINGROOM = "310"; // 방나가기 (채팅방 나가기)
+	
+	public static final String DISMANTINGROOMMASTER = "320";
 
 	public static final String SENDMESSAGE = "400"; // 메세지 보내기
 
