@@ -40,6 +40,8 @@ public class Protocol {
 	public static final String ROOMMAKE_OK1 = "202"; // 방만들기_ACK(만든사람에게)
 
 	public static final String ROOMSORT = "210"; // 방정렬 나
+	
+	public static final String ROOMSORT_MYROOM = "211"; // 방정렬 내방만
 
 	public static final String EXITWAITROOM = "220"; // 대기방 나가기(= logout) 
 

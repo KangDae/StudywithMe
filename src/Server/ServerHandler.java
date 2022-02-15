@@ -376,8 +376,32 @@ public class ServerHandler extends Thread {
 									+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject()
 									+ "%" + roomtotalList.get(i).roomInUserList.size() + "-");
 						}
-
+						
+						else if (line[1].equals("내방만")) {
+		                     // Roomlist.txt파일 불러오기
+		                     System.out.println("내방 불러오기");
+		                     File MyRoom = new File(path + "\\userFolder\\" + this.user.getIdName() + "\\Roomlist.txt");
+		                     // Roomlist.txt파일 읽어오기
+		                     BufferedReader reader = new BufferedReader(new FileReader(MyRoom));
+		                     String s = reader.readLine();// 한줄로 가져오기
+		                     String[] inRoomList = s.split("%");
+		                     for (int j = 0; j < inRoomList.length; j++) {
+		                        System.out.println(inRoomList[j]);
+		                        // roomlist.txt.랑 내가참가한 방이랑 같을때
+		                        if (inRoomList[j].equals(String.valueOf(roomtotalList.get(i).getrID()))) {
+		                           // 방리스트 불러오기
+		                           roomListMessage += (roomtotalList.get(i).getrID() + "%"
+		                                 + roomtotalList.get(i).getTitle() + "%"
+		                                 + roomtotalList.get(i).getUserCount() + "%"
+		                                 + roomtotalList.get(i).getMasterName() + "%"
+		                                 + roomtotalList.get(i).getSubject() + "%"
+		                                 + roomtotalList.get(i).roomInUserList.size() + "-");
+		                        }
+		                     }
+		                  }
+						
 					}
+					
 
 					// 신호를 보낸 user
 
