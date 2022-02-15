@@ -49,6 +49,7 @@ public class FrameChattingRoom extends R{
 	public DefaultListModel<String> model;
 	public JList<String> list;
 	public JTextArea Chatting_textArea_chatting, Chatting_textarea_Inuserlist;
+	public JScrollPane scrollpnae;
 
 	public FrameChattingRoom(){
 		initialize();
@@ -68,6 +69,7 @@ public class FrameChattingRoom extends R{
 		this.setBounds(100, 100, 400, 600);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		
 		JTabbedPane tabbedPane_Chatting = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_Chatting.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
 		this.getContentPane().add(tabbedPane_Chatting, BorderLayout.CENTER);
@@ -78,10 +80,23 @@ public class FrameChattingRoom extends R{
 		tabbedPane_Chatting.addTab("채팅", null, panel_Chatting, null);
 		panel_Chatting.setLayout(null);
 		
-		Chatting_textArea_chatting = new JTextArea();
+		
+		Chatting_textArea_chatting = new JTextArea();	
 		Chatting_textArea_chatting.setEditable(false);
-		Chatting_textArea_chatting.setBounds(12, 10, 355, 417);
-		panel_Chatting.add(Chatting_textArea_chatting);
+		Chatting_textArea_chatting.setCaretPosition(Chatting_textArea_chatting.getDocument().getLength());
+		//Chatting_textArea_chatting.setBounds(12, 10, 355, 417);
+		
+		
+		
+		 
+		scrollpnae = new JScrollPane(Chatting_textArea_chatting);
+		scrollpnae.setBounds(12, 10, 355, 417);
+		
+
+		
+		scrollpnae.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollpnae.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		panel_Chatting.add(scrollpnae);
 		
 		chatting_textField_message = new JTextField();
 		chatting_textField_message.setBounds(12, 437, 260, 30);
