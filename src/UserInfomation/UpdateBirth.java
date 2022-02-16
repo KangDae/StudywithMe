@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 
 public class UpdateBirth extends R{
-	
+	//업데이트
 	public JComboBox comboBox_Year, comboBox_Moonth, comboBox_Day;
 	public JButton btn_cancle, btn_Update;	
 	public UpdateBirth() {
