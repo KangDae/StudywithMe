@@ -72,33 +72,33 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		frameCenter.Center_comboBox_List.addActionListener(this); // 매인창 룸필터
 		frameCenter.Center_button_MakeRoom.addActionListener(this); // 매인창 방만들기
 		// ===============> 내정보 수정하는 부분(in Center)<===============
-		frameCenter.btn_updateID.addActionListener(this);
-		frameCenter.btn_updateName.addActionListener(this);
-		frameCenter.btn_updatePW.addActionListener(this);
-		frameCenter.btn_updateEmail.addActionListener(this);
-		frameCenter.btn_updateBirth.addActionListener(this);
-
-		frameUpdateName.btn_cencle.addActionListener(this);
-		frameUpdateName.btn_update.addActionListener(this);
-
-		frameUpdateIdname.btn_cencle.addActionListener(this);
-		frameUpdateIdname.btn_check.addActionListener(this);
-		frameUpdateIdname.btn_change.addActionListener(this);
-
-		frameUpdatePassword.btn_cencle.addActionListener(this);
-		frameUpdatePassword.btn_check.addActionListener(this);
-		frameUpdatePassword.btn_cencle.addActionListener(this);
-
-		frameUpdateEmail.btn_cencle.addActionListener(this);
-		frameUpdateEmail.btn_Send.addActionListener(this);
-		frameUpdateEmail.btn_Auth.addActionListener(this);
-		frameUpdateEmail.btn_Confilrm.addActionListener(this);
-
-		frameUpdateBirth.btn_cancle.addActionListener(this);
-		frameUpdateBirth.btn_Update.addActionListener(this);
-
-		frameUserPasswordCheck.btn_cencle.addActionListener(this);
-		frameUserPasswordCheck.btn_compleate.addActionListener(this);
+		frameCenter.btn_updateID.addActionListener(this); // 아이디수정
+		frameCenter.btn_updateName.addActionListener(this); // 이름수정
+		frameCenter.btn_updatePW.addActionListener(this); // 비밀번호 수정
+		frameCenter.btn_updateEmail.addActionListener(this); // 이메일 수정
+		frameCenter.btn_updateBirth.addActionListener(this); // 생일 수정
+		// ================== 이메일 update (수정부분) =============================
+		frameUpdateName.btn_cencle.addActionListener(this); // 이름수정 취소
+		frameUpdateName.btn_update.addActionListener(this); // 이름수정 업데이트
+		// ================== 이메일 update (수정부분) =============================
+		frameUpdateIdname.btn_cencle.addActionListener(this); // 아이디수정 취소
+		frameUpdateIdname.btn_check.addActionListener(this); // 아이디수정 재설정
+		frameUpdateIdname.btn_change.addActionListener(this); // 아이디 변경하기
+		// ================== 비밀번호 update (수정부분) =============================
+		frameUpdatePassword.btn_cencle.addActionListener(this); // 비번수정 취소
+		frameUpdatePassword.btn_check.addActionListener(this); // 비번수정 확인
+		frameUpdatePassword.btn_update.addActionListener(this); // 비번수정
+		// ================== 이메일 update (수정부분) =============================
+		frameUpdateEmail.btn_cencle.addActionListener(this); // 이메일 수정 취소
+		frameUpdateEmail.btn_Send.addActionListener(this); // 이메일 보내기
+		frameUpdateEmail.btn_Auth.addActionListener(this); // 이메일 인증
+		frameUpdateEmail.btn_Confilrm.addActionListener(this); // 이메일 수정
+		// ================== 생일 update (수정부분) =============================
+		frameUpdateBirth.btn_cancle.addActionListener(this); // 생일 취소
+		frameUpdateBirth.btn_Update.addActionListener(this); // 생일 수정
+		// ================== 비밀번호 재확인 (수정부분) =============================
+		frameUserPasswordCheck.btn_cencle.addActionListener(this); // 아이디수정
+		frameUserPasswordCheck.btn_compleate.addActionListener(this); // 아이디수정
 		// ================== 방만들기 부분 =============================
 		frameMakeRoom.roomMake_btn_Cancle.addActionListener(this); // 방만들기 취소
 		frameMakeRoom.roomMake_btn_RoomMaker.addActionListener(this); // 방만들기 확인
@@ -502,7 +502,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		else if (e.getSource().equals(frameCenter.Center_button_SearchRoom)) {
 
 		}
-		// ==> 내정보 수정 버튼 <== *************미구현
+		// ==> 회원탈퇴 버튼 <== *************미구현
 		else if (e.getSource().equals(frameCenter.Center_btn_update)) {
 
 		}
@@ -563,9 +563,14 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		}
 		// ==> 생년월일 수정 <==
 		else if (e.getSource().equals(frameCenter.btn_updateBirth)) {
+			
 			update = "생년월일";
 			frameCenter.frameDown();
 			frameUserPasswordCheck.start();
+			
+			frameUpdateBirth.comboBox_Year.setSelectedItem(19);
+			frameUpdateBirth.comboBox_Moonth.setSelectedItem(0);
+			frameUpdateBirth.comboBox_Day.setSelectedItem(5);
 
 		}
 		// ==> 비밀번호 확인 확인 구현 <==
@@ -573,6 +578,12 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			String password = frameUserPasswordCheck.passwordField.getText();
 			pw.println(Protocol.ENTERLOGIN_USERINFOMATION_CHECK + "|" + password + "%" + update);
 			pw.flush();
+
+			frameUserPasswordCheck.passwordField.setText("");
+
+		} else if (e.getSource().equals(frameUserPasswordCheck.btn_cencle)) {
+			frameUserPasswordCheck.frameDown();
+			frameCenter.start();
 
 			frameUserPasswordCheck.passwordField.setText("");
 
@@ -585,7 +596,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			frameUpdateName.frameDown();
 			frameCenter.start();
 		}
-		// ==> 이름 수정 확인 구현 <== ****쿼리문 미구현
+		// ==> 이름 수정 확인 구현 <== 
 		else if (e.getSource().equals(frameUpdateName.btn_update)) {
 			pw.println(Protocol.UPDATE_NAME + "|" + frameUpdateName.textField_Name.getText());
 			pw.flush();
@@ -617,7 +628,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			}
 
 		}
-		// ==> 아이디 변경 구현 <== ****쿼리문 미구현
+		// ==> 아이디 변경 구현 <== 
 		else if (e.getSource().equals(frameUpdateIdname.btn_change)) {
 			if (frameUpdateIdname.textField_id.getText().length() == 0) {
 				JOptionPane.showMessageDialog(R.btn_Confirm, "아이디를 입력해주세요.");
@@ -626,10 +637,12 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			} else {
 				pw.println(Protocol.UPDATE_IDNAME + "|" + frameUpdateIdname.textField_id.getText());
 				pw.flush();
-
+				
+				frameCenter.lbl_userId.setText(frameUpdateIdname.textField_id.getText());
+				
 				frameUpdateIdname.textField_id.setText("");
 				R.condition_ID = false;
-
+				
 				frameUpdateIdname.frameDown();
 				frameCenter.start();
 			}
@@ -664,7 +677,9 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			} else {
 				pw.println(Protocol.UPDATE_PASSWORD + "|" + framePassWordCheck.newPassworld2);
 				pw.flush();
-
+				
+				frameCenter.lbl_userpw.setText(framePassWordCheck.newPassworld2);
+				
 				frameUpdatePassword.passwordField.setText("");
 				frameUpdatePassword.passwordField_cehck.setText("");
 
@@ -718,6 +733,8 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 				pw.println(Protocol.UPDATE_MAIL + "|" + emailStr);
 				pw.flush();
 				
+				frameCenter.lbl_userEmail.setText(emailStr);
+				
 				frameUpdateEmail.comboBox.setSelectedItem(0);
 				frameUpdateEmail.textField_email.setText("");
 				frameUpdateEmail.textField_Auth.setText("");
@@ -748,7 +765,13 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			System.out.println(line);
 			pw.println(Protocol.UPDATE_BIRTH + "|" + line);
 			pw.flush();
-
+			
+			frameCenter.lbl_userBirth.setText(line);
+			
+			frameUpdateBirth.comboBox_Year.setSelectedItem(19);
+			frameUpdateBirth.comboBox_Moonth.setSelectedItem(0);
+			frameUpdateBirth.comboBox_Day.setSelectedItem(5);
+			
 			frameUserPasswordCheck.frameDown();
 			frameCenter.start();
 

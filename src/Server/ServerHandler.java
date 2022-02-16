@@ -992,7 +992,7 @@ public class ServerHandler extends Thread {
 						if (n >= filesize)
 							break;
 					}
-				} else if (line[0].compareTo(Protocol.UPDATE_NAME) == 0) {
+				} else if (line[0].compareTo(Protocol.UPDATE_NAME) == 0) { // 이름수정
 
 					System.out.println("이름 수정");
 
@@ -1004,17 +1004,48 @@ public class ServerHandler extends Thread {
 					pstmt.setString(2, user.getIdName());
 					pstmt.executeUpdate();
 
-				} else if (line[0].compareTo(Protocol.UPDATE_IDNAME) == 0) {
-					System.out.println("이름 수정");
+				} else if (line[0].compareTo(Protocol.UPDATE_IDNAME) == 0) { // 아이디 수정
+					System.out.println("아이디 수정");
 
 					String updateSql = "update usercontent set IDNAME=? where priNumber=?";
 
 					pstmt = conn.prepareStatement(updateSql);
 
 					pstmt.setString(1, line[1]);
-//					pstmt.setIn(2, user.getPryNumber());
+					pstmt.setInt(2, user.getPryNumber());
+					pstmt.executeUpdate();
+				} else if (line[0].compareTo(Protocol.UPDATE_PASSWORD) == 0) { // 패스워드 수정
+					System.out.println("패스워드 수정");
+
+					String updateSql = "update usercontent set PASSWORD=? where priNumber=?";
+
+					pstmt = conn.prepareStatement(updateSql);
+
+					pstmt.setString(1, line[1]);
+					pstmt.setInt(2, user.getPryNumber());
+					pstmt.executeUpdate();
+				} else if (line[0].compareTo(Protocol.UPDATE_MAIL) == 0) { // 패스워드 수정
+					System.out.println("이메일 수정");
+
+					String updateSql = "update usercontent set EMAIL=? where priNumber=?";
+
+					pstmt = conn.prepareStatement(updateSql);
+
+					pstmt.setString(1, line[1]);
+					pstmt.setInt(2, user.getPryNumber());
+					pstmt.executeUpdate();
+				} else if (line[0].compareTo(Protocol.UPDATE_BIRTH) == 0) { // 패스워드 수정
+					System.out.println("이메일 수정");
+
+					String updateSql = "update usercontent set AGE=? where priNumber=?";
+
+					pstmt = conn.prepareStatement(updateSql);
+
+					pstmt.setString(1, line[1]);
+					pstmt.setInt(2, user.getPryNumber());
 					pstmt.executeUpdate();
 				}
+				
 			} // while
 
 			br.close();
