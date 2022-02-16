@@ -117,7 +117,7 @@ public class FrameCenter extends R {
 
 		JLabel lbl_StudyWithMe = new JLabel(image);
 		lbl_StudyWithMe.setBounds(38, 26, 294, 153);
-		panel_Myinfomation.add(lbl_StudyWithMe);
+	    panel_Myinfomation.add(lbl_StudyWithMe);
 
 		Center_btn_Logout = new JButton("로그아웃");
 		Center_btn_Logout.setForeground(Color.BLACK);
@@ -218,8 +218,8 @@ public class FrameCenter extends R {
 		Center_button_MakeRoom.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		Center_button_MakeRoom.setBounds(115, 10, 88, 29);
 		panel_RoomJoin.add(Center_button_MakeRoom);
-		// roomTopicFilter
-		Center_comboBox_List = new JComboBox<String>();
+	 
+		Center_comboBox_List = new JComboBox<String>(roomTopicFilter);
 		Center_comboBox_List.setBackground(new Color(255, 255, 255));
 		Center_comboBox_List.setBounds(274, 10, 88, 29);
 		panel_RoomJoin.add(Center_comboBox_List);
@@ -240,6 +240,10 @@ public class FrameCenter extends R {
 
 		panel_in_noticeBoard = new JPanel();
 		scrollPane_1.setViewportView(panel_in_noticeBoard);
+		
+		JButton btnNewButton = new JButton("작성");
+		btnNewButton.setBounds(12, 124, 97, 23);
+		panel_noticeBoard.add(btnNewButton);
 
 		JLabel lbl_studywithMe_Board = new JLabel(image);
 		lbl_studywithMe_Board.setBounds(25, 21, 326, 116);

@@ -12,7 +12,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import DTO.Protocol;
-import FunctionTest.Email.SendMail_update;
+import Function.Email.SendMail_update;
 import Resource.R;
 import Server.Client_network;
 

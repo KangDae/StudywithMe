@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import DTO.Protocol;
-import FunctionTest.Email.SendMail_update;
+import Function.Email.SendMail_update;
 import Resource.R;
 import Server.Client_network;
 
