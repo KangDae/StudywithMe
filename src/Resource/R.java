@@ -13,8 +13,20 @@ import Frames.FrameMakeRoom;
 import Frames.FramePassWordCheck;
 import Frames.FrameSearchID;
 import Frames.FrameSearchPW;
+import Frames.FrameSearchRoom;
 import Frames.FrameSignup;
 import Frames.FrameStart;
+import TitleTest.noticeView;
+import TitleTest.noticeWrite;
+//import Frames.FrameCenter;
+//import Frames.FrameChattingRoom;
+//import Frames.FrameLogin;
+//import Frames.FrameMakeRoom;
+//import Frames.FramePassWordCheck;
+//import Frames.FrameSearchID;
+//import Frames.FrameSearchPW;
+//import Frames.FrameSignup;
+//import Frames.FrameStart;
 import Server.Client_network;
 import UserInfomation.UpdateBirth;
 import UserInfomation.UpdateEmail;
@@ -57,6 +69,7 @@ public class R extends JFrame{
 	public static final FrameSearchPW frameSearchPW = new FrameSearchPW();
 	public static final FrameSearchID frameSearchID = new FrameSearchID();
 	public static final FrameMakeRoom frameMakeRoom = new FrameMakeRoom();
+	public static final FrameSearchRoom frameSearchRoom = new FrameSearchRoom();
 	public static final FrameChattingRoom frameChattingRoom = new FrameChattingRoom();
 	public static final FramePassWordCheck framePassWordCheck = new FramePassWordCheck();
 	public static final UserPasswordCheck frameUserPasswordCheck = new UserPasswordCheck();
@@ -66,6 +79,8 @@ public class R extends JFrame{
 	public static final UpdateEmail frameUpdateEmail = new UpdateEmail();
 	public static final UpdateBirth frameUpdateBirth = new UpdateBirth();
 	public static ButtonAccemble accemble = new ButtonAccemble();
+	public static final noticeWrite noticewrite = new noticeWrite();
+	public static final noticeView noticeview = new noticeView();
 	
 	public static ButtonEvent action = new ButtonEvent();
 	

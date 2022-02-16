@@ -44,13 +44,13 @@ public class FrameCenter extends R {
 	public JTextArea Center_textArea_Chatting, textArea_Waituser;
 	public PanelRoomList[] panelRoomList;
 	public JLabel lbl_userName, lbl_userId, lbl_userEmail, lbl_userBirth;
+	
 
-	public JButton Center_button_MakeRoom, Center_button_SearchRoom, Center_btn_update, Center_btn_Logout,
-			Center_btn_Send, btn_updateName, btn_updateID, btn_updatePW, btn_updateEmail, btn_updateBirth;
+	public JButton Center_button_MakeRoom, Center_button_SearchRoom, Center_btn_update, Center_btn_Logout, Center_btn_Send
+	, btn_updateName, btn_updateID, btn_updatePW, btn_updateEmail, btn_updateBirth,btn_Write;
 	BufferedReader br;
 	PrintWriter pw;
 	public JPasswordField lbl_userpw;
-
 	/**
 	 * Create the application.
 	 */
@@ -117,65 +117,67 @@ public class FrameCenter extends R {
 
 		JLabel lbl_StudyWithMe = new JLabel(image);
 		lbl_StudyWithMe.setBounds(38, 26, 294, 153);
-		panel_Myinfomation.add(lbl_StudyWithMe);
+
+	    panel_Myinfomation.add(lbl_StudyWithMe);
+
 
 		Center_btn_Logout = new JButton("로그아웃");
 		Center_btn_Logout.setForeground(Color.BLACK);
 		Center_btn_Logout.setBackground(Color.WHITE);
 		Center_btn_Logout.setBounds(26, 451, 98, 34);
 		panel_Myinfomation.add(Center_btn_Logout);
-
+		
 		lbl_userName = new JLabel("");
 		lbl_userName.setBounds(96, 193, 116, 15);
 		panel_Myinfomation.add(lbl_userName);
-
+		
 		lbl_userId = new JLabel("");
 		lbl_userId.setBounds(96, 237, 116, 15);
 		panel_Myinfomation.add(lbl_userId);
-
+		
 		lbl_userEmail = new JLabel("");
 		lbl_userEmail.setBounds(96, 324, 116, 15);
 		panel_Myinfomation.add(lbl_userEmail);
-
+		
 		btn_updateName = new JButton(">>");
 		btn_updateName.setBackground(Color.WHITE);
 		btn_updateName.setForeground(Color.BLACK);
 		btn_updateName.setBounds(224, 189, 57, 23);
 		panel_Myinfomation.add(btn_updateName);
-
+		
 		btn_updateID = new JButton(">>");
 		btn_updateID.setForeground(Color.BLACK);
 		btn_updateID.setBackground(Color.WHITE);
 		btn_updateID.setBounds(224, 233, 57, 23);
 		panel_Myinfomation.add(btn_updateID);
-
+		
 		btn_updatePW = new JButton(">>");
 		btn_updatePW.setForeground(Color.BLACK);
 		btn_updatePW.setBackground(Color.WHITE);
 		btn_updatePW.setBounds(224, 277, 57, 23);
 		panel_Myinfomation.add(btn_updatePW);
-
+		
 		btn_updateEmail = new JButton(">>");
 		btn_updateEmail.setForeground(Color.BLACK);
 		btn_updateEmail.setBackground(Color.WHITE);
 		btn_updateEmail.setBounds(224, 320, 57, 23);
 		panel_Myinfomation.add(btn_updateEmail);
-
+		
 		JLabel lbl_birth = new JLabel("생 일 : ");
 		lbl_birth.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		lbl_birth.setBounds(38, 369, 69, 15);
+		lbl_birth.setBounds(26, 366, 71, 15);
 		panel_Myinfomation.add(lbl_birth);
-
+		
 		lbl_userBirth = new JLabel("");
 		lbl_userBirth.setBounds(98, 369, 116, 15);
 		panel_Myinfomation.add(lbl_userBirth);
-
+		
 		btn_updateBirth = new JButton(">>");
 		btn_updateBirth.setForeground(Color.BLACK);
 		btn_updateBirth.setBackground(Color.WHITE);
 		btn_updateBirth.setBounds(226, 365, 57, 23);
 		panel_Myinfomation.add(btn_updateBirth);
-
+		
 		lbl_userpw = new JPasswordField();
 		lbl_userpw.setEchoChar('*');
 		lbl_userpw.setEditable(false);
@@ -218,7 +220,11 @@ public class FrameCenter extends R {
 		Center_button_MakeRoom.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		Center_button_MakeRoom.setBounds(115, 10, 88, 29);
 		panel_RoomJoin.add(Center_button_MakeRoom);
+<<<<<<< HEAD
 		// roomTopicFilter
+=======
+	 
+>>>>>>> 41c0724735d877e359bf82a04442af19bd54e6d8
 		Center_comboBox_List = new JComboBox<String>(roomTopicFilter);
 		Center_comboBox_List.setBackground(new Color(255, 255, 255));
 		Center_comboBox_List.setBounds(274, 10, 88, 29);
@@ -240,11 +246,19 @@ public class FrameCenter extends R {
 
 		panel_in_noticeBoard = new JPanel();
 		scrollPane_1.setViewportView(panel_in_noticeBoard);
+		
+		btn_Write = new JButton("작성");
+		btn_Write.setBounds(12, 124, 97, 23);
+		panel_noticeBoard.add(btn_Write);
+		
+		
+		
 
 		JLabel lbl_studywithMe_Board = new JLabel(image);
 		lbl_studywithMe_Board.setBounds(25, 21, 326, 116);
 		panel_noticeBoard.add(lbl_studywithMe_Board);
-
+		
+		
 		JPanel panel_Waitting = new JPanel();
 		panel_Waitting.setBackground(new Color(135, 206, 250));
 		tabbedPane_Option.addTab("대기자 채팅방", null, panel_Waitting, null);
@@ -335,8 +349,8 @@ public class FrameCenter extends R {
 		panel_Developer.add(lblNewLabel_1_5);
 		tabbedPane_FriendsPanel.setBackgroundAt(2, new Color(0, 191, 255));
 
-	}
 
+	}
 	public void containPanelClear() {
 
 		Center_centerPane.removeAll();
@@ -347,6 +361,7 @@ public class FrameCenter extends R {
 
 	}
 
+	
 	public void frameDown() {
 		this.setVisible(false);
 	}

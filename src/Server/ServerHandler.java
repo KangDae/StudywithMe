@@ -418,7 +418,30 @@ public class ServerHandler extends Thread {
 					pw.println(Protocol.ROOMSORT + "|" + roomListMessage);
 					pw.flush();
 
-				} else if (line[0].compareTo(Protocol.SENDMESSAGE) == 0) { // 대기실방에서 메세지보내기
+					// 방 검색
+				} else if (line[0].compareTo(Protocol.SearchRoom) == 0) {
+					String testTitle = line[1];// 내가 입력한 방이름
+					System.out.println("내가 입력한 방 : " + testTitle);
+					String roomListMessage = "";
+
+					for (int i = 0; i < roomtotalList.size(); i++) {
+						// 현재방이름과 내가 검색한 방이름과 같을때
+						if (roomtotalList.get(i).getTitle().equals(testTitle)) {
+							roomListMessage += (roomtotalList.get(i).getrID() + "%"
+									+ roomtotalList.get(i).getTitle() + "%"
+									+ roomtotalList.get(i).getUserCount() + "%"
+									+ roomtotalList.get(i).getMasterName() + "%"
+									+ roomtotalList.get(i).getSubject() + "%"
+									+ roomtotalList.get(i).roomInUserList.size() + "-");
+						}else {
+							System.out.println("입력한 방 정보가 없습니다.");
+						}
+					}
+					pw.println(Protocol.SearchRoom + "|" + roomListMessage);
+					pw.flush();
+				}
+
+				else if (line[0].compareTo(Protocol.SENDMESSAGE) == 0) { // 대기실방에서 메세지보내기
 
 					for (int i = 0; i < waitUserList.size(); i++) {
 						waitUserList.get(i).pw
@@ -788,6 +811,7 @@ public class ServerHandler extends Thread {
 						fw.flush();
 					}
 
+<<<<<<< HEAD
 				} else if(line[0].compareTo(Protocol.CHATTINGSCROLLBARDOWN) == 0) {
 					int roomUserSize = roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.size();
 				
@@ -796,6 +820,8 @@ public class ServerHandler extends Thread {
 								Protocol.CHATTINGSCROLLBARDOWN + "|" + "message");
 						roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw.flush();
 					}
+=======
+>>>>>>> 41c0724735d877e359bf82a04442af19bd54e6d8
 				} else if (line[0].compareTo(Protocol.CHATTINGFILESEND_SYN) == 0) // FIle전송 싱크
 				{
 					fileName = line[1];

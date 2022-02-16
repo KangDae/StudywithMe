@@ -1,4 +1,4 @@
-package FunctionTest.Email;
+package Function.Email;
 
 import java.util.Date;
 import java.util.Properties;
