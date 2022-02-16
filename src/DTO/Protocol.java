@@ -38,6 +38,8 @@ public class Protocol {
 	public static final String ROOMMAKE_OK = "201"; // 방만들기_ACK
 
 	public static final String ROOMMAKE_OK1 = "202"; // 방만들기_ACK(만든사람에게)
+	
+	public static final String SearchRoom = "205"; // 방 검색
 
 	public static final String ROOMSORT = "210"; // 방정렬 나
 

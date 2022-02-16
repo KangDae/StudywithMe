@@ -14,15 +14,17 @@ import javax.swing.JOptionPane;
 import DTO.Protocol;
 import Resource.R;
 
-public class ClientHandler extends R implements Runnable{
+public class ClientHandler extends R implements Runnable {
 	BufferedReader br;
 	PrintWriter pw;
 	Socket socket;
-	public ClientHandler(){
+
+	public ClientHandler() {
 		br = Client_network.br;
 		pw = Client_network.pw;
 		socket = Client_network.socket;
 	}
+
 	@Override
 	public void run() {
 		// 받는쪽
@@ -49,7 +51,8 @@ public class ClientHandler extends R implements Runnable{
 				} else if (line[0].compareTo(Protocol.IDSEARCH_NO) == 0) { // ID가 없음
 					JOptionPane.showMessageDialog(this, line[1]);
 					frameSearchID.frameDown();
-					frameStart.start();;
+					frameStart.start();
+					;
 				} else if (line[0].compareTo(Protocol.PWRESET_OK) == 0) { // PW 재설정창 확인
 					JOptionPane.showMessageDialog(this, line[1]);
 					System.out.println("재설정 버튼");
@@ -98,18 +101,17 @@ public class ClientHandler extends R implements Runnable{
 					}
 					frameCenter.textArea_Waituser.setText(userlist);
 
-				} else if (line[0].compareTo(Protocol.SENDMESSAGE_ACK) == 0){ // 서버로 메세지 받음 [대기실]
+				} else if (line[0].compareTo(Protocol.SENDMESSAGE_ACK) == 0) { // 서버로 메세지 받음 [대기실]
 					frameCenter.Center_textArea_Chatting.append("[" + line[1] + "] :" + line[2] + '\n');
-				} else if (line[0].compareTo(Protocol.ROOMSORT) == 0) { //방정렬
+				} else if (line[0].compareTo(Protocol.ROOMSORT) == 0) { // 방정렬
 
 					System.out.println(line[0] + "엔터프레임 라인0");
-					
 
 					if (line.length == 1) {
 						System.out.println("비어있습니다.");
 						frameCenter.repaint();
 						frameCenter.containPanelClear();
-				    }else {
+					} else {
 
 						String roomList[] = line[1].split("-"); // 방세부
 
@@ -120,7 +122,7 @@ public class ClientHandler extends R implements Runnable{
 							System.out.println(roomList[i].toString() + "룸리스트i 투스트링부분");
 							roomListDetail = roomList[i].split("%");
 							System.out.println(roomListDetail.length);
-							
+
 							frameCenter.panelRoomList[i].init(); // 방리스트를 받은거로 다시 생성해주고
 							String userNumber = "";
 							if (roomListDetail.length == 8) // 공개방
@@ -136,7 +138,18 @@ public class ClientHandler extends R implements Runnable{
 						}
 					}
 
-				} else if (line[0].compareTo(Protocol.ROOMMAKE_OK) == 0) // 방만들어짐
+				} else if (line[0].compareTo(Protocol.SearchRoom) == 0) {
+					String searchroom_text = frameSearchRoom.searchRoom_textField.getText();
+
+					if (searchroom_text.length() != 0) {
+						System.out.println("내가 검색한 방 : " + searchroom_text);
+					} else {
+						JOptionPane.showMessageDialog(btn_Confirm, "검색할 방 이름을 입력하세요.");
+					}
+
+				}
+
+				else if (line[0].compareTo(Protocol.ROOMMAKE_OK) == 0) // 방만들어짐
 				{
 
 					String roomList[] = line[1].split("-"); // 방 갯수
@@ -192,7 +205,7 @@ public class ClientHandler extends R implements Runnable{
 				{
 					System.out.println("입장화면 변환");
 					frameCenter.frameDown();
-					
+
 					frameChattingRoom.Chatting_textArea_chatting.setText("");
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText("");
 					frameChattingRoom.setVisible(true);
@@ -225,7 +238,7 @@ public class ClientHandler extends R implements Runnable{
 
 				} else if (line[0].compareTo(Protocol.CHATTINGSENDMESSAGE_OK) == 0) {
 					frameChattingRoom.Chatting_textArea_chatting.append("[" + line[1] + "] :" + line[2] + "\n");
-				} 
+				}
 //				else if (line[0].compareTo(Protocol.frameChattingRoomILESEND_SYNACK) == 0) {
 //
 //					pw.println(Protocol.frameChattingRoomILESEND_FILE + "|" + frameChattingRoom.file.length());
@@ -286,8 +299,7 @@ public class ClientHandler extends R implements Runnable{
 //					System.out.println("파일 다운로드 끝 !!!");
 //				}
 
-			} 
-			catch (IOException io) {
+			} catch (IOException io) {
 				io.printStackTrace();
 			}
 

@@ -30,24 +30,24 @@ import DTO.Protocol;
 import DTO.Room;
 import DTO.User;
 
-public class ServerHandler extends Thread{
+public class ServerHandler extends Thread {
 	private BufferedReader br;
 	private PrintWriter pw;
 	private Socket socket;
 	private User user;
 	private BufferedWriter fw;
-	
+
 	private Connection conn;
 	private PreparedStatement pstmt;
-	
+
 	private ArrayList<ServerHandler> allUserList; // 전체 사용자
 	private ArrayList<ServerHandler> waitUserList;// 대기실 사용자
-	private ArrayList<Room> roomtotalList;  // 전체 방 리스트
-	
+	private ArrayList<Room> roomtotalList; // 전체 방 리스트
+
 	private Room priRoom;
 	private String fileName;
 	String path = System.getProperty("user.dir");
-	
+
 	public ServerHandler(Socket socket, ArrayList<ServerHandler> allUserList, ArrayList<ServerHandler> waitUserList,
 			ArrayList<Room> roomtotalList, Connection conn) throws IOException {
 		this.user = new User();
@@ -57,26 +57,25 @@ public class ServerHandler extends Thread{
 		this.waitUserList = waitUserList;
 		this.roomtotalList = roomtotalList;
 		this.conn = conn;
-		
+
 		br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-		
+
 		this.fileName = "";
 	}
-	
+
 	@Override
 	public void run() {
-		
+
 		try {
 			OutputStream out = null;
 			String[] line = null;
-			while(true) {
+			while (true) {
 				line = br.readLine().split("\\|");
 				if (line == null) {
 					break;
 				}
 
-				
 				// REGISTER가 true일때
 				if (line[0].compareTo(Protocol.REGISTER) == 0) // [회원가입]
 				{
@@ -311,7 +310,7 @@ public class ServerHandler extends Thread{
 										+ "%" + roomtotalList.get(i).getUserCount() + "%"
 										+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject()
 										+ "%" + roomtotalList.get(i).roomInUserList.size() + "-");
-										
+
 							}
 
 							System.out.println(roomListMessage);
@@ -389,7 +388,15 @@ public class ServerHandler extends Thread{
 					pw.println(Protocol.ROOMSORT + "|" + roomListMessage);
 					pw.flush();
 
-				} else if (line[0].compareTo(Protocol.SENDMESSAGE) == 0) { // 대기실방에서 메세지보내기
+					
+				} 
+				// 방 검색
+				else if (line[0].compareTo(Protocol.SearchRoom) == 0) {
+					pw.println(Protocol.SearchRoom + "|");
+					pw.flush();
+				}
+
+				else if (line[0].compareTo(Protocol.SENDMESSAGE) == 0) { // 대기실방에서 메세지보내기
 
 					for (int i = 0; i < waitUserList.size(); i++) {
 						waitUserList.get(i).pw
@@ -499,8 +506,7 @@ public class ServerHandler extends Thread{
 						roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle() + "%"
 								+ roomtotalList.get(i).getrPassword() + "%" + roomtotalList.get(i).getUserCount() + "%"
 								+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject() + "%"
-								+ roomtotalList.get(i).roomInUserList.size()
-								+ "-");
+								+ roomtotalList.get(i).roomInUserList.size() + "-");
 					}
 
 					System.out.println(roomListMessage);
@@ -603,8 +609,7 @@ public class ServerHandler extends Thread{
 						roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle() + "%"
 								+ roomtotalList.get(i).getrPassword() + "%" + roomtotalList.get(i).getUserCount() + "%"
 								+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject() + "%"
-								+ roomtotalList.get(i).roomInUserList.size()
-								+ "-");
+								+ roomtotalList.get(i).roomInUserList.size() + "-");
 					}
 
 					String roomMember = "";

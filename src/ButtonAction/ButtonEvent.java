@@ -26,54 +26,56 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 	public void event() {
 
 		// ================== 시작 프레임 부분 ======================
-		start_btn_loginBtn.addActionListener(this);  // 로그인
-		start_btn_SingUp.addActionListener(this);    // 회원가입
-		btnExit.addActionListener(this);             // 종료.
+		start_btn_loginBtn.addActionListener(this); // 로그인
+		start_btn_SingUp.addActionListener(this); // 회원가입
+		btnExit.addActionListener(this); // 종료.
 		// ================== 회원가입 프레임 부분 ======================
-		signup_btn_IDCheck.addActionListener(this);  // 아이디중복확인
+		signup_btn_IDCheck.addActionListener(this); // 아이디중복확인
 		signup_btn_EmailSend.addActionListener(this);// 이메일 인증보내기
-		signup_btn_Auth.addActionListener(this);     // 이메일 인증
-		signup_btn_Cancle.addActionListener(this);   // 회원가입 취소
-		signup_btn_Check.addActionListener(this);    // 회원가입 확인
+		signup_btn_Auth.addActionListener(this); // 이메일 인증
+		signup_btn_Cancle.addActionListener(this); // 회원가입 취소
+		signup_btn_Check.addActionListener(this); // 회원가입 확인
 		// ================== 로그인 프레임 부분 ======================
-		StudyWithMe.addMouseListener(this);          // 홈으로
-		login_btn_Login.addActionListener(this);     // 로그인 확인
-		login_btn_SearchID.addActionListener(this);  // 로그인->아이디찾기
-		login_btn_SearchPW.addActionListener(this);  // 로그인->비밀번호찾기
-		login_btn_Exit.addActionListener(this);      // 로그인->종료
+		StudyWithMe.addMouseListener(this); // 홈으로
+		login_btn_Login.addActionListener(this); // 로그인 확인
+		login_btn_SearchID.addActionListener(this); // 로그인->아이디찾기
+		login_btn_SearchPW.addActionListener(this); // 로그인->비밀번호찾기
+		login_btn_Exit.addActionListener(this); // 로그인->종료
 		// ================== 아이디 찾기 부분 ======================
-		searchi_btn_Send.addActionListener(this);    // 아이디찾기 이메일보내기
-		searchi_btn_Auth.addActionListener(this);    // 아이디찾기 이메일인증
-		searchi_btn_Cancle.addActionListener(this);  // 아이디찾기 취소
-		searchi_btn_Exit.addActionListener(this);    // 아이디찾기 종료
+		searchi_btn_Send.addActionListener(this); // 아이디찾기 이메일보내기
+		searchi_btn_Auth.addActionListener(this); // 아이디찾기 이메일인증
+		searchi_btn_Cancle.addActionListener(this); // 아이디찾기 취소
+		searchi_btn_Exit.addActionListener(this); // 아이디찾기 종료
 		searchi_btn_Confilrm.addActionListener(this);// 아이디찾기 확인
 		// ================== 비밀번호 찾기 부분 ======================
-		searchp_btn_Send.addActionListener(this);    // 비밀번호찾기 이메일보내기
+		searchp_btn_Send.addActionListener(this); // 비밀번호찾기 이메일보내기
 		searchp_btn_Confirm.addActionListener(this); // 비밀번호찾기 확인
-		searchp_btn_Auth.addActionListener(this);    // 비밀번호찾기 이메일인증
+		searchp_btn_Auth.addActionListener(this); // 비밀번호찾기 이메일인증
 		searchp_btn_pwCancle.addActionListener(this);// 비밀번호찾기 취소
-		searchp_btn_pwExit.addActionListener(this);  // 비밀번호찾기 종료
-		searchp_btn_Reset.addActionListener(this);   // 비밀번호찾기 재설정
+		searchp_btn_pwExit.addActionListener(this); // 비밀번호찾기 종료
+		searchp_btn_Reset.addActionListener(this); // 비밀번호찾기 재설정
 		// ================== 재설정 부분 ===========================
-		reset_btn_pwCheck.addActionListener(this);   // 재설정 비밀번호확인
-		reset_btn_Cancle.addActionListener(this);    // 재설정 취소
-		reset_btn_Reset.addActionListener(this);     // 재설정 재설정하기
+		reset_btn_pwCheck.addActionListener(this); // 재설정 비밀번호확인
+		reset_btn_Cancle.addActionListener(this); // 재설정 취소
+		reset_btn_Reset.addActionListener(this); // 재설정 재설정하기
 		// ================== 센터 부분 =============================
 		frameCenter.Center_button_SearchRoom.addActionListener(this); // 매인창 방검색
-		frameCenter.Center_btn_update.addActionListener(this);        // 매인창 내정보수정
-		frameCenter.Center_btn_Logout.addActionListener(this);        // 매인창 로그아웃
-		frameCenter.Center_btn_Send.addActionListener(this);          // 매인창 채팅전송
-		frameCenter.Center_comboBox_List.addActionListener(this);     // 매인창 룸필터
-		frameCenter.Center_button_MakeRoom.addActionListener(this);   // 매인창 방만들기
+		frameCenter.Center_btn_update.addActionListener(this); // 매인창 내정보수정
+		frameCenter.Center_btn_Logout.addActionListener(this); // 매인창 로그아웃
+		frameCenter.Center_btn_Send.addActionListener(this); // 매인창 채팅전송
+		frameCenter.Center_comboBox_List.addActionListener(this); // 매인창 룸필터
+		frameCenter.Center_button_MakeRoom.addActionListener(this); // 매인창 방만들기
 		// ================== 방만들기 부분 =============================
-		frameMakeRoom.roomMake_btn_Cancle.addActionListener(this);    // 방만들기 취소
+		frameSearchRoom.searchRoom_btn.addActionListener(this);// 방 검색 검색버튼
+		frameSearchRoom.searchRoom_btn_Cancle.addActionListener(this);// 방 검색 확인 버튼
+		frameMakeRoom.roomMake_btn_Cancle.addActionListener(this); // 방만들기 취소
 		frameMakeRoom.roomMake_btn_RoomMaker.addActionListener(this); // 방만들기 확인
 		// ================== 대화방 부분 =============================
 		frameChattingRoom.chatting_btn_MessageSend.addActionListener(this); // 대화방 메시지보내기
-		frameChattingRoom.chatting_btn_ExitButton.addActionListener(this);  // 대화방 나가기
-		frameChattingRoom.chatting_btn_FileTab.addActionListener(this);     // 대화방 파일탭 
+		frameChattingRoom.chatting_btn_ExitButton.addActionListener(this); // 대화방 나가기
+		frameChattingRoom.chatting_btn_FileTab.addActionListener(this); // 대화방 파일탭
 		frameChattingRoom.chatting_btn_Dismantling.addActionListener(this); // 대화방 모임해체
-		
+
 	}
 
 	@Override
@@ -161,12 +163,12 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			String emailCheck = frameSignup.textField_auth.getText();
 
 			if (name.length() == 0 || id.length() == 0 || password.length() == 0 || email1.length() == 0
-					|| emailCheck.length() == 0 || emailCheck.length()==0) { // 
+					|| emailCheck.length() == 0 || emailCheck.length() == 0) { //
 				JOptionPane.showMessageDialog(btn_Confirm, "빈칸을 입력해 주세요");
 			} else if (condition_Email && condition_ID) {
 				String line = "";
-				line += (id + "%" + password + "%" + name + "%" + ageYear + ageMonnth + ageDay + "%"
-						+ email1 + "@" + email2);
+				line += (id + "%" + password + "%" + name + "%" + ageYear + ageMonnth + ageDay + "%" + email1 + "@"
+						+ email2);
 				pw.println(Protocol.REGISTER + "|" + line);
 				pw.flush();
 
@@ -455,17 +457,32 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			}
 		}
 		// ==================== 센터 프레임 부분 ====================
-		// ==> 방(이름으로) 검색 버튼 <==**********미구현
+		// ==> 방(이름으로) 검색 버튼 <==
 		else if (e.getSource().equals(frameCenter.Center_button_SearchRoom)) {
+			frameSearchRoom.start();
+			frameCenter.frameDown();
 
+		}
+
+		// ==> 방 검색-> 검색 버튼 <==
+		else if (e.getSource().equals(frameSearchRoom.searchRoom_btn)) {
+
+			pw.println(Protocol.SearchRoom + "|");
+			pw.flush();
+		}
+
+		// ==> 방 검색-> 확인 버튼 <==
+		else if (e.getSource().equals(frameSearchRoom.searchRoom_btn_Cancle)) {
+			frameCenter.start();
+			frameSearchRoom.frameDown();
 		}
 		// ==> 내정보 수정 버튼 <== *************미구현
 		else if (e.getSource().equals(frameCenter.Center_btn_update)) {
-			
+
 		}
 		// ==> 로그아웃 버튼 <==
 		else if (e.getSource().equals(frameCenter.Center_btn_Logout)) {
-			
+
 			frameCenter.frameDown();
 			frameLogin.start();
 		}
@@ -476,12 +493,12 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 				pw.println(Protocol.SENDMESSAGE + "|" + line);
 				pw.flush();
 				frameCenter.Center_textField_Message.setText("");
-			}	
+			}
 		}
 		// ==> 방 필터 기능 <==
 		else if (e.getSource().equals(frameCenter.Center_comboBox_List)) {
 
-		} 
+		}
 		// ==> 방 만들기 기능 <==
 		else if (e.getSource().equals(frameCenter.Center_button_MakeRoom)) {
 			frameMakeRoom.start();
@@ -491,22 +508,25 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		// ==> 방만들기 취소 <==
 		else if (e.getSource().equals(frameMakeRoom.roomMake_btn_Cancle)) {
 
-		} 
+		}
 		// ==> 방만들기 확인 <==
 		else if (e.getSource().equals(frameMakeRoom.roomMake_btn_RoomMaker)) {
 
-		} 
+		}
 		// ================== 채팅방 부분 ==================
-		// ==> 파일탭 <== *********세부 프레임 미구현 
+		// ==> 파일탭 <== *********세부 프레임 미구현
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_FileTab)) {
 			frameChattingRoom.listUpload();
 			pw.println(Protocol.CHATTINGFILESEND_SYN + "|" + frameChattingRoom.file.getName());
 			pw.flush();
-		} 
+		}
 		// ==> 방나가기 <==
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_ExitButton)) {
-
-		} 
+			frameMakeRoom.frameDown();
+			frameCenter.start();
+			pw.println(Protocol.EXITCHATTINGROOM + "|");
+			pw.flush();
+		}
 		// ==> 채팅방 메세지 보내기 <==
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_MessageSend)) {
 

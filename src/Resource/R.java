@@ -14,6 +14,7 @@ import TitleTest.FrameLogin;
 import TitleTest.FrameMakeRoom;
 import TitleTest.FramePassWordCheck;
 import TitleTest.FrameSearchPW;
+import TitleTest.FrameSearchRoom;
 import TitleTest.FrameSignup;
 import TitleTest.FrameStart;
 
@@ -48,6 +49,7 @@ public class R extends JFrame{
 	public static final FrameSignup frameSignup = new FrameSignup();
 	public static final FrameSearchPW frameSearchPW = new FrameSearchPW();
 	public static final FrameSearchID frameSearchID = new FrameSearchID();
+	public static final FrameSearchRoom frameSearchRoom = new FrameSearchRoom(); //방 검색
 	public static final FrameMakeRoom frameMakeRoom = new FrameMakeRoom();
 	public static final FrameChattingRoom frameChattingRoom = new FrameChattingRoom();
 	public static final FramePassWordCheck framePassWordCheck = new FramePassWordCheck();
