@@ -103,6 +103,8 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		frameMakeRoom.roomMake_btn_Cancle.addActionListener(this); // 방만들기 취소
 		frameMakeRoom.roomMake_btn_RoomMaker.addActionListener(this); // 방만들기 확인
 		// ================== 대화방 부분 =============================
+		frameSearchRoom.searchRoom_btn.addActionListener(this);// 방 검색 검색버튼
+		frameSearchRoom.searchRoom_btn_Cancle.addActionListener(this);// 방 검색 확인 버튼
 		frameChattingRoom.chatting_btn_MessageSend.addActionListener(this); // 대화방 메시지보내기
 		frameChattingRoom.chatting_btn_ExitButton.addActionListener(this); // 대화방 나가기
 		frameChattingRoom.chatting_btn_FileTab.addActionListener(this); // 대화방 파일탭
@@ -498,9 +500,29 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			}
 		}
 		// ==================== 센터 프레임 부분 ====================
-		// ==> 방(이름으로) 검색 버튼 <==**********미구현
+		// ==> 방 검색 <==
 		else if (e.getSource().equals(frameCenter.Center_button_SearchRoom)) {
+			frameSearchRoom.start();
+			frameCenter.frameDown();
 
+		}
+
+		// ==> 방 검색-> 검색 버튼 <==
+		else if (e.getSource().equals(frameSearchRoom.searchRoom_btn)) {
+			String searchroom_text = frameSearchRoom.searchRoom_textField.getText();
+
+			frameCenter.start();
+			frameSearchRoom.frameDown();
+			frameSearchRoom.searchRoom_textField.setText("");
+			
+			pw.println(Protocol.SearchRoom + "|" + searchroom_text);
+			pw.flush();
+		}
+
+		// ==> 방 검색-> 확인 버튼 <==
+		else if (e.getSource().equals(frameSearchRoom.searchRoom_btn_Cancle)) {
+			frameCenter.start();
+			frameSearchRoom.frameDown();
 		}
 		// ==> 내정보 수정 버튼 <== *************미구현
 		else if (e.getSource().equals(frameCenter.Center_btn_update)) {
@@ -589,10 +611,10 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		else if (e.getSource().equals(frameUpdateName.btn_update)) {
 			pw.println(Protocol.UPDATE_NAME + "|" + frameUpdateName.textField_Name.getText());
 			pw.flush();
-			
+
 			frameCenter.lbl_userName.setText(frameUpdateName.textField_Name.getText());
 			frameUpdateName.textField_Name.setText("");
-			
+
 			frameUpdateName.frameDown();
 			frameCenter.start();
 		}
@@ -714,10 +736,10 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			if (R.condition_Email == true) {
 				String emailStr = frameUpdateEmail.textField_email.getText() + '@'
 						+ (String) frameUpdateEmail.comboBox.getSelectedItem();
-				
+
 				pw.println(Protocol.UPDATE_MAIL + "|" + emailStr);
 				pw.flush();
-				
+
 				frameUpdateEmail.comboBox.setSelectedItem(0);
 				frameUpdateEmail.textField_email.setText("");
 				frameUpdateEmail.textField_Auth.setText("");
@@ -784,6 +806,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			}
 		}
 		// ================== 채팅방 부분 ==================
+
 		// ==> 파일탭 <== *********세부 프레임 미구현
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_FileTab)) {
 			frameChattingRoom.openDialog();
