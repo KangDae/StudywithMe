@@ -1,13 +1,17 @@
 package Server;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -208,18 +212,6 @@ public class ClientHandler extends R implements Runnable {
 //					}
 
 				}else if(line[0].compareTo(Protocol.DISMANTINGROOM)==0){
-					
-					JOptionPane.showMessageDialog(R.btn_Confirm, "강퇴되었습니다.");
-					
-					frameChattingRoom.frameDown();
-					frameCenter.start();
-					
-					
-					
-				}else if(line[0].compareTo(Protocol.DISMANTINGROOMMASTER)==0){
-					
-					JOptionPane.showMessageDialog(R.btn_Confirm, "모임을 해체했습니다.");
-					
 					frameChattingRoom.frameDown();
 					frameCenter.start();
 					
@@ -240,7 +232,7 @@ public class ClientHandler extends R implements Runnable {
 
 					// 파일의 내용을 보낸다
 
-					byte[] b = new byte[471000];
+					byte[] b = new byte[104857600];
 
 					int n;
 					while ((n = fis.read(b, 0, b.length)) > 0) {
@@ -262,17 +254,26 @@ public class ClientHandler extends R implements Runnable {
 				} else if (line[0].compareTo(Protocol.ENTERROOM_USERLISTSEND) == 0) {
 				     
 				   System.out.println("enter room");
-					String roomMember[] = line[1].split("%");// 룸에 들어온사람들
+				   	String LinesTest[] = line[1].split(", ");
+					String roomMember[] = line[2].split("%");// 룸에 들어온사람들
+					String LinesTest1 = "";
 					String lineList = "";
+					
+					for (int i = 0; i < LinesTest.length; i++) {
+						LinesTest1 += (LinesTest[i] + "\n"); 
+						System.out.println(LinesTest[i] + "라인즈테스트 순서");						
+					}
+					
 					for (int i = 0; i < roomMember.length; i++) {
 						lineList += (roomMember[i] + "\n");
 					}
-
+					
+					frameChattingRoom.Chatting_textArea_chatting.setText(LinesTest1.replace("[","").replace("]",""));
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText(lineList);
-					frameChattingRoom.Chatting_textArea_chatting.append(line[2] + "\n");
+					frameChattingRoom.Chatting_textArea_chatting.append(line[3] + "\n");
 
 					if (line.length == 4) {
-						String fileList[] = line[3].split("%");
+						String fileList[] = line[5].split("%");
 						frameChattingRoom.model.removeAllElements();
 						for (int i = 0; i < fileList.length; i++) {
 							frameChattingRoom.model.addElement(fileList[i]);
@@ -291,7 +292,7 @@ public class ClientHandler extends R implements Runnable {
 
 					// 보내온 파일 내용을 파일에 저장
 
-					byte[] b = new byte[471000];
+					byte[] b = new byte[104857600];
 
 					int n = 0;
 					long filesize = Long.parseLong(line[1]);

@@ -36,7 +36,9 @@ public class R extends JFrame{
 			"13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30",
 			"31" };
 	public static final String[] roomTopic = { "경영", "마케팅", "고객관리", "개발", "디자인" };
-	public static final String[] roomTopicFilter = { "모두", "경영", "마케팅", "고객관리", "개발", "디자인", "내방" };
+	
+	public static final String[] roomTopicFilter = { "모두", "내방만", "경영", "마케팅", "고객관리", "개발", "디자인" };
+
 	public static final String SCRET = ":)s2";
 	public static String scretNumber = ":)s2";
 	public String newPassword = ""; // 새로 만드는 비밀번호
