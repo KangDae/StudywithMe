@@ -1,4 +1,4 @@
-package TitleTest;
+package Frames;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -9,7 +9,6 @@ import javax.swing.border.MatteBorder;
 
 import DTO.Protocol;
 import Resource.R;
-import Room.DetailPanel;
 import Server.Client_network;
 
 import javax.swing.JList;
@@ -164,7 +163,7 @@ public class FrameCenter extends R {
 
 		JLabel lbl_birth = new JLabel("생 일 : ");
 		lbl_birth.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-		lbl_birth.setBounds(26, 366, 71, 15);
+		lbl_birth.setBounds(38, 369, 69, 15);
 		panel_Myinfomation.add(lbl_birth);
 
 		lbl_userBirth = new JLabel("");
@@ -219,8 +218,8 @@ public class FrameCenter extends R {
 		Center_button_MakeRoom.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		Center_button_MakeRoom.setBounds(115, 10, 88, 29);
 		panel_RoomJoin.add(Center_button_MakeRoom);
-		// 
-		Center_comboBox_List = new JComboBox<String>(roomTopicFilter);
+		// roomTopicFilter
+		Center_comboBox_List = new JComboBox<String>();
 		Center_comboBox_List.setBackground(new Color(255, 255, 255));
 		Center_comboBox_List.setBounds(274, 10, 88, 29);
 		panel_RoomJoin.add(Center_comboBox_List);

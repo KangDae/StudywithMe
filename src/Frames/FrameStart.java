@@ -1,4 +1,4 @@
-package TitleTest;
+package Frames;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
