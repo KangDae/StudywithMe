@@ -502,8 +502,8 @@ public class ServerHandler extends Thread {
 					// 룸리스트 정보
 					for (int i = 0; i < roomtotalList.size(); i++) {
 						roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle() + "%"
-								+ roomtotalList.get(i).getUserCount() + "%" + roomtotalList.get(i).getMasterName() + "%"
-								+ roomtotalList.get(i).getSubject() + "%" + roomtotalList.get(i).roomInUserList.size()
+								+ roomtotalList.get(i).getUserCount() + "%" + roomtotalList.get(i).roomInUserList.size() + "%"
+								+ roomtotalList.get(i).getSubject() + "%" + roomtotalList.get(i).getMasterName() + "%"
 								+ "-");
 					}
 

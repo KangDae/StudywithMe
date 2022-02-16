@@ -581,7 +581,8 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 
 			frameUserPasswordCheck.passwordField.setText("");
 
-		} else if (e.getSource().equals(frameUserPasswordCheck.btn_cencle)) {
+		} // ==> 비밀번호 확인 취소 구현 <==
+		else if (e.getSource().equals(frameUserPasswordCheck.btn_cencle)) {
 			frameUserPasswordCheck.frameDown();
 			frameCenter.start();
 
