@@ -16,6 +16,19 @@ import Frames.FrameSearchPW;
 import Frames.FrameSignup;
 import Frames.FrameStart;
 import Server.Client_network;
+<<<<<<< HEAD
+import TitleTest.FrameCenter;
+import TitleTest.FrameChattingRoom;
+import TitleTest.FrameSearchID;
+import TitleTest.FrameLogin;
+import TitleTest.FrameMakeRoom;
+import TitleTest.FramePassWordCheck;
+import TitleTest.FrameSearchPW;
+import TitleTest.FrameSearchRoom;
+import TitleTest.FrameSignup;
+import TitleTest.FrameStart;
+=======
+>>>>>>> 5ff00a76c4b9b9f096be7c6b0c274c0c9884d6a3
 import UserInfomation.UpdateBirth;
 import UserInfomation.UpdateEmail;
 import UserInfomation.UpdateIdname;
@@ -57,6 +70,7 @@ public class R extends JFrame{
 	public static final FrameSearchPW frameSearchPW = new FrameSearchPW();
 	public static final FrameSearchID frameSearchID = new FrameSearchID();
 	public static final FrameMakeRoom frameMakeRoom = new FrameMakeRoom();
+	public static final FrameSearchRoom frameSearchRoom = new FrameSearchRoom();
 	public static final FrameChattingRoom frameChattingRoom = new FrameChattingRoom();
 	public static final FramePassWordCheck framePassWordCheck = new FramePassWordCheck();
 	public static final UserPasswordCheck frameUserPasswordCheck = new UserPasswordCheck();
