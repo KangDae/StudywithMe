@@ -1,7 +1,5 @@
 package Frames;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
@@ -9,31 +7,27 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
 
-import DTO.Protocol;
 import Resource.R;
-import Server.Client_network;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
-import java.awt.event.ActionEvent;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.swing.JList;
 import javax.swing.JLabel;
 /*
@@ -43,13 +37,17 @@ import javax.swing.JLabel;
 public class FrameChattingRoom extends R{
 	public File file, folder;
 	public JTextField chatting_textField_message;
+	public JLabel lbl_Active;
+	public JPanel chatting_chattingPanel;
 	PrintWriter pw;
 	BufferedReader br;
 	public JButton chatting_btn_Dismantling, chatting_btn_MessageSend, chatting_btn_FileTab, chatting_btn_ExitButton;
 	public DefaultListModel<String> model;
 	public JList<String> list;
-	public JTextArea Chatting_textArea_chatting, Chatting_textarea_Inuserlist;
-	public JScrollPane scrollpnae;
+	public JTextArea Chatting_textarea_Inuserlist;
+	public JScrollPane scroll_chatting;
+	public Box vertical = Box.createVerticalBox();
+	Boolean typing;
 
 	public FrameChattingRoom(){
 		initialize();
@@ -79,24 +77,30 @@ public class FrameChattingRoom extends R{
 		panel_Chatting.setForeground(Color.LIGHT_GRAY);
 		tabbedPane_Chatting.addTab("채팅", null, panel_Chatting, null);
 		panel_Chatting.setLayout(null);
-		
-		
-		Chatting_textArea_chatting = new JTextArea();	
-		Chatting_textArea_chatting.setEditable(false);
-		Chatting_textArea_chatting.setCaretPosition(Chatting_textArea_chatting.getDocument().getLength());
 		//Chatting_textArea_chatting.setBounds(12, 10, 355, 417);
 		
 		
 		
 		 
-		scrollpnae = new JScrollPane(Chatting_textArea_chatting);
-		scrollpnae.setBounds(12, 10, 355, 417);
+		scroll_chatting = new JScrollPane();
+		scroll_chatting.setBounds(12, 25, 355, 402);
 		
 
 		
-		scrollpnae.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollpnae.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		panel_Chatting.add(scrollpnae);
+		scroll_chatting.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll_chatting.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		panel_Chatting.add(scroll_chatting);
+		Timer t = new Timer(1, new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				if (!typing) {
+					lbl_Active.setText("Active Now");
+				}
+			}
+		});
+		t.setInitialDelay(0);
+		
+		chatting_chattingPanel = new JPanel();
+		scroll_chatting.setViewportView(chatting_chattingPanel);
 		
 		chatting_textField_message = new JTextField();
 		chatting_textField_message.setBounds(12, 437, 260, 30);
@@ -119,6 +123,10 @@ public class FrameChattingRoom extends R{
 		chatting_btn_FileTab.setBackground(new Color(255, 255, 255));
 		chatting_btn_FileTab.setBounds(12, 477, 97, 39);
 		panel_Chatting.add(chatting_btn_FileTab);
+		
+		lbl_Active = new JLabel("Active");
+		lbl_Active.setBounds(12, 10, 57, 15);
+		panel_Chatting.add(lbl_Active);
 		
 		JPanel panel_ParticipantList = new JPanel();
 		panel_ParticipantList.setBackground(new Color(135, 206, 250));
@@ -198,4 +206,24 @@ public class FrameChattingRoom extends R{
 		model.remove(list.getSelectedIndex());
 
 	}
+	public static JPanel formatLabel(String message){
+        JPanel chattingPanel = new JPanel();
+        chattingPanel.setLayout(new BoxLayout(chattingPanel, BoxLayout.Y_AXIS));
+        
+        JLabel chattingLabel = new JLabel("<html><p style = \"width : 70px\">" + message + "</p></html>");
+        chattingLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        chattingLabel.setBackground(new Color(135, 206, 235));
+        chattingLabel.setOpaque(true);
+        chattingLabel.setBorder(new EmptyBorder(15,15,15,50));
+        
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        
+        JLabel timeLabel = new JLabel();
+        timeLabel.setText(sdf.format(cal.getTime()));
+        
+        chattingPanel.add(chattingLabel);
+        chattingPanel.add(timeLabel);
+        return chattingPanel;
+    }
 }

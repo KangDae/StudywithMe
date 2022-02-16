@@ -1,5 +1,6 @@
 package ButtonAction;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -7,7 +8,9 @@ import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 
+import javax.swing.Box;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -22,6 +25,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 	String pLine = "";
 	String subject = "모두";
 	String update = "";
+	String myIdname = "";
 
 	public ButtonEvent() {
 		pw = Client_network.pw;
@@ -251,7 +255,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 				JOptionPane.showMessageDialog(btn_Confirm, "빈칸을 입력해주세요.");
 			} else {
 				String line = ID + "%" + PW;
-
+				myIdname = ID;
 				pw.println(Protocol.ENTERLOGIN + "|" + line);
 				pw.flush();
 
@@ -826,10 +830,17 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		}
 		// ==> 채팅방 메세지 보내기 <==
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_MessageSend)) {
-			pw.println(Protocol.CHATTINGSENDMESSAGE + "|" + frameChattingRoom.chatting_textField_message.getText()); // 메세지를
-																														// 보냄
+			String message = frameChattingRoom.chatting_textField_message.getText();
+	
+			frameChattingRoom.chatting_chattingPanel.setLayout(new BorderLayout());
+			frameChattingRoom.vertical.add(Box.createVerticalStrut(5));
+			frameChattingRoom.chatting_chattingPanel.add(frameChattingRoom.vertical, BorderLayout.PAGE_START);
+			frameChattingRoom.chatting_chattingPanel.repaint();
+			pw.println(Protocol.CHATTINGSENDMESSAGE + "|" + message + "%" + myIdname); // 메세지를																									// 보냄
 			pw.flush();
 			frameChattingRoom.chatting_textField_message.setText("");
+			pw.println(Protocol.CHATTINGSCROLLBARDOWN + "|" + "message");
+			pw.flush();
 
 		}
 		// ==> 방해체 <==

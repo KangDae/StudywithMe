@@ -86,7 +86,11 @@ public class Protocol {
 	public static final String CHATTINGSENDMESSAGE = "420"; // 채팅방에서 메세지 보내기 (Request)
 
 	public static final String CHATTINGSENDMESSAGE_OK = "430"; // 채팅방에서 메세지 보내기 (Request)
-
+	
+	public static final String CHATTINGSENDMESSAGE_MASTER_OK = "440";
+	
+	public static final String CHATTINGSCROLLBARDOWN = "450";
+	
 	public static final String CHATTINGFILESEND_SYN = "500"; // 파일전송1
 
 	public static final String CHATTINGFILESEND_SYNACK = "510"; // 파일전송2

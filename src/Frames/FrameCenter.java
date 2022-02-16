@@ -219,7 +219,7 @@ public class FrameCenter extends R {
 		Center_button_MakeRoom.setBounds(115, 10, 88, 29);
 		panel_RoomJoin.add(Center_button_MakeRoom);
 		// roomTopicFilter
-		Center_comboBox_List = new JComboBox<String>();
+		Center_comboBox_List = new JComboBox<String>(roomTopicFilter);
 		Center_comboBox_List.setBackground(new Color(255, 255, 255));
 		Center_comboBox_List.setBounds(274, 10, 88, 29);
 		panel_RoomJoin.add(Center_comboBox_List);

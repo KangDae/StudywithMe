@@ -387,32 +387,31 @@ public class ServerHandler extends Thread {
 							System.out.println("내방이다아아아");
 
 						}
-						
+
 						else if (line[1].equals("내방만")) {
-		                     // Roomlist.txt파일 불러오기
-		                     System.out.println("내방 불러오기");
-		                     File MyRoom = new File(path + "\\userFolder\\" + this.user.getIdName() + "\\Roomlist.txt");
-		                     // Roomlist.txt파일 읽어오기
-		                     BufferedReader reader = new BufferedReader(new FileReader(MyRoom));
-		                     String s = reader.readLine();// 한줄로 가져오기
-		                     String[] inRoomList = s.split("%");
-		                     for (int j = 0; j < inRoomList.length; j++) {
-		                        System.out.println(inRoomList[j]);
-		                        // roomlist.txt.랑 내가참가한 방이랑 같을때
-		                        if (inRoomList[j].equals(String.valueOf(roomtotalList.get(i).getrID()))) {
-		                           // 방리스트 불러오기
-		                           roomListMessage += (roomtotalList.get(i).getrID() + "%"
-		                                 + roomtotalList.get(i).getTitle() + "%"
-		                                 + roomtotalList.get(i).getUserCount() + "%"
-		                                 + roomtotalList.get(i).getMasterName() + "%"
-		                                 + roomtotalList.get(i).getSubject() + "%"
-		                                 + roomtotalList.get(i).roomInUserList.size() + "-");
-		                        }
-		                     }
-		                  }
-						
+							// Roomlist.txt파일 불러오기
+							System.out.println("내방 불러오기");
+							File MyRoom = new File(path + "\\userFolder\\" + this.user.getIdName() + "\\Roomlist.txt");
+							// Roomlist.txt파일 읽어오기
+							BufferedReader reader = new BufferedReader(new FileReader(MyRoom));
+							String s = reader.readLine();// 한줄로 가져오기
+							String[] inRoomList = s.split("%");
+							for (int j = 0; j < inRoomList.length; j++) {
+								System.out.println(inRoomList[j]);
+								// roomlist.txt.랑 내가참가한 방이랑 같을때
+								if (inRoomList[j].equals(String.valueOf(roomtotalList.get(i).getrID()))) {
+									// 방리스트 불러오기
+									roomListMessage += (roomtotalList.get(i).getrID() + "%"
+											+ roomtotalList.get(i).getTitle() + "%"
+											+ roomtotalList.get(i).getUserCount() + "%"
+											+ roomtotalList.get(i).getMasterName() + "%"
+											+ roomtotalList.get(i).getSubject() + "%"
+											+ roomtotalList.get(i).roomInUserList.size() + "-");
+								}
+							}
+						}
+
 					}
-					
 
 					// 신호를 보낸 user
 
@@ -503,8 +502,8 @@ public class ServerHandler extends Thread {
 					for (int i = 0; i < roomtotalList.size(); i++) {
 						roomListMessage += (roomtotalList.get(i).getrID() + "%" + roomtotalList.get(i).getTitle() + "%"
 								+ roomtotalList.get(i).getUserCount() + "%" + roomtotalList.get(i).getMasterName() + "%"
-								+ roomtotalList.get(i).getSubject() + "%" + roomtotalList.get(i).roomInUserList.size() + "%"
-								+ "-");
+								+ roomtotalList.get(i).getSubject() + "%" + roomtotalList.get(i).roomInUserList.size()
+								+ "%" + "-");
 					}
 
 					System.out.println(roomListMessage);
@@ -633,7 +632,6 @@ public class ServerHandler extends Thread {
 					}
 
 					System.out.println(path + "\\roomFolder\\" + priRoom.getrID() + "\\ChattingLog.txt");
-					System.out.println("채팅내역 여기에 불러와지나?");
 					File TextTest = new File(path + "\\roomFolder\\" + priRoom.getrID() + "\\ChattingLog.txt");
 					FileReader ReaderTest = new FileReader(TextTest);
 					BufferedReader BufReaderTest = new BufferedReader(ReaderTest);
@@ -755,12 +753,31 @@ public class ServerHandler extends Thread {
 					int roomUserSize = roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.size();
 
 					if (line.length == 2) {
+						String contents[] = line[1].split("%");
+						String message = contents[0];
+						String id = contents[1];
 						for (int i = 0; i < roomUserSize; i++) {
-							System.out.println(line.length);
-							roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw
-									.println(Protocol.CHATTINGSENDMESSAGE_OK + "|" + user.getIdName() + "|" + line[1]);
-							String log = Protocol.CHATTINGSENDMESSAGE_OK + "|" + user.getIdName() + "|" + line[1];
-							roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw.flush();
+							System.out.println("id : "
+									+ roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).user
+											.getIdName()
+									+ "sendid : " + id);
+							if (roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).user.getIdName()
+									.equals(id)) {
+								System.out.println(line.length);
+								roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw
+										.println(Protocol.CHATTINGSENDMESSAGE_MASTER_OK + "|" + user.getIdName() + "|"
+												+ message);
+								String log = Protocol.CHATTINGSENDMESSAGE_MASTER_OK + "|" + user.getIdName() + "|"
+										+ message;
+								roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw.flush();
+							} else {
+								System.out.println(line.length);
+								roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw.println(
+										Protocol.CHATTINGSENDMESSAGE_OK + "|" + user.getIdName() + "|" + message);
+								String log = Protocol.CHATTINGSENDMESSAGE_OK + "|" + user.getIdName() + "|" + message;
+								roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw.flush();
+							}
+
 						}
 						System.out.println("현재 작업 경로: " + path);
 
@@ -770,7 +787,15 @@ public class ServerHandler extends Thread {
 						fw.write("[" + user.getIdName() + "] : " + line[1] + "\n");
 						fw.flush();
 					}
-					
+
+				} else if(line[0].compareTo(Protocol.CHATTINGSCROLLBARDOWN) == 0) {
+					int roomUserSize = roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.size();
+				
+					for (int i = 0; i < roomUserSize; i++) {
+						roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw.println(
+								Protocol.CHATTINGSCROLLBARDOWN + "|" + "message");
+						roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw.flush();
+					}
 				} else if (line[0].compareTo(Protocol.CHATTINGFILESEND_SYN) == 0) // FIle전송 싱크
 				{
 					fileName = line[1];
@@ -1045,7 +1070,7 @@ public class ServerHandler extends Thread {
 					pstmt.setInt(2, user.getPryNumber());
 					pstmt.executeUpdate();
 				}
-				
+
 			} // while
 
 			br.close();

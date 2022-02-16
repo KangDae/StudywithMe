@@ -1,5 +1,6 @@
 package Server;
 
+import java.awt.BorderLayout;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,7 +14,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import DTO.Protocol;
 import Resource.R;
@@ -79,7 +82,7 @@ public class ClientHandler extends R implements Runnable {
 					frameLogin.frameDown();
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN_OK) == 0) // 로그인 성공
 				{
-					
+
 					frameLogin.frameDown();
 					frameCenter.start();
 					frameCenter.Center_textArea_Chatting.append(line[1] + line[2] + '\n');
@@ -90,12 +93,10 @@ public class ClientHandler extends R implements Runnable {
 						userlist += (text[i] + "\n");
 					}
 					frameCenter.textArea_Waituser.setText(userlist);
-					
-					
 
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN_OK_USERINFOMATION) == 0) {
 					String[] userinfo = line[1].split("%");
-					for(int i=0; i<userinfo.length;i++) {
+					for (int i = 0; i < userinfo.length; i++) {
 						System.out.println(userinfo[i]);
 					}
 					frameCenter.lbl_userName.setText(userinfo[0]);
@@ -179,46 +180,69 @@ public class ClientHandler extends R implements Runnable {
 						frameCenter.panelRoomList[i].labelArray[5].setText(userNumber); // 인원수
 						frameCenter.panelRoomList[i].labelArray[7].setText(roomListDetail[1]); // 방제목
 						frameCenter.panelRoomList[i].labelArray[8].setText("개설자 : " + roomListDetail[3]); // 개설자
-						
+
 						System.out.println("userNumber : " + userNumber);
 
 					}
-					frameChattingRoom.Chatting_textArea_chatting.setText("");
+//					frameChattingRoom.Chatting_textArea_chatting.setText("");
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText("");
-				//	frameCenter.frameDown(); // 대기방 화면 끄고
+					// frameCenter.frameDown(); // 대기방 화면 끄고
 
 				} else if (line[0].compareTo(Protocol.ROOMMAKE_OK1) == 0) // 방만들어짐 (만든 당사자) // 입장
 				{
 					System.out.println("방장 입장화면 변환");
 					frameMakeRoom.frameDown(); // 대기방 화면 끄고
-					System.out.println("RoomMaker: "+ line[1]);
-					
+					System.out.println("RoomMaker: " + line[1]);
+
 					frameChattingRoom.setVisible(true);
-					frameChattingRoom.Chatting_textArea_chatting.setText("");
+//					frameChattingRoom.Chatting_textArea_chatting.setText("");
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText(line[1]);
-					
 
 				} else if (line[0].compareTo(Protocol.ENTERROOM_OK1) == 0) // 방입장 입장하는 당사자
 				{
 					System.out.println("입장화면 변환");
 					frameCenter.frameDown();
 
-					frameChattingRoom.Chatting_textArea_chatting.setText("");
+					frameChattingRoom.chatting_chattingPanel.removeAll();
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText("");
 					frameChattingRoom.setVisible(true);
 //					System.out.println(line[2]);
 //					String roomMember[] = line[2].split("%");//룸에 들어온사람들
-//					frameChattingRoom.partList.append(line[1]); //자기 추가해주고
+//					frameChattingRoom.Chatting_textarea_Inuserlist.append(line[1]); //자기 추가해주고
 //					for (int i = 0; i < roomMember.length; i++) {
-//						frameChattingRoom.partList.append(roomMember[i] + "\n");
+//						frameChattingRoom.Chatting_textarea_Inuserlist.append(roomMember[i] + "\n");
 //					}
 
-				}else if (line[0].compareTo(Protocol.CHATTINGSENDMESSAGE_OK) == 0) {
-					frameChattingRoom.Chatting_textArea_chatting.append("[" + line[1] + "] :" + line[2] + "\n");
-					frameChattingRoom.Chatting_textArea_chatting.setCaretPosition(frameChattingRoom.Chatting_textArea_chatting.getDocument().getLength()); 
+				} else if (line[0].compareTo(Protocol.CHATTINGSENDMESSAGE_MASTER_OK) == 0) {
+					if (line.length == 3) {
+						String message = line[2];
+						JPanel panel = frameChattingRoom.formatLabel(message);
+						JPanel right = new JPanel(new BorderLayout());
+						right.add(panel, BorderLayout.LINE_END);
+						frameChattingRoom.vertical.add(right);
+						frameChattingRoom.chatting_chattingPanel.repaint();
+					}
+				} else if (line[0].compareTo(Protocol.CHATTINGSENDMESSAGE_OK) == 0) {
+					if (line.length == 3) {
+						String message = "[" + line[1] + "] :" + line[2];
+						JPanel p2 = frameChattingRoom.formatLabel(message);
+						JPanel left = new JPanel(new BorderLayout());
+						left.add(p2, BorderLayout.LINE_START);
+						frameChattingRoom.vertical.add(left);
+						frameChattingRoom.chatting_chattingPanel.repaint();
+					}
+				} else if (line[0].compareTo(Protocol.CHATTINGSCROLLBARDOWN) == 0) {
+					try {
 
-					
-				}  else if (line[0].compareTo(Protocol.CHATTINGFILESEND_SYNACK) == 0) {
+						Thread.sleep(100);
+						frameChattingRoom.scroll_chatting.getVerticalScrollBar()
+								.setValue(frameChattingRoom.scroll_chatting.getVerticalScrollBar().getMaximum());
+
+					} catch (Exception e) {
+						System.out.println(e);
+					}
+
+				} else if (line[0].compareTo(Protocol.CHATTINGFILESEND_SYNACK) == 0) {
 
 					pw.println(Protocol.CHATTINGFILESEND_FILE + "|" + frameChattingRoom.file.length());
 					pw.flush();
@@ -242,7 +266,6 @@ public class ClientHandler extends R implements Runnable {
 					// 소켓에서 보낼 출력 스트림을 구한다.
 				} else if (line[0].compareTo(Protocol.CHATTINGFILESEND_FILEACK) == 0) {
 
-
 					String[] fileList = line[1].split("%");
 
 					frameChattingRoom.model.removeAllElements();
@@ -251,27 +274,27 @@ public class ClientHandler extends R implements Runnable {
 					}
 
 				} else if (line[0].compareTo(Protocol.ENTERROOM_USERLISTSEND) == 0) {
-				     
-				   System.out.println("enter room");
-				   	String LinesTest[] = line[1].split(", ");
+
+					System.out.println("enter room");
+					String LinesTest[] = line[1].split(", ");
 					String roomMember[] = line[2].split("%");// 룸에 들어온사람들
 					String LinesTest1 = "";
 					String lineList = "";
-					
+
 					for (int i = 0; i < LinesTest.length; i++) {
-						LinesTest1 += (LinesTest[i] + "\n"); 
-						System.out.println(LinesTest[i] + "라인즈테스트 순서");						
+						LinesTest1 += (LinesTest[i] + "\n");
+						System.out.println(LinesTest[i] + "라인즈테스트 순서");
 					}
-					
+
 					for (int i = 0; i < roomMember.length; i++) {
 						lineList += (roomMember[i] + "\n");
 					}
-					
-					frameChattingRoom.Chatting_textArea_chatting.setText(LinesTest1.replace("[","").replace("]",""));
+
+//					frameChattingRoom.Chatting_textArea_chatting.setText(LinesTest1.replace("[","").replace("]",""));
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText(lineList);
-					frameChattingRoom.Chatting_textArea_chatting.append(line[3] + "\n");
-					frameChattingRoom.Chatting_textArea_chatting.setCaretPosition(frameChattingRoom.Chatting_textArea_chatting.getDocument().getLength()); 
-					
+//					frameChattingRoom.Chatting_textArea_chatting.append(line[3] + "\n");
+					frameChattingRoom.scroll_chatting.getVerticalScrollBar()
+							.setValue(frameChattingRoom.scroll_chatting.getVerticalScrollBar().getMaximum());
 
 					if (line.length == 4) {
 						String fileList[] = line[5].split("%");
@@ -280,9 +303,7 @@ public class ClientHandler extends R implements Runnable {
 							frameChattingRoom.model.addElement(fileList[i]);
 						}
 					}
-				
-				
-				
+
 				} else if (line[0].compareTo(Protocol.CHATTINGFILEDOWNLOAD_SEND) == 0) { // 파일을 받음
 					String path = frameChattingRoom.file.getAbsolutePath();
 
@@ -311,45 +332,43 @@ public class ClientHandler extends R implements Runnable {
 					fos.close();
 					System.out.println("파일 다운로드 끝 !!!");
 
-				} else if (line[0].compareTo(Protocol.ENTERLOGIN_USERINFOMATION_CHECK) == 0) { //비밀번호가 맞았을때
-					if(line[1].equals("이름")) {
+				} else if (line[0].compareTo(Protocol.ENTERLOGIN_USERINFOMATION_CHECK) == 0) { // 비밀번호가 맞았을때
+					if (line[1].equals("이름")) {
 						frameUserPasswordCheck.frameDown();
 						frameUpdateName.start();
-					} else if(line[1].equals("아이디")) {
+					} else if (line[1].equals("아이디")) {
 						frameUserPasswordCheck.frameDown();
 						frameUpdateIdname.start();
-					} else if(line[1].equals("비밀번호")) {
+					} else if (line[1].equals("비밀번호")) {
 						frameUserPasswordCheck.frameDown();
 						frameUpdatePassword.start();
-					} else if(line[1].equals("이메일")) {
+					} else if (line[1].equals("이메일")) {
 						frameUserPasswordCheck.frameDown();
 						frameUpdateEmail.start();
-					} else if(line[1].equals("생년월일")) {
+					} else if (line[1].equals("생년월일")) {
 						frameUserPasswordCheck.frameDown();
 						frameUpdateBirth.start();
-					} 
-				} else if (line[0].compareTo(Protocol.ENTERLOGIN_USERINFOMATION_CHECK_NOT) == 0) { //비밀번호가 틀렸을때
+					}
+				} else if (line[0].compareTo(Protocol.ENTERLOGIN_USERINFOMATION_CHECK_NOT) == 0) { // 비밀번호가 틀렸을때
 					JOptionPane.showMessageDialog(R.btn_Confirm, "비밀번호가 틀렸습니다.");
 
-				} else if(line[0].compareTo(Protocol.DISMANTINGROOM)==0){
-					
+				} else if (line[0].compareTo(Protocol.DISMANTINGROOM) == 0) {
+
 					JOptionPane.showMessageDialog(R.btn_Confirm, "강퇴되었습니다.");
-					
+
 					frameChattingRoom.frameDown();
 					frameCenter.start();
-					
-					
-					
-				}else if(line[0].compareTo(Protocol.DISMANTINGROOMMASTER)==0){
-					
+
+				} else if (line[0].compareTo(Protocol.DISMANTINGROOMMASTER) == 0) {
+
 					JOptionPane.showMessageDialog(R.btn_Confirm, "모임을 해체했습니다.");
-					
+
 					frameChattingRoom.frameDown();
 					frameCenter.start();
-				}else if(line[0].compareTo(Protocol.DISMANTINGROOMUSER)==0){
-					
+				} else if (line[0].compareTo(Protocol.DISMANTINGROOMUSER) == 0) {
+
 					JOptionPane.showMessageDialog(R.btn_Confirm, "모임을 탈퇴했습니다.");
-					
+
 					frameChattingRoom.frameDown();
 					frameCenter.start();
 
