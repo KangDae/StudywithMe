@@ -6,7 +6,17 @@ import javax.swing.JFrame;
 
 import ButtonAction.ButtonAccemble;
 import ButtonAction.ButtonEvent;
+import Frames.FrameCenter;
+import Frames.FrameChattingRoom;
+import Frames.FrameLogin;
+import Frames.FrameMakeRoom;
+import Frames.FramePassWordCheck;
+import Frames.FrameSearchID;
+import Frames.FrameSearchPW;
+import Frames.FrameSignup;
+import Frames.FrameStart;
 import Server.Client_network;
+<<<<<<< HEAD
 import TitleTest.FrameCenter;
 import TitleTest.FrameChattingRoom;
 import TitleTest.FrameSearchID;
@@ -17,6 +27,8 @@ import TitleTest.FrameSearchPW;
 import TitleTest.FrameSearchRoom;
 import TitleTest.FrameSignup;
 import TitleTest.FrameStart;
+=======
+>>>>>>> 5ff00a76c4b9b9f096be7c6b0c274c0c9884d6a3
 import UserInfomation.UpdateBirth;
 import UserInfomation.UpdateEmail;
 import UserInfomation.UpdateIdname;
