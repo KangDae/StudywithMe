@@ -75,7 +75,9 @@ public class Protocol {
 	
 	public static final String DISMANTINGROOM = "320";
 	
-	public static final String DISMANTINGROOMMASTER = "321";
+	public static final String DISMANTINGROOMMASTER = "321"; //방장이 모임해체를 눌렀을때 
+	
+	public static final String DISMANTINGROOMUSER = "322"; //일반 유저가 모임해체를눌렀을때
 
 	public static final String SENDMESSAGE = "400"; // 메세지 보내기
 

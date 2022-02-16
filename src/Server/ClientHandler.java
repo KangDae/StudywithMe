@@ -191,10 +191,12 @@ public class ClientHandler extends R implements Runnable {
 				{
 					System.out.println("방장 입장화면 변환");
 					frameMakeRoom.frameDown(); // 대기방 화면 끄고
-
-					frameChattingRoom.Chatting_textArea_chatting.setText("");
+					System.out.println("RoomMaker: "+ line[1]);
+					
 					frameChattingRoom.setVisible(true);
-					frameChattingRoom.Chatting_textarea_Inuserlist.setText(line[1] + "\n");
+					frameChattingRoom.Chatting_textArea_chatting.setText("");
+					frameChattingRoom.Chatting_textarea_Inuserlist.setText(line[1]);
+					
 
 				} else if (line[0].compareTo(Protocol.ENTERROOM_OK1) == 0) // 방입장 입장하는 당사자
 				{
@@ -211,14 +213,11 @@ public class ClientHandler extends R implements Runnable {
 //						frameChattingRoom.partList.append(roomMember[i] + "\n");
 //					}
 
-				}else if(line[0].compareTo(Protocol.DISMANTINGROOM)==0){
-					frameChattingRoom.frameDown();
-					frameCenter.start();
-					
-					
-					
 				}else if (line[0].compareTo(Protocol.CHATTINGSENDMESSAGE_OK) == 0) {
 					frameChattingRoom.Chatting_textArea_chatting.append("[" + line[1] + "] :" + line[2] + "\n");
+					frameChattingRoom.Chatting_textArea_chatting.setCaretPosition(frameChattingRoom.Chatting_textArea_chatting.getDocument().getLength()); 
+
+					
 				}  else if (line[0].compareTo(Protocol.CHATTINGFILESEND_SYNACK) == 0) {
 
 					pw.println(Protocol.CHATTINGFILESEND_FILE + "|" + frameChattingRoom.file.length());
@@ -271,6 +270,8 @@ public class ClientHandler extends R implements Runnable {
 					frameChattingRoom.Chatting_textArea_chatting.setText(LinesTest1.replace("[","").replace("]",""));
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText(lineList);
 					frameChattingRoom.Chatting_textArea_chatting.append(line[3] + "\n");
+					frameChattingRoom.Chatting_textArea_chatting.setCaretPosition(frameChattingRoom.Chatting_textArea_chatting.getDocument().getLength()); 
+					
 
 					if (line.length == 4) {
 						String fileList[] = line[5].split("%");
@@ -309,6 +310,7 @@ public class ClientHandler extends R implements Runnable {
 
 					fos.close();
 					System.out.println("파일 다운로드 끝 !!!");
+
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN_USERINFOMATION_CHECK) == 0) { //비밀번호가 맞았을때
 					if(line[1].equals("이름")) {
 						frameUserPasswordCheck.frameDown();
@@ -328,6 +330,29 @@ public class ClientHandler extends R implements Runnable {
 					} 
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN_USERINFOMATION_CHECK_NOT) == 0) { //비밀번호가 틀렸을때
 					JOptionPane.showMessageDialog(R.btn_Confirm, "비밀번호가 틀렸습니다.");
+
+				} else if(line[0].compareTo(Protocol.DISMANTINGROOM)==0){
+					
+					JOptionPane.showMessageDialog(R.btn_Confirm, "강퇴되었습니다.");
+					
+					frameChattingRoom.frameDown();
+					frameCenter.start();
+					
+					
+					
+				}else if(line[0].compareTo(Protocol.DISMANTINGROOMMASTER)==0){
+					
+					JOptionPane.showMessageDialog(R.btn_Confirm, "모임을 해체했습니다.");
+					
+					frameChattingRoom.frameDown();
+					frameCenter.start();
+				}else if(line[0].compareTo(Protocol.DISMANTINGROOMUSER)==0){
+					
+					JOptionPane.showMessageDialog(R.btn_Confirm, "모임을 탈퇴했습니다.");
+					
+					frameChattingRoom.frameDown();
+					frameCenter.start();
+
 				}
 
 			} catch (IOException io) {
