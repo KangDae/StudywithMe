@@ -71,6 +71,10 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		frameCenter.Center_btn_Send.addActionListener(this); // 매인창 채팅전송
 		frameCenter.Center_comboBox_List.addActionListener(this); // 매인창 룸필터
 		frameCenter.Center_button_MakeRoom.addActionListener(this); // 매인창 방만들기
+		frameCenter.btn_Write.addActionListener(this); // 게시판 작성 버튼
+		// ================== 게시물 작성 부분 ======================
+		noticewrite.btn_Write.addActionListener(this);
+		noticewrite.btn_Cancle.addActionListener(this);
 		// ===============> 내정보 수정하는 부분(in Center)<===============
 		frameCenter.btn_updateID.addActionListener(this);
 		frameCenter.btn_updateName.addActionListener(this);
@@ -514,7 +518,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			frameCenter.start();
 			frameSearchRoom.frameDown();
 			frameSearchRoom.searchRoom_textField.setText("");
-			
+
 			pw.println(Protocol.SearchRoom + "|" + searchroom_text);
 			pw.flush();
 		}
@@ -558,6 +562,24 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			frameMakeRoom.start();
 			frameCenter.frameDown();
 		}
+
+		// ==> 게시판 작성 버튼 <==
+		else if (e.getSource().equals(frameCenter.btn_Write)) {
+			noticewrite.start();
+			frameCenter.frameDown();
+		}
+		// ================== 게시판 작성 부분 ==================
+
+		// ==> 작성 버튼 <==
+		else if (e.getSource().equals(noticewrite.btn_Write)) {
+
+		}
+
+		// ==> 취소 버튼 <==
+		else if (e.getSource().equals(noticewrite.btn_Cancle)) {
+
+		}
+
 		// ================== 수정 부분(in Center) ==================
 		// ==> 이름 수정 <==
 		else if (e.getSource().equals(frameCenter.btn_updateName)) {

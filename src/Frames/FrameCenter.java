@@ -1,4 +1,4 @@
-package TitleTest;
+package Frames;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -9,7 +9,6 @@ import javax.swing.border.MatteBorder;
 
 import DTO.Protocol;
 import Resource.R;
-import Room.DetailPanel;
 import Server.Client_network;
 
 import javax.swing.JList;
@@ -40,7 +39,7 @@ public class FrameCenter extends R {
 	}
 
 	public JTextField Center_textField_Message;
-	public JPanel Center_centerPane;
+	public JPanel Center_centerPane, panel_in_noticeBoard;
 	public JComboBox<String> Center_comboBox_List;
 	public JTextArea Center_textArea_Chatting, textArea_Waituser;
 	public PanelRoomList[] panelRoomList;
@@ -48,7 +47,7 @@ public class FrameCenter extends R {
 	
 
 	public JButton Center_button_MakeRoom, Center_button_SearchRoom, Center_btn_update, Center_btn_Logout, Center_btn_Send
-	, btn_updateName, btn_updateID, btn_updatePW, btn_updateEmail, btn_updateBirth;
+	, btn_updateName, btn_updateID, btn_updatePW, btn_updateEmail, btn_updateBirth,btn_Write;
 	BufferedReader br;
 	PrintWriter pw;
 	public JPasswordField lbl_userpw;
@@ -244,13 +243,63 @@ public class FrameCenter extends R {
 		panel_in_noticeBoard = new JPanel();
 		scrollPane_1.setViewportView(panel_in_noticeBoard);
 		
-		JButton btnNewButton = new JButton("작성");
-		btnNewButton.setBounds(12, 124, 97, 23);
-		panel_noticeBoard.add(btnNewButton);
+		btn_Write = new JButton("작성");
+		btn_Write.setBounds(12, 124, 97, 23);
+		panel_noticeBoard.add(btn_Write);
+		
+		
+		
 
 		JLabel lbl_studywithMe_Board = new JLabel(image);
 		lbl_studywithMe_Board.setBounds(25, 21, 326, 116);
 		panel_noticeBoard.add(lbl_studywithMe_Board);
+		
+		
+		JPanel panel_Waitting = new JPanel();
+		panel_Waitting.setBackground(new Color(135, 206, 250));
+		tabbedPane_Option.addTab("대기자 채팅방", null, panel_Waitting, null);
+		panel_Waitting.setLayout(null);
+
+		Center_btn_Send = new JButton("전송");
+		Center_btn_Send.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+		Center_btn_Send.setBounds(289, 464, 73, 29);
+		panel_Waitting.add(Center_btn_Send);
+
+		JScrollPane scrollPane_ChattBord = new JScrollPane();
+		scrollPane_ChattBord.setBounds(12, 10, 350, 444);
+		panel_Waitting.add(scrollPane_ChattBord);
+
+		Center_textArea_Chatting = new JTextArea();
+		Center_textArea_Chatting.setEditable(false);
+		Center_textArea_Chatting.setLineWrap(true);
+		Center_textArea_Chatting.setWrapStyleWord(true);
+		Center_textArea_Chatting.setText("안녕하세여\n");
+		Center_textArea_Chatting.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		scrollPane_ChattBord.setViewportView(Center_textArea_Chatting);
+
+		Center_textField_Message = new JTextField();
+		Center_textField_Message.setFont(new Font("Gulim", Font.PLAIN, 12));
+		Center_textField_Message.setBounds(12, 464, 265, 28);
+		panel_Waitting.add(Center_textField_Message);
+		Center_textField_Message.setColumns(10);
+
+		JPanel panel_Waituser = new JPanel();
+		tabbedPane_Option.addTab("대기실 인원", null, panel_Waituser, null);
+		panel_Waituser.setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 5, 350, 488);
+		panel_Waituser.add(scrollPane);
+
+		textArea_Waituser = new JTextArea();
+		textArea_Waituser.setEditable(false);
+		scrollPane.setViewportView(textArea_Waituser);
+
+		for (int i = 0; i < 100; i++) {
+			panelRoomList[i] = new PanelRoomList(br, pw);
+			Center_centerPane.add(panelRoomList[i]);
+		}
+		tabbedPane_FriendsPanel.setBackgroundAt(1, new Color(135, 206, 250));
 
 		JTabbedPane tabbedPane_Cahtting = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_FriendsPanel.addTab("스터디윗미!", null, tabbedPane_Cahtting, null);

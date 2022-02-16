@@ -99,7 +99,9 @@ public class Protocol {
 
 	public static final String CHATTINGFILEDOWNLOAD_SYN = "550"; // 파일 다운로드1
 
-	public static final String CHATTINGFILEDOWNLOAD_SEND = "560"; // 파일 보냄"560"; // ���� ����	
+	public static final String CHATTINGFILEDOWNLOAD_SEND = "560"; // 파일 보냄
+	
+	public static final String WRITRNOTICEBOARD = "600"; //게시판 작성
 	
 
 }
