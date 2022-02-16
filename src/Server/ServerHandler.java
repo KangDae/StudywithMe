@@ -1018,7 +1018,7 @@ public class ServerHandler extends Thread {
 					System.out.println("패스워드 수정");
 
 					String updateSql = "update usercontent set PASSWORD=? where priNumber=?";
-
+					user.setPassword(line[1]);
 					pstmt = conn.prepareStatement(updateSql);
 
 					pstmt.setString(1, line[1]);
@@ -1035,7 +1035,7 @@ public class ServerHandler extends Thread {
 					pstmt.setInt(2, user.getPryNumber());
 					pstmt.executeUpdate();
 				} else if (line[0].compareTo(Protocol.UPDATE_BIRTH) == 0) { // 패스워드 수정
-					System.out.println("이메일 수정");
+					System.out.println("생일 수정");
 
 					String updateSql = "update usercontent set AGE=? where priNumber=?";
 
