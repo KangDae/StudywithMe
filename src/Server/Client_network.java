@@ -1,5 +1,6 @@
 package Server;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +12,7 @@ import java.net.UnknownHostException;
 public class Client_network {
 	public static BufferedReader br;
 	public static PrintWriter pw;
+	public static BufferedInputStream bin;
 	public static Socket socket; 
 	
 	public Client_network(){
@@ -21,6 +23,7 @@ public class Client_network {
 			socket = new Socket("127.0.0.1",9500);
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+			bin = new BufferedInputStream(socket.getInputStream());
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			System.out.println("서버를 찾을 수 없습니다.");

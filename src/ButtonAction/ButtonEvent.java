@@ -1,14 +1,19 @@
 package ButtonAction;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -18,10 +23,16 @@ import DTO.Protocol;
 import Function.Email.SendMail_update;
 import Resource.R;
 import Server.Client_network;
+import shareDisplay.Display_Client;
+import shareDisplay.Display_Server;
 
 public class ButtonEvent extends ButtonAccemble implements ActionListener, MouseListener, ListSelectionListener {
+	
+	private static final long serialVersionUID = 1L;
 	PrintWriter pw;
 	BufferedReader br;
+	BufferedInputStream bin;
+	
 	String pLine = "";
 	String subject = "모두";
 	String update = "";
@@ -30,6 +41,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 	public ButtonEvent() {
 		pw = Client_network.pw;
 		br = Client_network.br;
+		bin = Client_network.bin;
 		event();
 	}
 
@@ -78,8 +90,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		frameCenter.btn_Write.addActionListener(this); // 게시판 작성 버튼
 		// ================== 게시물 작성 부분 ======================
 		noticewrite.btn_Write.addActionListener(this);
-		noticewrite.btn_Cancle.addActionListener(this);
-		
+		noticewrite.btn_Cancle.addActionListener(this);	
 		noticeview.check_Btn.addActionListener(this);
 		// ===============> 내정보 수정하는 부분(in Center)<===============
 		frameCenter.btn_updateID.addActionListener(this);
@@ -119,7 +130,9 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		frameChattingRoom.chatting_btn_ExitButton.addActionListener(this); // 대화방 나가기
 		frameChattingRoom.chatting_btn_FileTab.addActionListener(this); // 대화방 파일탭
 		frameChattingRoom.chatting_btn_Dismantling.addActionListener(this); // 대화방 모임해체
-		frameChattingRoom.list.addListSelectionListener(this);
+		frameChattingRoom.btn_ShareDisplay.addActionListener(this);
+		frameChattingRoom.btn_ShowDisplay.addActionListener(this);
+		frameChattingRoom.list.addListSelectionListener(this); //파일 목록
 
 	}
 
@@ -889,6 +902,25 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			pw.flush();
 
 		}
+		
+		// ==> 화면공유 <==
+		else if(e.getSource().equals(frameChattingRoom.btn_ShareDisplay)) {
+			
+			new Display_Server();
+		  
+		     
+		}
+		
+		// ==> 화면공유 보기<==
+		else if(e.getSource().equals(frameChattingRoom.btn_ShowDisplay)) {
+		
+
+			
+			new Display_Client();
+
+			
+		    
+		}
 	}
 
 	@Override
@@ -940,5 +972,8 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		StudyWithMe.setIcon(image);
 
 	}
+
+	
+	
 
 }

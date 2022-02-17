@@ -113,5 +113,9 @@ public class Protocol {
 	
 	public static final String WRITENOTICEBOARD_MASTER = "620"; //게시판 만든 당사자
 	
+	public static final String SHAREDISPLAY = "630"; //화면 공유
+	
+	public static final String WATCHDISPLAY = "640"; //화면 보기
+	
 
 }

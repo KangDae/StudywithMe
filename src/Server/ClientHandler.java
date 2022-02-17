@@ -2,6 +2,8 @@ package Server;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Toolkit;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,7 +17,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -514,7 +518,33 @@ public class ClientHandler extends R implements Runnable {
 					noticeview.start();
 					noticeview.Title_Textfield.setText(line[2]);
 					noticeview.lblNewLabel_3.setText(line[3]);
-					noticeview.Text_Content.setText(line[4]);
+					noticeview.Text_Content.setText(line[4]);		
+				} else if(line[0].compareTo(Protocol.WATCHDISPLAY)==0) {
+					
+					final int w = Toolkit.getDefaultToolkit().getScreenSize().width,
+							h = Toolkit.getDefaultToolkit().getScreenSize().height;
+
+					JFrame frame = new JFrame("Client"); // 창 생성
+
+					frame.setBounds(0, 0, 1920, 1080);// 창 위치,크기 조절
+
+					frame.setLayout(null); // 레이아웃 없게 함.
+
+					frame.setVisible(true);
+					
+					
+
+					BufferedInputStream bin = new BufferedInputStream(socket.getInputStream());
+
+					// 소켓의 입력스트림을 버퍼스트림으로
+
+					while (true) {
+
+						frame.getGraphics().drawImage(ImageIO.read(ImageIO.createImageInputStream(bin)), 0, 0, w, h, frame);
+
+						// 이미지를 받아오는 동시에 화면에 그림
+
+					}
 					
 					
 				}
