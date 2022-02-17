@@ -42,8 +42,7 @@ public class FrameCenter extends R {
 
 	public JTextField Center_textField_Message;
 
-	
-	public JPanel panel_in_noticeBoard_1;
+	// public JPanel panel_in_noticeBoard_1;
 	public JPanel Center_centerPane, panel_in_noticeBoard, panel_waituserList;
 
 	public JComboBox<String> Center_comboBox_List;
@@ -216,7 +215,7 @@ public class FrameCenter extends R {
 
 		Center_centerPane = new JPanel(new GridLayout(100, 2, 10, 10));
 		panel_in_noticeBoard = new JPanel(new GridLayout(100, 2, 10, 10));
-		
+
 		JScrollPane scrollPane_RoomList = new JScrollPane(Center_centerPane);
 		scrollPane_RoomList.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane_RoomList.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -236,7 +235,7 @@ public class FrameCenter extends R {
 		Center_button_MakeRoom.setBounds(115, 10, 88, 29);
 		panel_RoomJoin.add(Center_button_MakeRoom);
 
-		//roomTopicFilter
+		// roomTopicFilter
 
 		Center_comboBox_List = new JComboBox<String>(roomTopicFilter);
 		Center_comboBox_List.setBackground(new Color(255, 255, 255));
@@ -284,19 +283,16 @@ public class FrameCenter extends R {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(12, 191, 350, 302);
 		panel_Waituser.add(scrollPane);
-		
+
 		panel_waituserList = new JPanel();
 		panel_waituserList.setBackground(new Color(0, 191, 255));
 		scrollPane.setViewportView(panel_waituserList);
 		panel_waituserList.setLayout(new GridLayout(100, 2, 10, 10));
-		
+
 		JLabel lblNewLabel_2 = new JLabel(image);
 		lblNewLabel_2.setBounds(35, 25, 303, 134);
 		panel_Waituser.add(lblNewLabel_2);
-		
-		
-		
-		
+
 		for (int i = 0; i < 100; i++) {
 			panelRoomList[i] = new PanelRoomList(br, pw);
 			Center_centerPane.add(panelRoomList[i]);
@@ -304,7 +300,8 @@ public class FrameCenter extends R {
 
 		for (int i = 0; i < 100; i++) {
 			noticeboardList[i] = new NoticeBoardList(br, pw);
-			panel_in_noticeBoard_1.add(noticeboardList[i]);
+			panel_in_noticeBoard.add(noticeboardList[i]);
+		}
 
 		for (int i = 0; i < 100; i++) {
 			waitUserPanel[i] = new PanelAddToFriedns(br, pw);
@@ -312,6 +309,47 @@ public class FrameCenter extends R {
 
 		}
 		tabbedPane_FriendsPanel.setBackgroundAt(1, new Color(135, 206, 250));
+
+		JPanel panel_noticeBoard = new JPanel();
+		tabbedPane_FriendsPanel.addTab("자유게시판", null, panel_noticeBoard, null);
+		panel_noticeBoard.setBackground(new Color(135, 206, 250));
+		panel_noticeBoard.setLayout(null);
+
+		btn_Write = new JButton("작성");
+		btn_Write.setBounds(12, 124, 97, 23);
+		panel_noticeBoard.add(btn_Write);
+
+		JLabel lbl_studywithMe_Board = new JLabel(image);
+		lbl_studywithMe_Board.setBounds(25, 21, 326, 116);
+		panel_noticeBoard.add(lbl_studywithMe_Board);
+
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane_1.getVerticalScrollBar().setValue(scrollPane_1.getVerticalScrollBar().getMaximum());
+		scrollPane_1.setBounds(12, 155, 350, 338);
+		panel_noticeBoard.add(scrollPane_1);
+
+		panel_in_noticeBoard = new JPanel();
+		scrollPane_1.setViewportView(panel_in_noticeBoard);
+		panel_in_noticeBoard.setLayout(new GridLayout(100, 2, 10, 10));
+		panel_noticeBoard.setBackground(new Color(135, 206, 250));
+		panel_noticeBoard.setLayout(null);
+
+		JLabel lbl_studywithMe_Board1 = new JLabel(image);
+		lbl_studywithMe_Board1.setBounds(25, 21, 326, 116);
+		panel_noticeBoard.add(lbl_studywithMe_Board1);
+
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane_1.getVerticalScrollBar().setValue(scrollPane_1.getVerticalScrollBar().getMaximum());
+		scrollPane_1.setBounds(12, 155, 350, 338);
+		panel_noticeBoard.add(scrollPane_1);
+
+		panel_in_noticeBoard = new JPanel();
+		scrollPane_1.setViewportView(panel_in_noticeBoard);
+		panel_in_noticeBoard.setLayout(new GridLayout(100, 2, 10, 10));
 
 		JTabbedPane tabbedPane_Cahtting = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_FriendsPanel.addTab("스터디윗미!", null, tabbedPane_Cahtting, null);
@@ -355,57 +393,9 @@ public class FrameCenter extends R {
 		lblNewLabel_1_5.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		lblNewLabel_1_5.setBounds(53, 433, 254, 36);
 		panel_Developer.add(lblNewLabel_1_5);
-		tabbedPane_FriendsPanel.setBackgroundAt(2, new Color(0, 191, 255));
-		
-				JPanel panel_noticeBoard = new JPanel();
-		panel_noticeBoard.setBackground(new Color(135, 206, 250));
-		tabbedPane_Option.addTab("자유 게시판", null, panel_noticeBoard, null);
-		panel_noticeBoard.setLayout(null);
-
-		btn_Write = new JButton("작성");
-		btn_Write.setBounds(12, 124, 97, 23);
-		panel_noticeBoard.add(btn_Write);
-
-		JLabel lbl_studywithMe_Board = new JLabel(image);
-		lbl_studywithMe_Board.setBounds(25, 21, 326, 116);
-		panel_noticeBoard.add(lbl_studywithMe_Board);
-
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane_1.getVerticalScrollBar().setValue(scrollPane_1.getVerticalScrollBar().getMaximum());
-		scrollPane_1.setBounds(12, 155, 350, 338);
-		panel_noticeBoard.add(scrollPane_1);
-
-		panel_in_noticeBoard_1 = new JPanel();
-		scrollPane_1.setViewportView(panel_in_noticeBoard_1);
-		panel_in_noticeBoard_1.setLayout(new GridLayout(100, 2, 10, 10));JPanel panel_noticeBoard = new JPanel();
-		panel_noticeBoard.setBackground(new Color(135, 206, 250));
-		tabbedPane_Option.addTab("자유 게시판", null, panel_noticeBoard, null);
-		panel_noticeBoard.setLayout(null);
-
-		btn_Write = new JButton("작성");
-		btn_Write.setBounds(12, 124, 97, 23);
-		panel_noticeBoard.add(btn_Write);
-
-		JLabel lbl_studywithMe_Board = new JLabel(image);
-		lbl_studywithMe_Board.setBounds(25, 21, 326, 116);
-		panel_noticeBoard.add(lbl_studywithMe_Board);
-
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane_1.getVerticalScrollBar().setValue(scrollPane_1.getVerticalScrollBar().getMaximum());
-		scrollPane_1.setBounds(12, 155, 350, 338);
-		panel_noticeBoard.add(scrollPane_1);
-
-		panel_in_noticeBoard_1 = new JPanel();
-		scrollPane_1.setViewportView(panel_in_noticeBoard_1);
-		panel_in_noticeBoard_1.setLayout(new GridLayout(100, 2, 10, 10));
+		tabbedPane_FriendsPanel.setBackgroundAt(3, new Color(0, 191, 255));
 
 	}
-
-	
 
 	public void containPanelClear() {
 
@@ -416,6 +406,7 @@ public class FrameCenter extends R {
 		}
 
 	}
+
 	public void containWaitpanelClear() {
 
 		panel_waituserList.removeAll();
@@ -428,10 +419,10 @@ public class FrameCenter extends R {
 
 	public void containNoticePanelClear() {
 
-		panel_in_noticeBoard_1.removeAll();
+		panel_in_noticeBoard.removeAll();
 		for (int i = 0; i < 100; i++) {
 			noticeboardList[i] = new NoticeBoardList(br, pw);
-			panel_in_noticeBoard_1.add(noticeboardList[i]);
+			panel_in_noticeBoard.add(noticeboardList[i]);
 		}
 
 	}

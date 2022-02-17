@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import DTO.Notice;
 import DTO.Room;
 
 public class Server {
@@ -21,13 +22,14 @@ public class Server {
 	private ArrayList<ServerHandler> allUserList;
 	private ArrayList<ServerHandler> waitUserList;
 	private ArrayList<Room> roomtotalList;
+	private ArrayList<Notice> noticeList;
 	/*
 	 * 		protocol, ip, port, db
 	 */
 	String protocol = "jdbc:mariadb://";
 	String ip = "127.0.0.1";
 	String port = "3306";
-	String db = "studywithme";
+	String db = "userinfo";
 	/*
 	 * 		mariaDB와 연동, driver org.Driver
 	 * 		protocol url, id, pw
@@ -36,7 +38,7 @@ public class Server {
 	private String driver = "org.mariadb.jdbc.Driver";
 	private String url = String.format("%s%s:%s/%s", protocol, ip, port, db);
 	private String user = "root";
-	private String password = "1234";
+	private String password = "7984";
 	
 	public Server() {
 		try {
@@ -54,13 +56,15 @@ public class Server {
 			allUserList = new ArrayList<ServerHandler>();
 			waitUserList = new ArrayList<ServerHandler>();
 			roomtotalList = new ArrayList<Room>();
+			noticeList = new ArrayList<Notice>();
+			
 			
 			while(true) {
 				/*
 				 * 		소켓 
 				 */
 				Socket socket = serverSocket.accept();
-				ServerHandler handler = new ServerHandler(socket, allUserList, waitUserList, roomtotalList, conn);
+				ServerHandler handler = new ServerHandler(socket, allUserList, waitUserList, roomtotalList, noticeList, conn);
 				handler.start();
 				allUserList.add(handler);
 			}
