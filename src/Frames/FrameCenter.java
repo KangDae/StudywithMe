@@ -39,10 +39,11 @@ public class FrameCenter extends R {
 	}
 
 	public JTextField Center_textField_Message;
-	public JPanel Center_centerPane, panel_in_noticeBoard;
+	public JPanel Center_centerPane, panel_in_noticeBoard, panel_waituserList;
 	public JComboBox<String> Center_comboBox_List;
-	public JTextArea Center_textArea_Chatting, textArea_Waituser;
+	public JTextArea Center_textArea_Chatting;
 	public PanelRoomList[] panelRoomList;
+	public PanelAddToFriedns[] waitUserPanel;
 	public JLabel lbl_userName, lbl_userId, lbl_userEmail, lbl_userBirth;
 	
 
@@ -70,6 +71,7 @@ public class FrameCenter extends R {
 		this.getContentPane().setLayout(null);
 
 		panelRoomList = new PanelRoomList[100];
+		waitUserPanel = new PanelAddToFriedns[100];
 
 		JTabbedPane tabbedPane_FriendsPanel = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_FriendsPanel.setBackground(new Color(135, 206, 250));
@@ -220,11 +222,7 @@ public class FrameCenter extends R {
 		Center_button_MakeRoom.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		Center_button_MakeRoom.setBounds(115, 10, 88, 29);
 		panel_RoomJoin.add(Center_button_MakeRoom);
-<<<<<<< HEAD
-		// roomTopicFilter
-=======
-	 
->>>>>>> 41c0724735d877e359bf82a04442af19bd54e6d8
+		//roomTopicFilter
 		Center_comboBox_List = new JComboBox<String>(roomTopicFilter);
 		Center_comboBox_List.setBackground(new Color(255, 255, 255));
 		Center_comboBox_List.setBounds(274, 10, 88, 29);
@@ -234,29 +232,6 @@ public class FrameCenter extends R {
 		Label_Filter.setFont(new Font("맑은 고딕", Font.BOLD, 15));
 		Label_Filter.setBounds(229, 14, 57, 25);
 		panel_RoomJoin.add(Label_Filter);
-
-		JPanel panel_noticeBoard = new JPanel();
-		panel_noticeBoard.setBackground(new Color(135, 206, 250));
-		tabbedPane_Option.addTab("자유 게시판", null, panel_noticeBoard, null);
-		panel_noticeBoard.setLayout(null);
-
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(12, 157, 350, 336);
-		panel_noticeBoard.add(scrollPane_1);
-
-		panel_in_noticeBoard = new JPanel();
-		scrollPane_1.setViewportView(panel_in_noticeBoard);
-		
-		btn_Write = new JButton("작성");
-		btn_Write.setBounds(12, 124, 97, 23);
-		panel_noticeBoard.add(btn_Write);
-		
-		
-		
-
-		JLabel lbl_studywithMe_Board = new JLabel(image);
-		lbl_studywithMe_Board.setBounds(25, 21, 326, 116);
-		panel_noticeBoard.add(lbl_studywithMe_Board);
 		
 		
 		JPanel panel_Waitting = new JPanel();
@@ -282,26 +257,39 @@ public class FrameCenter extends R {
 		scrollPane_ChattBord.setViewportView(Center_textArea_Chatting);
 
 		Center_textField_Message = new JTextField();
-		Center_textField_Message.setFont(new Font("Gulim", Font.PLAIN, 12));
+		Center_textField_Message.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
 		Center_textField_Message.setBounds(12, 464, 265, 28);
 		panel_Waitting.add(Center_textField_Message);
 		Center_textField_Message.setColumns(10);
 
 		JPanel panel_Waituser = new JPanel();
+		panel_Waituser.setBackground(new Color(135, 206, 250));
 		tabbedPane_Option.addTab("대기실 인원", null, panel_Waituser, null);
 		panel_Waituser.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 5, 350, 488);
+		scrollPane.setBounds(12, 191, 350, 302);
 		panel_Waituser.add(scrollPane);
-
-		textArea_Waituser = new JTextArea();
-		textArea_Waituser.setEditable(false);
-		scrollPane.setViewportView(textArea_Waituser);
-
+		
+		panel_waituserList = new JPanel();
+		panel_waituserList.setBackground(new Color(0, 191, 255));
+		scrollPane.setViewportView(panel_waituserList);
+		panel_waituserList.setLayout(new GridLayout(100, 2, 10, 10));
+		
+		JLabel lblNewLabel_2 = new JLabel(image);
+		lblNewLabel_2.setBounds(35, 25, 303, 134);
+		panel_Waituser.add(lblNewLabel_2);
+		
+		
+		
+		
 		for (int i = 0; i < 100; i++) {
 			panelRoomList[i] = new PanelRoomList(br, pw);
 			Center_centerPane.add(panelRoomList[i]);
+		}
+		for (int i = 0; i < 100; i++) {
+			waitUserPanel[i] = new PanelAddToFriedns(br, pw);
+			panel_waituserList.add(waitUserPanel[i]);
 		}
 		tabbedPane_FriendsPanel.setBackgroundAt(1, new Color(135, 206, 250));
 
@@ -348,6 +336,30 @@ public class FrameCenter extends R {
 		lblNewLabel_1_5.setBounds(53, 433, 254, 36);
 		panel_Developer.add(lblNewLabel_1_5);
 		tabbedPane_FriendsPanel.setBackgroundAt(2, new Color(0, 191, 255));
+		
+				JPanel panel_noticeBoard = new JPanel();
+				tabbedPane_FriendsPanel.addTab("자유 게시판", null, panel_noticeBoard, null);
+				panel_noticeBoard.setBackground(new Color(135, 206, 250));
+				panel_noticeBoard.setLayout(null);
+				
+						JScrollPane scrollPane_1 = new JScrollPane();
+						scrollPane_1.setBounds(12, 157, 350, 336);
+						panel_noticeBoard.add(scrollPane_1);
+						
+								panel_in_noticeBoard = new JPanel();
+								scrollPane_1.setViewportView(panel_in_noticeBoard);
+								panel_in_noticeBoard.setLayout(new GridLayout(1, 0, 0, 0));
+								
+								btn_Write = new JButton("작성");
+								btn_Write.setBounds(12, 124, 97, 23);
+								panel_noticeBoard.add(btn_Write);
+								
+								
+								
+
+								JLabel lbl_studywithMe_Board = new JLabel(image);
+								lbl_studywithMe_Board.setBounds(25, 21, 326, 116);
+								panel_noticeBoard.add(lbl_studywithMe_Board);
 
 
 	}
@@ -357,6 +369,15 @@ public class FrameCenter extends R {
 		for (int i = 0; i < 100; i++) {
 			panelRoomList[i] = new PanelRoomList(br, pw);
 			Center_centerPane.add(panelRoomList[i]);
+		}
+
+	}
+	public void containWaitpanelClear() {
+
+		panel_waituserList.removeAll();
+		for (int i = 0; i < 100; i++) {
+			waitUserPanel[i] = new PanelAddToFriedns(br, pw);
+			panel_waituserList.add(waitUserPanel[i]);
 		}
 
 	}

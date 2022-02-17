@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.swing.JList;
 import javax.swing.JLabel;
+import java.awt.SystemColor;
 /*
  * 		방만들기 이후 입장해서 보이게되는 화면의
  * 		프레임입니다.
@@ -98,8 +99,9 @@ public class FrameChattingRoom extends R{
 			}
 		});
 		t.setInitialDelay(0);
-		
+		vertical.setBackground(new Color(173, 216, 230));
 		chatting_chattingPanel = new JPanel();
+		chatting_chattingPanel.setBackground(SystemColor.menu);
 		scroll_chatting.setViewportView(chatting_chattingPanel);
 		
 		chatting_textField_message = new JTextField();
@@ -206,12 +208,15 @@ public class FrameChattingRoom extends R{
 		model.remove(list.getSelectedIndex());
 
 	}
+	public void containPanelClear() {
+		chatting_chattingPanel.removeAll();
+	}
 	public static JPanel formatLabel(String message){
         JPanel chattingPanel = new JPanel();
         chattingPanel.setLayout(new BoxLayout(chattingPanel, BoxLayout.Y_AXIS));
         
-        JLabel chattingLabel = new JLabel("<html><p style = \"width : 70px\">" + message + "</p></html>");
-        chattingLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        JLabel chattingLabel = new JLabel("<html><p style = \"width : 100px\">" + message + "</p></html>");
+        chattingLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
         chattingLabel.setBackground(new Color(135, 206, 235));
         chattingLabel.setOpaque(true);
         chattingLabel.setBorder(new EmptyBorder(15,15,15,50));
