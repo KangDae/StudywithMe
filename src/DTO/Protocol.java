@@ -107,5 +107,23 @@ public class Protocol {
 	
 	public static final String WRITRNOTICEBOARD = "600"; //게시판 작성
 	
+	public static final String ADDFRIENDS = "700"; // 친구추가
+	
+	public static final String ADDFRIENDS_ALREADY = "715"; // 이미 친군데?
+	
+	public static final String ADDFRIENDS_ASK = "710"; // 친구 추가 받을거야?
+	
+	public static final String ADDFRIENDS_ANSWER = "720"; // 응받을래
+	
+	public static final String ADDFRIENDS_NO = "730"; // 친추 안받을건데?
+	
+	public static final String MYFRIENDS_LIST = "740"; // 내친구리스트 불러올래
+	
+	public static final String MYFRIENDS_LIST_RESET = "750"; // 내친구리스트 불러올래
+	
+	public static final String MYFRIENDS_DELETE = "760"; // 내친구리스트 불러올래
+	
+	
+	
 
 }

@@ -14,8 +14,6 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.SocketException;
-import java.nio.BufferUnderflowException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -24,7 +22,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import DTO.Protocol;
@@ -84,7 +81,7 @@ public class ServerHandler extends Thread {
 					// line[1]은 %까지 split
 					String userContent[] = line[1].split("%");
 					System.out.println(line[1]);
-					String sql = "Insert into UserContent values(nextval(num),?,?,?,?,?,?)";
+					String sql = "Insert into UserContent values(nextval(num),?,?,?,?,?,?,?)";
 					pstmt = conn.prepareStatement(sql);
 					// DB의 회원정보 순서
 					pstmt.setString(1, userContent[0]); // ID
@@ -93,11 +90,13 @@ public class ServerHandler extends Thread {
 					pstmt.setString(4, userContent[3]); // age
 					pstmt.setString(5, userContent[4]); // eamil
 					pstmt.setString(6, sql);
+					pstmt.setString(7, sql);
 					String Roompath = path + "\\userFolder\\" + userContent[0];
 
 					File folder = new File(Roompath);
 
 					File RoomList = new File(Roompath + "\\Roomlist.txt");
+					File FriendsList = new File(Roompath + "\\Friends.txt");
 
 					if (folder.exists()) {// exists-> 파일폴더가 존재하는지.
 						try {
@@ -108,6 +107,7 @@ public class ServerHandler extends Thread {
 					} else if (!folder.exists()) {// 폴더가 존재하지 않을때
 						folder.mkdir();// mkdir-> 폴더 새로 생성
 						RoomList.createNewFile();
+						FriendsList.createNewFile();
 						System.out.println("폴더가 생성되었습니다.");
 					}
 
@@ -232,6 +232,8 @@ public class ServerHandler extends Thread {
 
 					System.out.println(userContent[0] + "/" + userContent[1]);
 
+					
+					
 					// 로그인후 대기실인원=waitUserList
 					for (int i = 0; i < waitUserList.size(); i++) {
 						if ((waitUserList.get(i).user.getIdName()).compareTo(userContent[0]) == 0) {
@@ -279,7 +281,7 @@ public class ServerHandler extends Thread {
 
 						} else { // 로그인 되었을때
 							waitUserList.add(this); // 대기방 인원수 추가
-
+				
 							String userinfo = "";
 							userinfo += user.getName() + "%" + user.getIdName() + "%" + user.getPassword() + "%"
 									+ user.getEmail() + "%" + user.getAge();
@@ -347,6 +349,7 @@ public class ServerHandler extends Thread {
 					for (int i = 0; i < waitUserList.size(); i++) {
 						userline += (waitUserList.get(i).user.getIdName() + ":");
 					}
+					// 로그아웃이야
 
 					System.out.println("대기자 인원 :" + userline);
 					for (int i = 0; i < waitUserList.size(); i++) {
@@ -507,6 +510,7 @@ public class ServerHandler extends Thread {
 					pstmt = conn.prepareStatement(updateSql);
 
 					String roomId = Files.readString(Paths.get(userpath));
+					System.out.println(roomId + "룸아이디");
 					pstmt.setString(1, roomId);
 					pstmt.setString(2, user.getIdName());
 					pstmt.executeUpdate();
@@ -696,8 +700,8 @@ public class ServerHandler extends Thread {
 
 					for (int i = 0; i < roomtotalList.get(index).roomInUserList.size(); i++) {
 						if (!(roomtotalList.get(index).roomInUserList.get(i).user.getIdName() == user.getIdName())) {
-							roomtotalList.get(index).roomInUserList.get(i).pw.println(Protocol.CHATTINGSENDMESSAGE_OK
-									+ "|" + user.getIdName() + "|" + "님이 입장하셨습니다.!");
+							roomtotalList.get(index).roomInUserList.get(i).pw.println(
+									Protocol.CHATTINGSENDMESSAGE_OK + "|" + user.getIdName() + "|" + "님이 입장하셨습니다.!");
 							roomtotalList.get(index).roomInUserList.get(i).pw.flush();
 						}
 					}
@@ -1093,6 +1097,144 @@ public class ServerHandler extends Thread {
 					pstmt.setString(1, line[1]);
 					pstmt.setInt(2, user.getPryNumber());
 					pstmt.executeUpdate();
+				} else if (line[0].compareTo(Protocol.ADDFRIENDS) == 0) {
+					// line[1] 친추받는유저이름
+					String userpath = path + "\\userFolder\\" + user.getIdName() + "\\Friends.txt";
+					String[] friendsList = Files.readString(Paths.get(userpath)).split("%");
+					String idName = line[1];
+					boolean whereFriends = false;
+					if (idName.equals(user.getIdName())) {
+						pw.println(Protocol.ADDFRIENDS_ASK + "|" + user.getIdName());
+						pw.flush();
+					} else {
+						for (int i = 0; i < friendsList.length; i++) {
+							if (friendsList[i].equals(idName)) {
+								whereFriends = true;
+							}
+						}
+						if (!whereFriends) {
+							for (int i = 0; i < waitUserList.size(); i++) {
+								if (waitUserList.get(i).user.getIdName().equals(idName)) {
+									waitUserList.get(i).pw
+											.println(Protocol.ADDFRIENDS_ASK + "|" + user.getIdName() + "%" + idName);
+									waitUserList.get(i).pw.flush();
+								}
+							}
+						} else {
+							pw.println(Protocol.ADDFRIENDS_ALREADY + "|" + "message");
+							pw.flush();
+						}
+					}
+				} else if (line[0].compareTo(Protocol.ADDFRIENDS_ANSWER) == 0) {
+					String[] userContents = line[1].split("%");
+					System.out.println(userContents[0] + "님께서 " + userContents[1] + "님께 " + userContents[2]);
+					String userpath1 = path + "\\userFolder\\" + userContents[0] + "\\Friends.txt";
+					String userpath2 = path + "\\userFolder\\" + userContents[1] + "\\Friends.txt";
+
+					if (userContents[2].equals("OK")) {
+						String updateSql = "update usercontent set friends=? where IDNAME=?";
+						fw = new BufferedWriter(new FileWriter(userpath1, true));
+						fw.write(userContents[1] + "%");
+						fw.flush();
+
+						pstmt = conn.prepareStatement(updateSql);
+
+						String friendsList = Files.readString(Paths.get(userpath1));
+						pstmt.setString(1, friendsList);
+						pstmt.setString(2, userContents[0]);
+						pstmt.executeUpdate();
+
+						fw = new BufferedWriter(new FileWriter(userpath2, true));
+						fw.write(userContents[0] + "%");
+						fw.flush();
+
+						pstmt = conn.prepareStatement(updateSql);
+
+						friendsList = Files.readString(Paths.get(userpath2));
+						pstmt.setString(1, friendsList);
+						pstmt.setString(2, userContents[1]);
+						pstmt.executeUpdate();
+						for(int i=0;i<waitUserList.size();i++) {
+							waitUserList.get(i).pw.println(Protocol.MYFRIENDS_LIST_RESET + "|" + "message");
+							waitUserList.get(i).pw.flush();
+						}
+					} else {
+						for (int i = 0; i < waitUserList.size(); i++) {
+							if (waitUserList.get(i).user.getIdName().equals(userContents[0])) {
+								waitUserList.get(i).pw.println(Protocol.ADDFRIENDS_NO + "|" + userContents[1]);
+								waitUserList.get(i).pw.flush();
+							}
+						}
+					}
+				} else if (line[0].compareTo(Protocol.MYFRIENDS_LIST) == 0) {
+					String userpath = path + "\\userFolder\\" + user.getIdName() + "\\Friends.txt";
+					String friendsList = Files.readString(Paths.get(userpath));
+					String[] friends = friendsList.split("%");
+					
+					String frinedsLine = "";
+					boolean check = false;
+					for (int j = 0; j < friends.length; j++) {
+						for (int i = 0; i < waitUserList.size(); i++) {
+							if (waitUserList.get(i).user.getIdName().equals(friends[0])) {
+								frinedsLine += friends[j] + "%" + "on" + "-";
+								check = true;
+							}
+						} 
+						if(!check) {
+							frinedsLine += friends[j] + "%" + "off" + "-";
+						}
+					}
+					
+					pw.println(Protocol.MYFRIENDS_LIST + "|" + frinedsLine);
+					pw.flush();
+				} else if (line[0].compareTo(Protocol.MYFRIENDS_DELETE) == 0) {
+					String updateSql = "update usercontent set friends=? where IDNAME=?";
+					String userpath1 = path + "\\userFolder\\" + user.getIdName() + "\\Friends.txt";//방장꺼 수정
+					String friendsList = Files.readString(Paths.get(userpath1));
+					String updateText = "";
+					String[] test = friendsList.split("%");
+					for(int i =0;i<test.length;i++) {
+						if(test[i].equals(line[1])) {
+						} else {
+							updateText += test[i] + "%";
+						}
+					}
+					System.out.println(updateText);
+					fw = new BufferedWriter(new FileWriter(userpath1, false));
+					fw.write(updateText);
+					fw.flush();
+
+					pstmt = conn.prepareStatement(updateSql);
+
+					pstmt.setString(1, updateText);
+					pstmt.setString(2, user.getIdName());
+					pstmt.executeUpdate();
+					
+					// ======================= 삭제한 유저쪽 =======================
+					userpath1 = path + "\\userFolder\\" + line[1] + "\\Friends.txt";//방장꺼 수정
+					friendsList = Files.readString(Paths.get(userpath1));
+					updateText = "";
+					String[] test1 = friendsList.split("%");
+					for(int i =0;i<test.length;i++) {
+						if(test1[i].equals(user.getIdName())) {
+						} else {
+							updateText += test1[i] + "%";
+						}
+					}
+					fw = new BufferedWriter(new FileWriter(userpath1, false));
+					fw.write(updateText);
+					fw.flush();
+
+					pstmt = conn.prepareStatement(updateSql);
+
+					friendsList = Files.readString(Paths.get(userpath1));
+					pstmt.setString(1, updateText);
+					pstmt.setString(2, line[1]);
+					pstmt.executeUpdate();
+					for(int i=0;i<waitUserList.size();i++) {
+						waitUserList.get(i).pw.println(Protocol.MYFRIENDS_LIST_RESET + "|" + "message");
+						waitUserList.get(i).pw.flush();
+					}
 				}
 
 			} // while
@@ -1102,9 +1244,9 @@ public class ServerHandler extends Thread {
 			socket.close();
 
 		} catch (IOException io) {
-			io.printStackTrace();
+
 		} catch (SQLException e) {
-			e.printStackTrace();
+
 		}
 	}
 

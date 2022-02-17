@@ -15,15 +15,15 @@ import javax.swing.JPanel;
 import DTO.Protocol;
 import Server.Client_network;
 
-public class PanelAddToFriedns extends JPanel implements ActionListener {
-	public static String labelName[] = { "아 이 디: ", "        ", "         " };
+public class PanelMyFridendsList extends JPanel implements ActionListener {
+	public static String labelName[] = { "아 이 디: ", "        ", "    " };
 	public JLabel labelArray[];
 	private JButton enterButton;
 
 	private BufferedReader br;
 	private PrintWriter pw;
 
-	public PanelAddToFriedns(BufferedReader br, PrintWriter pw) {
+	public PanelMyFridendsList(BufferedReader br, PrintWriter pw) {
 		this.br = br;
 		this.pw = pw;
 		this.setBackground(new Color(0, 191, 255));
@@ -39,7 +39,7 @@ public class PanelAddToFriedns extends JPanel implements ActionListener {
 			labelArray[i] = new JLabel(labelName[i]);
 			this.add(labelArray[i]);
 		}
-		enterButton = new JButton("친구추가");
+		enterButton = new JButton("친구 삭제");
 		this.add(enterButton);
 		enterButton.addActionListener(this);
 		this.setBackground(new Color(135, 206, 250));
@@ -48,10 +48,8 @@ public class PanelAddToFriedns extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == enterButton) {
-			String line = "";
-				line += (Protocol.ADDFRIENDS + "|" + labelArray[1].getText());
-				pw.println(line);
-				pw.flush();
+			pw.println(Protocol.MYFRIENDS_DELETE + "|" + labelArray[1].getText());
+			pw.flush();
 		}
 	}
 

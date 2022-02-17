@@ -3,17 +3,13 @@ package Server;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.JOptionPane;
@@ -94,6 +90,8 @@ public class ClientHandler extends R implements Runnable {
 						frameCenter.waitUserPanel[i].init();
 						frameCenter.waitUserPanel[i].labelArray[1].setText(text[i]);
 					}
+					pw.println(Protocol.MYFRIENDS_LIST + "|" + "message");
+					pw.flush();
 
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN_OK_USERINFOMATION) == 0) {
 					String[] userinfo = line[1].split("%");
@@ -121,7 +119,8 @@ public class ClientHandler extends R implements Runnable {
 						frameCenter.waitUserPanel[i].init();
 						frameCenter.waitUserPanel[i].labelArray[1].setText(text[i]);
 					}
-					
+					pw.println(Protocol.MYFRIENDS_LIST + "|" + "message");
+					pw.flush();
 
 				} else if (line[0].compareTo(Protocol.SENDMESSAGE_ACK) == 0) { // 서버로 메세지 받음 [대기실]
 					frameCenter.Center_textArea_Chatting.append("[" + line[1] + "] :" + line[2] + '\n');
@@ -160,13 +159,13 @@ public class ClientHandler extends R implements Runnable {
 					}
 
 				} else if (line[0].compareTo(Protocol.SearchRoom) == 0) {
-					//방 검색 실패했을때
+					// 방 검색 실패했을때
 					if (line.length == 1) {
 						JOptionPane.showMessageDialog(btn_Confirm, "검색을 실패하였습니다.");
 						frameCenter.repaint();
 						frameCenter.containPanelClear();
 					}
-					//방 검색 성공했을때
+					// 방 검색 성공했을때
 					else {
 						JOptionPane.showMessageDialog(btn_Confirm, "검색을 성공하였습니다.");
 						String roomList[] = line[1].split("-"); // 방세부
@@ -174,7 +173,6 @@ public class ClientHandler extends R implements Runnable {
 
 						frameCenter.containPanelClear(); // 룸 프레임에 컨테이너를 비워주고
 						for (int i = 0; i < roomList.length; i++) {
-							System.out.println(roomList[i].toString() + "룸리스트i 투스트링부분");
 							roomListDetail = roomList[i].split("%");
 							System.out.println(roomListDetail.length);
 
@@ -250,7 +248,6 @@ public class ClientHandler extends R implements Runnable {
 //						frameChattingRoom.Chatting_textarea_Inuserlist.append(roomMember[i] + "\n");
 //					}
 
-
 				} else if (line[0].compareTo(Protocol.CHATTINGSENDMESSAGE_MASTER_OK) == 0) {
 					if (line.length == 3) {
 						String message = line[2];
@@ -318,7 +315,7 @@ public class ClientHandler extends R implements Runnable {
 					String roomMember[] = line[2].split("%");// 룸에 들어온사람들
 					String LinesTest1 = "";
 					String lineList = "";
-					
+
 					for (int i = 0; i < LinesTest.length; i++) {
 						LinesTest1 += (LinesTest[i] + "-\n");
 					}
@@ -326,55 +323,56 @@ public class ClientHandler extends R implements Runnable {
 					for (int i = 0; i < roomMember.length; i++) {
 						lineList += (roomMember[i] + "\n");
 					}
-					
-					String testNew[] = LinesTest1.replace("[","").replace("]","").replace(" ", "").split("-");
+
+					String testNew[] = LinesTest1.replace("[", "").replace("]", "").replace(" ", "").split("-");
 					LinesTest1 = "";
-					for(int i=0;i<testNew.length-1;i++) {
-						testNew[i] = testNew[i].substring(testNew[i].indexOf(":")+1);
-						LinesTest1 += ( testNew[i] + "%" );
+					for (int i = 0; i < testNew.length - 1; i++) {
+						testNew[i] = testNew[i].substring(testNew[i].indexOf(":") + 1);
+						LinesTest1 += (testNew[i] + "%");
 					}
-					int j=0;
+					int j = 0;
 					String text[] = LinesTest1.split("%");
-					String ids[] = new String[text.length/2];
-					String messages[] = new String[text.length/2];
-					for(int i=0;i<text.length;i++) {
-						if(i==0 || i%2==1) {
+					String ids[] = new String[text.length / 2];
+					String messages[] = new String[text.length / 2];
+					for (int i = 0; i < text.length; i++) {
+						if (i == 0 || i % 2 == 1) {
 							ids[j] = text[i];
 						} else {
 							messages[j] = text[i];
 							j++;
 						}
 					}
-					for(int i=0;i<messages.length-1;i++) {
-						if(line[3].equals(ids[i])) {
-							
-								JPanel panel = frameChattingRoom.formatLabel(messages[i]);
-								JPanel right = new JPanel(new BorderLayout());
-								right.add(panel, BorderLayout.LINE_END);
-								frameChattingRoom.vertical.add(right);
-								frameChattingRoom.chatting_chattingPanel.repaint();
+					for (int i = 0; i < messages.length - 1; i++) {
+						if (line[3].equals(ids[i])) {
+
+							JPanel panel = frameChattingRoom.formatLabel(messages[i]);
+							JPanel right = new JPanel(new BorderLayout());
+							right.add(panel, BorderLayout.LINE_END);
+							frameChattingRoom.vertical.add(right);
+							frameChattingRoom.chatting_chattingPanel.repaint();
 						} else {
-								String message = "[" + ids[i] + "] :" + messages[i];
-								JPanel p2 = frameChattingRoom.formatLabel(messages[i]);
-								JPanel left = new JPanel(new BorderLayout());
-								left.add(p2, BorderLayout.LINE_START);
-								frameChattingRoom.vertical.add(left);
-								frameChattingRoom.chatting_chattingPanel.repaint();
+							String message = "[" + ids[i] + "] :" + messages[i];
+							JPanel p2 = frameChattingRoom.formatLabel(messages[i]);
+							JPanel left = new JPanel(new BorderLayout());
+							left.add(p2, BorderLayout.LINE_START);
+							frameChattingRoom.vertical.add(left);
+							frameChattingRoom.chatting_chattingPanel.repaint();
 						}
 					}
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText(lineList);
-					String message = "[" + "환영합니다"+line[3] + "회원님" + "]";
+					String message = "[" + "환영합니다" + line[3] + "회원님" + "]";
 					JPanel p2 = frameChattingRoom.formatLabel(message);
 					JPanel left = new JPanel(new BorderLayout());
 					left.add(p2, BorderLayout.LINE_START);
 					frameChattingRoom.vertical.add(left);
-					frameChattingRoom.chatting_chattingPanel.repaint();	
+					frameChattingRoom.chatting_chattingPanel.repaint();
 
 					try {
 						frameChattingRoom.chatting_chattingPanel.setLayout(new BorderLayout());
 						frameChattingRoom.vertical.add(Box.createVerticalStrut(5));
 						frameChattingRoom.vertical.setBackground(new Color(173, 216, 230));
-						frameChattingRoom.chatting_chattingPanel.add(frameChattingRoom.vertical, BorderLayout.PAGE_START);
+						frameChattingRoom.chatting_chattingPanel.add(frameChattingRoom.vertical,
+								BorderLayout.PAGE_START);
 						frameChattingRoom.chatting_chattingPanel.repaint();
 						Thread.sleep(500);
 						frameChattingRoom.scroll_chatting.getVerticalScrollBar()
@@ -460,6 +458,54 @@ public class ClientHandler extends R implements Runnable {
 					frameChattingRoom.frameDown();
 					frameCenter.start();
 
+				} else if (line[0].compareTo(Protocol.ADDFRIENDS_ASK) == 0) {
+					String[] userContents = line[1].split("%");
+					if (userContents.length == 2) {
+						int result = JOptionPane.showConfirmDialog(null, userContents[0] + "님께서 친구추가 요청을 하였습니다.");
+						if (result == JOptionPane.YES_OPTION) {
+							pw.println(Protocol.ADDFRIENDS_ANSWER + "|" + userContents[0] + "%" + userContents[1] + "%"
+									+ "OK");
+							pw.flush();
+						} else {
+							pw.println(Protocol.ADDFRIENDS_ANSWER + "|" + userContents[0] + "%" + userContents[1] + "%"
+									+ "NO");
+							pw.flush();
+						}
+					} else {
+						JOptionPane.showMessageDialog(R.btn_Confirm, "자기자신은 누구보다 친한 친구입니다.");
+					}
+
+				} else if (line[0].compareTo(Protocol.ADDFRIENDS_ALREADY) == 0) {
+					JOptionPane.showMessageDialog(R.btn_Confirm, "이미 친구로 등록되어있습니다. !");
+				} else if (line[0].compareTo(Protocol.ADDFRIENDS_NO) == 0) {
+					JOptionPane.showMessageDialog(R.btn_Confirm, line[1] + "친구요청이 거절되었습니다.");
+				} else if (line[0].compareTo(Protocol.MYFRIENDS_LIST) == 0) {
+					if (line.length == 1) {
+						System.out.println("비어있습니다.");
+						frameCenter.repaint();
+						frameCenter.containFriendsClear();
+					} else {
+
+						String friendsList[] = line[1].split("-"); // 방세부
+
+						String friendsOnLie[];
+
+						frameCenter.containFriendsClear(); // 룸 프레임에 컨테이너를 비워주고
+						for (int i = 0; i < friendsList.length; i++) {
+							friendsOnLie = friendsList[i].split("%");
+							System.out.println(friendsOnLie.length);
+							if (friendsOnLie[0] != "") {
+								frameCenter.friendsPanel[i].init(); // 방리스트를 받은거로 다시 생성해주고
+								String userNumber = "";
+
+								frameCenter.friendsPanel[i].labelArray[1].setText(friendsOnLie[0]);
+								frameCenter.friendsPanel[i].labelArray[2].setText(friendsOnLie[1]);
+							}
+						}
+					}
+				} else if (line[0].compareTo(Protocol.MYFRIENDS_LIST_RESET) == 0) {
+					pw.println(Protocol.MYFRIENDS_LIST + "|" + "message");
+					pw.flush();
 				}
 
 			} catch (IOException io) {
