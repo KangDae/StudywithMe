@@ -1,5 +1,7 @@
 package Server;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,7 +15,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import DTO.Protocol;
 import Resource.R;
@@ -85,11 +89,11 @@ public class ClientHandler extends R implements Runnable {
 					frameCenter.Center_textArea_Chatting.append(line[1] + line[2] + '\n');
 
 					String text[] = line[3].split(":");
-					String userlist = "";
+					frameCenter.containWaitpanelClear(); // 룸 프레임에 컨테이너를 비워주고
 					for (int i = 0; i < text.length; i++) {
-						userlist += (text[i] + "\n");
+						frameCenter.waitUserPanel[i].init();
+						frameCenter.waitUserPanel[i].labelArray[1].setText(text[i]);
 					}
-					frameCenter.textArea_Waituser.setText(userlist);
 
 				} else if (line[0].compareTo(Protocol.ENTERLOGIN_OK_USERINFOMATION) == 0) {
 					String[] userinfo = line[1].split("%");
@@ -112,10 +116,12 @@ public class ClientHandler extends R implements Runnable {
 
 					String text[] = line[3].split(":");
 					String userlist = "";
+					frameCenter.containWaitpanelClear(); // 룸 프레임에 컨테이너를 비워주고
 					for (int i = 0; i < text.length; i++) {
-						userlist += (text[i] + "\n");
+						frameCenter.waitUserPanel[i].init();
+						frameCenter.waitUserPanel[i].labelArray[1].setText(text[i]);
 					}
-					frameCenter.textArea_Waituser.setText(userlist);
+					
 
 				} else if (line[0].compareTo(Protocol.SENDMESSAGE_ACK) == 0) { // 서버로 메세지 받음 [대기실]
 					frameCenter.Center_textArea_Chatting.append("[" + line[1] + "] :" + line[2] + '\n');
@@ -215,7 +221,8 @@ public class ClientHandler extends R implements Runnable {
 						System.out.println("userNumber : " + userNumber);
 
 					}
-					frameChattingRoom.Chatting_textArea_chatting.setText("");
+					frameChattingRoom.chatting_chattingPanel.removeAll();
+					frameChattingRoom.chatting_chattingPanel.repaint();
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText("");
 					// frameCenter.frameDown(); // 대기방 화면 끄고
 
@@ -224,9 +231,8 @@ public class ClientHandler extends R implements Runnable {
 					System.out.println("방장 입장화면 변환");
 					frameMakeRoom.frameDown(); // 대기방 화면 끄고
 					System.out.println("RoomMaker: " + line[1]);
-
+					frameChattingRoom.vertical.removeAll();
 					frameChattingRoom.setVisible(true);
-					frameChattingRoom.Chatting_textArea_chatting.setText("");
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText(line[1]);
 
 				} else if (line[0].compareTo(Protocol.ENTERROOM_OK1) == 0) // 방입장 입장하는 당사자
@@ -234,20 +240,45 @@ public class ClientHandler extends R implements Runnable {
 					System.out.println("입장화면 변환");
 					frameCenter.frameDown();
 
-					frameChattingRoom.Chatting_textArea_chatting.setText("");
+					frameChattingRoom.vertical.removeAll();
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText("");
 					frameChattingRoom.setVisible(true);
-//					System.out.println(line[2]);
+
 //					String roomMember[] = line[2].split("%");//룸에 들어온사람들
-//					frameChattingRoom.partList.append(line[1]); //자기 추가해주고
+//					frameChattingRoom.Chatting_textarea_Inuserlist.append(line[1]); //자기 추가해주고
 //					for (int i = 0; i < roomMember.length; i++) {
-//						frameChattingRoom.partList.append(roomMember[i] + "\n");
+//						frameChattingRoom.Chatting_textarea_Inuserlist.append(roomMember[i] + "\n");
 //					}
 
+
+				} else if (line[0].compareTo(Protocol.CHATTINGSENDMESSAGE_MASTER_OK) == 0) {
+					if (line.length == 3) {
+						String message = line[2];
+						JPanel panel = frameChattingRoom.formatLabel(message);
+						JPanel right = new JPanel(new BorderLayout());
+						right.add(panel, BorderLayout.LINE_END);
+						frameChattingRoom.vertical.add(right);
+						frameChattingRoom.chatting_chattingPanel.repaint();
+					}
 				} else if (line[0].compareTo(Protocol.CHATTINGSENDMESSAGE_OK) == 0) {
-					frameChattingRoom.Chatting_textArea_chatting.append("[" + line[1] + "] :" + line[2] + "\n");
-					frameChattingRoom.Chatting_textArea_chatting
-							.setCaretPosition(frameChattingRoom.Chatting_textArea_chatting.getDocument().getLength());
+					if (line.length == 3) {
+						String message = "[" + line[1] + "] :" + line[2];
+						JPanel p2 = frameChattingRoom.formatLabel(message);
+						JPanel left = new JPanel(new BorderLayout());
+						left.add(p2, BorderLayout.LINE_START);
+						frameChattingRoom.vertical.add(left);
+						frameChattingRoom.chatting_chattingPanel.repaint();
+					}
+				} else if (line[0].compareTo(Protocol.CHATTINGSCROLLBARDOWN) == 0) {
+					try {
+
+						Thread.sleep(500);
+						frameChattingRoom.scroll_chatting.getVerticalScrollBar()
+								.setValue(frameChattingRoom.scroll_chatting.getVerticalScrollBar().getMaximum());
+
+					} catch (Exception e) {
+						System.out.println(e);
+					}
 
 				} else if (line[0].compareTo(Protocol.CHATTINGFILESEND_SYNACK) == 0) {
 
@@ -287,21 +318,71 @@ public class ClientHandler extends R implements Runnable {
 					String roomMember[] = line[2].split("%");// 룸에 들어온사람들
 					String LinesTest1 = "";
 					String lineList = "";
-
+					
 					for (int i = 0; i < LinesTest.length; i++) {
-						LinesTest1 += (LinesTest[i] + "\n");
-						System.out.println(LinesTest[i] + "라인즈테스트 순서");
+						LinesTest1 += (LinesTest[i] + "-\n");
 					}
 
 					for (int i = 0; i < roomMember.length; i++) {
 						lineList += (roomMember[i] + "\n");
 					}
-
-					frameChattingRoom.Chatting_textArea_chatting.setText(LinesTest1.replace("[", "").replace("]", ""));
+					
+					String testNew[] = LinesTest1.replace("[","").replace("]","").replace(" ", "").split("-");
+					LinesTest1 = "";
+					for(int i=0;i<testNew.length-1;i++) {
+						testNew[i] = testNew[i].substring(testNew[i].indexOf(":")+1);
+						LinesTest1 += ( testNew[i] + "%" );
+					}
+					int j=0;
+					String text[] = LinesTest1.split("%");
+					String ids[] = new String[text.length/2];
+					String messages[] = new String[text.length/2];
+					for(int i=0;i<text.length;i++) {
+						if(i==0 || i%2==1) {
+							ids[j] = text[i];
+						} else {
+							messages[j] = text[i];
+							j++;
+						}
+					}
+					for(int i=0;i<messages.length-1;i++) {
+						if(line[3].equals(ids[i])) {
+							
+								JPanel panel = frameChattingRoom.formatLabel(messages[i]);
+								JPanel right = new JPanel(new BorderLayout());
+								right.add(panel, BorderLayout.LINE_END);
+								frameChattingRoom.vertical.add(right);
+								frameChattingRoom.chatting_chattingPanel.repaint();
+						} else {
+								String message = "[" + ids[i] + "] :" + messages[i];
+								JPanel p2 = frameChattingRoom.formatLabel(messages[i]);
+								JPanel left = new JPanel(new BorderLayout());
+								left.add(p2, BorderLayout.LINE_START);
+								frameChattingRoom.vertical.add(left);
+								frameChattingRoom.chatting_chattingPanel.repaint();
+						}
+					}
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText(lineList);
-					frameChattingRoom.Chatting_textArea_chatting.append(line[3] + "\n");
-					frameChattingRoom.Chatting_textArea_chatting
-							.setCaretPosition(frameChattingRoom.Chatting_textArea_chatting.getDocument().getLength());
+					String message = "[" + "환영합니다"+line[3] + "회원님" + "]";
+					JPanel p2 = frameChattingRoom.formatLabel(message);
+					JPanel left = new JPanel(new BorderLayout());
+					left.add(p2, BorderLayout.LINE_START);
+					frameChattingRoom.vertical.add(left);
+					frameChattingRoom.chatting_chattingPanel.repaint();	
+
+					try {
+						frameChattingRoom.chatting_chattingPanel.setLayout(new BorderLayout());
+						frameChattingRoom.vertical.add(Box.createVerticalStrut(5));
+						frameChattingRoom.vertical.setBackground(new Color(173, 216, 230));
+						frameChattingRoom.chatting_chattingPanel.add(frameChattingRoom.vertical, BorderLayout.PAGE_START);
+						frameChattingRoom.chatting_chattingPanel.repaint();
+						Thread.sleep(500);
+						frameChattingRoom.scroll_chatting.getVerticalScrollBar()
+								.setValue(frameChattingRoom.scroll_chatting.getVerticalScrollBar().getMaximum());
+
+					} catch (Exception e) {
+						System.out.println(e);
+					}
 
 					if (line.length == 4) {
 						String fileList[] = line[5].split("%");
