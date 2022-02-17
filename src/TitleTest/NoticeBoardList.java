@@ -8,16 +8,17 @@ import java.io.PrintWriter;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
 import javax.swing.JPanel;
 
 import DTO.Protocol;
-import Resource.R;
+
 import Server.Client_network;
 
 public class NoticeBoardList extends JPanel implements ActionListener{
-	public static String labelName[] = { "게시판 번호: ", "     ", "게시판 제목 : ", "     ", "작성일 : ", "     "
-			, "작성자 : ", "     ",};
+	public static String labelName[] = { "번호: ", "     ", "제목 : ", "     ", "작성자 : ", "     ", "작성일 : ", "     ", "     " };
+	
+	
 	public JLabel labelArray[];
 	private JButton enterButton;
 	
@@ -46,16 +47,11 @@ public class NoticeBoardList extends JPanel implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		System.out.println("입장버튼");
-		if(e.getSource() == enterButton) {
-			String count[] = labelArray[5].getText().split("/");
-			if(count[0].compareTo(count[1]) == 0) {
-				JOptionPane.showMessageDialog(this, "인원수 초과로 들어갈 수 없습니다.");
-			} else {
+		if(e.getSource() == enterButton) {		
 				String line = "";
-				line += (Protocol.ENTERROOM + "|" + labelArray[1].getText());
+				line += (Protocol.ENTERNOTICEBOARD_SERVER + "|" + labelArray[1].getText());
 				pw.println(line);
 				pw.flush();
-			}
 		}
 		
 	}

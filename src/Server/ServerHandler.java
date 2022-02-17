@@ -1,5 +1,11 @@
 package Server;
 
+import java.awt.AWTException;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -24,13 +30,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+
+import DTO.Notice;
 import DTO.Protocol;
 import DTO.Room;
 import DTO.User;
+import TitleTest.NoticeBoardList;
 
 public class ServerHandler extends Thread {
 	private BufferedReader br;
 	private PrintWriter pw;
+	private BufferedOutputStream bout; 
 	private Socket socket;
 	private User user;
 	private BufferedWriter fw;
@@ -41,23 +55,27 @@ public class ServerHandler extends Thread {
 	private ArrayList<ServerHandler> allUserList; // 전체 사용자
 	private ArrayList<ServerHandler> waitUserList;// 대기실 사용자
 	private ArrayList<Room> roomtotalList; // 전체 방 리스트
+	private ArrayList<Notice> noticeList;
 
 	private Room priRoom;
+	private Notice priNotice;
 	private String fileName;
 	String path = System.getProperty("user.dir");
 
 	public ServerHandler(Socket socket, ArrayList<ServerHandler> allUserList, ArrayList<ServerHandler> waitUserList,
-			ArrayList<Room> roomtotalList, Connection conn) throws IOException {
+			ArrayList<Room> roomtotalList, ArrayList<Notice> noticeList, Connection conn) throws IOException {
 		this.user = new User();
 		this.priRoom = new Room();
 		this.socket = socket;
 		this.allUserList = allUserList;
 		this.waitUserList = waitUserList;
 		this.roomtotalList = roomtotalList;
+		this.noticeList = noticeList;
 		this.conn = conn;
 
 		br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+		bout = new BufferedOutputStream(socket.getOutputStream());
 
 		this.fileName = "";
 	}
@@ -66,6 +84,8 @@ public class ServerHandler extends Thread {
 	public void run() {
 
 		try {
+			final int w = Toolkit.getDefaultToolkit().getScreenSize().width,
+					h = Toolkit.getDefaultToolkit().getScreenSize().height;
 			OutputStream out = null;
 			String[] line = null;
 			while (true) {
@@ -305,10 +325,12 @@ public class ServerHandler extends Thread {
 							for (Room room : roomtotalList) {// 전체방리스트
 								System.out.println(room.toString() + "현재방에 인원수 : " + room.roomInUserList.size());
 							}
+
 							System.out.println("[전체 Room 갯수 ]" + roomtotalList.size());
 
 							// RoomtotalList 전체 정보를 Message로 만들어서 보내야된다
 							String roomListMessage = "";
+							String noticeMessage = "";
 
 							// roomtotalList의 정보들을 console로 알려줌.
 							for (int i = 0; i < roomtotalList.size(); i++) {
@@ -319,14 +341,30 @@ public class ServerHandler extends Thread {
 										+ "%" + roomtotalList.get(i).roomInUserList.size() + "-");
 
 							}
+							System.out.println("size = " + noticeList.size());
+							for (int i = 0; i < noticeList.size(); i++) { // 0 prynum 1 title 2 writer 3 date 4 content
+																			// 5 -
+								noticeMessage += (noticeList.get(i).getPryNumber() + "%" + noticeList.get(i).getTitle()
+										+ "%" + noticeList.get(i).getName() + "%" + noticeList.get(i).getDate() + "%"
+										+ noticeList.get(i).getContent() + "*");
+							}
 
 							System.out.println(roomListMessage);
+							System.out.println("noticemsg=" + noticeMessage);
 							// 대기실에 방이 생겼다고 대기유저들한테 브로드캐스트로 알려주는것.
 							if (roomListMessage.length() != 0) {
 								for (int i = 0; i < waitUserList.size(); i++) {
 									waitUserList.get(i).pw.println(Protocol.ROOMMAKE_OK + "|" + roomListMessage);
 									waitUserList.get(i).pw.flush();
 								}
+							}
+
+							if (noticeMessage.length() != 0) {
+								for (int i = 0; i < waitUserList.size(); i++) {
+									waitUserList.get(i).pw.println(Protocol.ENTERNOTICEBOARD + "|" + noticeMessage);
+									waitUserList.get(i).pw.flush();
+								}
+
 							}
 						}
 
@@ -394,11 +432,15 @@ public class ServerHandler extends Thread {
 						else if (line[1].equals("내방만")) {
 							// Roomlist.txt파일 불러오기
 							System.out.println("내방 불러오기");
-							File MyRoom = new File(path + "\\userFolder\\" + this.user.getIdName() + "\\Roomlist.txt");
+							// File MyRoom = new File(path + "\\userFolder\\" + this.user.getIdName() +
+							// "\\Roomlist.txt");
 							// Roomlist.txt파일 읽어오기
-							BufferedReader reader = new BufferedReader(new FileReader(MyRoom));
-							String s = reader.readLine();// 한줄로 가져오기
-							String[] inRoomList = s.split("%");
+							// BufferedReader reader = new BufferedReader(new FileReader(MyRoom));
+
+							String userPath = path + "\\userFolder\\" + this.user.getIdName() + "\\Roomlist.txt";
+							String roomId = Files.readString(Paths.get(userPath));
+
+							String[] inRoomList = roomId.split("%");
 							for (int j = 0; j < inRoomList.length; j++) {
 								System.out.println(inRoomList[j]);
 								// roomlist.txt.랑 내가참가한 방이랑 같을때
@@ -449,7 +491,7 @@ public class ServerHandler extends Thread {
 								.println(Protocol.SENDMESSAGE_ACK + "|" + user.getIdName() + " |" + line[1]);
 						waitUserList.get(i).pw.flush();
 					}
-				} else if (line[0].compareTo(Protocol.ROOMMAKE) == 0) { // 방만들기
+				} else if (line[0].compareTo(Protocol.ROOMMAKE) == 0) { // 방 만들기
 
 					String userContent[] = line[1].split("%");
 					for (int i = 0; i < userContent.length; i++) {
@@ -1097,6 +1139,7 @@ public class ServerHandler extends Thread {
 					pstmt.setString(1, line[1]);
 					pstmt.setInt(2, user.getPryNumber());
 					pstmt.executeUpdate();
+
 				} else if (line[0].compareTo(Protocol.ADDFRIENDS) == 0) {
 					// line[1] 친추받는유저이름
 					String userpath = path + "\\userFolder\\" + user.getIdName() + "\\Friends.txt";
@@ -1235,6 +1278,103 @@ public class ServerHandler extends Thread {
 						waitUserList.get(i).pw.println(Protocol.MYFRIENDS_LIST_RESET + "|" + "message");
 						waitUserList.get(i).pw.flush();
 					}
+
+				} else if (line[0].compareTo(Protocol.WRITENOTICEBOARD) == 0) { // 게시판 작성
+
+					System.out.println(line[0]); // 프로토콜
+					System.out.println(line[1]); // title
+					System.out.println(line[2]); // content
+
+					if (line[2] == null) {
+
+					}
+
+					String sql = "Insert into noticeboard values(nextval(num),?,?,?,?)";
+
+					LocalDate now = LocalDate.now(); // 현재 시각
+
+					pstmt = conn.prepareStatement(sql);
+					// DB의 회원정보 순서
+					pstmt.setString(1, line[1]); // Title
+					pstmt.setString(2, this.user.getIdName()); // Name
+					pstmt.setString(3, now.toString()); // date
+					pstmt.setString(4, line[2]); // content
+
+					int su = pstmt.executeUpdate();
+					System.out.println("su=" + su);
+
+					Notice notice = new Notice();
+
+					notice.setTitle(line[1]);
+					notice.setName(this.user.getIdName());
+					notice.setDate(now.toString());
+					notice.setContent(line[2]);
+
+					String selectsql = "select * from noticeboard where Title = '" + line[1] + "' and  Name= '"
+							+ this.user.getIdName() + "' and  date= '" + now.toString() + "' and  content= '" + line[2]
+							+ "'";
+
+					pstmt = conn.prepareStatement(selectsql);
+					ResultSet rs = pstmt.executeQuery(selectsql);
+
+					int count = 0;
+					int priNumber = 0;// DB
+
+					while (rs.next()) {
+						count++;
+						priNumber = rs.getInt("priNumber");
+					}
+
+					notice.setPryNumber(priNumber);
+					noticeList.add(notice);
+					priNotice = notice; // 현재 룸을 지정함
+
+					String noticeMessage = "";
+
+					for (int i = 0; i < noticeList.size(); i++) { // 0 prynum 1 title 2 writer 3 date 4 content 5 -
+						noticeMessage += (noticeList.get(i).getPryNumber() + "%" + noticeList.get(i).getTitle() + "%"
+								+ noticeList.get(i).getName() + "%" + noticeList.get(i).getDate() + "%"
+								+ noticeList.get(i).getContent() + "%" + "*");
+					}
+
+					System.out.println("notice=" + noticeMessage);
+
+					for (int i = 0; i < waitUserList.size(); i++) {// 대기자수
+						// 방만든사람에게는 바로 채팅화면으로
+						// 대기자ID랑 방만든사람ID가 같을때
+						if (waitUserList.get(i).user.getIdName().compareTo(notice.getName()) == 0) {
+							waitUserList.get(i).pw.println(Protocol.WRITENOTICEBOARD_MASTER + "|" + notice.getTitle()
+									+ "|" + notice.getContent() + "|" + notice.getName());
+							// 방 만든사람에게 대기방 새로고침
+							waitUserList.get(i).pw.println(Protocol.ENTERNOTICEBOARD + "|" + noticeMessage);
+							waitUserList.get(i).pw.flush();
+						} else { // 다른 대기방사람들에게는 대기방만 새로고침
+							waitUserList.get(i).pw.println(Protocol.ENTERNOTICEBOARD + "|" + noticeMessage);
+							waitUserList.get(i).pw.flush();
+						}
+					}
+
+				} else if (line[0].compareTo(Protocol.ENTERNOTICEBOARD_SERVER) == 0) {
+					// pw.print(Protocol.ENTERNOTICEBOARD_SERVER+"|"+)
+
+					String prynum = line[1];
+					String lines = "";
+
+					for (int i = 0; i < noticeList.size(); i++) {
+						if (noticeList.get(i).getPryNumber() == Integer.parseInt(prynum)) {
+
+							lines = prynum + "|" + noticeList.get(i).getTitle() + "|" + noticeList.get(i).getName()
+									+ "|" + noticeList.get(i).getContent();
+							pw.println(Protocol.ENTERNOTICEBOARD_SERVER + "|" + lines);
+							pw.flush();
+
+						}
+					}
+				}
+
+				else if (line[0].compareTo(Protocol.SHAREDISPLAY) == 0) {
+
+				
 				}
 
 			} // while
@@ -1244,10 +1384,12 @@ public class ServerHandler extends Thread {
 			socket.close();
 
 		} catch (IOException io) {
-
+			waitUserList.remove(this);
+			priRoom.roomInUserList.remove(this);
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
 
-		}
 	}
 
 }

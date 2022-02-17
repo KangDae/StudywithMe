@@ -26,7 +26,7 @@ import javax.swing.ScrollPaneConstants;
  * 		방목록등 전반적인 모든부분을
  * 		보여주는 프레임입니다.
  */
-public class FrameCenter extends JFrame {
+public class FrameCenter extends R {
 	public FrameCenter() {
 		initialize();
 //		this.setUndecorated(true);
@@ -187,7 +187,7 @@ public class FrameCenter extends JFrame {
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPane.setBounds(12, 167, 348, 318);
+		scrollPane.setBounds(0, 167, 372, 328);
 		panel_MyFriends_Tap.add(scrollPane);
 
 		panel_Myfriends = new JPanel();

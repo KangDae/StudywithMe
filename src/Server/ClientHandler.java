@@ -2,6 +2,8 @@ package Server;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Toolkit;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,7 +13,9 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -506,6 +510,88 @@ public class ClientHandler extends R implements Runnable {
 				} else if (line[0].compareTo(Protocol.MYFRIENDS_LIST_RESET) == 0) {
 					pw.println(Protocol.MYFRIENDS_LIST + "|" + "message");
 					pw.flush();
+
+				} else if (line[0].compareTo(Protocol.ENTERNOTICEBOARD) ==0) {
+					
+					
+					
+					String NoticeList[] = line[1].split("\\*"); // 게시판 갯수
+					
+					
+					for (int i = 0; i < NoticeList.length; i++) {
+						System.out.print(NoticeList[i] + "/");
+					}
+
+					String NoticeListDetail[]; // 게시판 세부
+					System.out.println("NoticeList size : " + NoticeList.length);
+
+					frameCenter.containNoticePanelClear(); // 룸 프레임에 컨테이너를 비워주고
+					for (int i = 0; i < NoticeList.length; i++) {
+
+						frameCenter.noticeboardList[i].init(); // 방리스트를 받은거로 다시 생성해주고
+						NoticeListDetail = NoticeList[i].split("%");
+
+						
+						frameCenter.noticeboardList[i].labelArray[1].setText(NoticeListDetail[0]);// 게시판 번호
+						frameCenter.noticeboardList[i].labelArray[3].setText(NoticeListDetail[1]); // 게시판 제목
+						frameCenter.noticeboardList[i].labelArray[5].setText(NoticeListDetail[2]); // 게시판 게시자
+						frameCenter.noticeboardList[i].labelArray[7].setText(NoticeListDetail[3]); // 게시판 날짜
+
+						
+
+					}
+				
+					// frameCenter.frameDown(); // 대기방 화면 끄고
+					
+					
+										
+					
+				} else if (line[0].compareTo(Protocol.WRITENOTICEBOARD_MASTER)==0) {
+					
+					
+					System.out.println("게시자 입장화면 변환");
+					noticewrite.framedown(); // 대기방 화면 끄고
+					System.out.println("NoticeMaker: " + line[1]);
+
+					noticeview.start();
+					noticeview.Title_Textfield.setText(line[1]);
+					noticeview.Text_Content.setText(line[2]);
+					noticeview.lblNewLabel_3.setText(line[3]);
+					
+					
+				} else if(line[0].compareTo(Protocol.ENTERNOTICEBOARD_SERVER)==0) {
+					System.out.println(line[1]);
+					
+					noticeview.start();
+					noticeview.Title_Textfield.setText(line[2]);
+					noticeview.lblNewLabel_3.setText(line[3]);
+					noticeview.Text_Content.setText(line[4]);		
+				} else if(line[0].compareTo(Protocol.WATCHDISPLAY)==0) {
+					
+					final int w = Toolkit.getDefaultToolkit().getScreenSize().width,
+							h = Toolkit.getDefaultToolkit().getScreenSize().height;
+
+					JFrame frame = new JFrame("Client"); // 창 생성
+
+					frame.setBounds(0, 0, 1920, 1080);// 창 위치,크기 조절
+
+					frame.setLayout(null); // 레이아웃 없게 함.
+
+					frame.setVisible(true);
+					
+					
+
+					BufferedInputStream bin = new BufferedInputStream(socket.getInputStream());
+
+					// 소켓의 입력스트림을 버퍼스트림으로
+
+					while (true) {
+
+						frame.getGraphics().drawImage(ImageIO.read(ImageIO.createImageInputStream(bin)), 0, 0, w, h, frame);
+
+						// 이미지를 받아오는 동시에 화면에 그림
+
+					}
 				}
 
 			} catch (IOException io) {

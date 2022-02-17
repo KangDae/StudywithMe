@@ -48,6 +48,8 @@ public class FrameChattingRoom extends R{
 	public JTextArea Chatting_textarea_Inuserlist;
 	public JScrollPane scroll_chatting;
 	public Box vertical = Box.createVerticalBox();
+	public JButton btn_ShareDisplay;
+    public JButton btn_ShowDisplay;
 	Boolean typing;
 
 	public FrameChattingRoom(){
@@ -165,7 +167,22 @@ public class FrameChattingRoom extends R{
 		JLabel lbl_FileList = new JLabel("공유파일 목록");
 		lbl_FileList.setBounds(26, 236, 103, 19);
 		panel_ParticipantList.add(lbl_FileList);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(135, 206, 250));
+		tabbedPane_Chatting.addTab("화면 공유", null, panel, null);
+		panel.setLayout(null);
+		
+		btn_ShareDisplay = new JButton("화면 공유");
+		btn_ShareDisplay.setBounds(124, 160, 97, 23);
+		panel.add(btn_ShareDisplay);
+		
+		btn_ShowDisplay = new JButton("보기");
+		btn_ShowDisplay.setBounds(124, 331, 97, 23);
+		panel.add(btn_ShowDisplay);
 	}
+	
+	
 	public void frameDown() {
 		this.setVisible(false);
 	}

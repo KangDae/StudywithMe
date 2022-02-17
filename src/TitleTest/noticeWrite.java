@@ -42,6 +42,10 @@ public class noticeWrite extends R {
 	public void start() {
 		this.setVisible(true);
 	}
+	
+	public void framedown() {
+		this.setVisible(false);
+	}
 
 	/**
 	 * Initialize the contents of the frame.

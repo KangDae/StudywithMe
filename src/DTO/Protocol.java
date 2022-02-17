@@ -105,7 +105,17 @@ public class Protocol {
 
 	public static final String CHATTINGFILEDOWNLOAD_SEND = "560"; // 파일 보냄
 	
-	public static final String WRITRNOTICEBOARD = "600"; //게시판 작성
+	public static final String WRITENOTICEBOARD = "600"; //게시판 작성
+	
+	public static final String ENTERNOTICEBOARD_SERVER = "611"; //서버 게시판 조회
+	
+	public static final String ENTERNOTICEBOARD = "610"; // 게시판 조회
+	
+	public static final String WRITENOTICEBOARD_MASTER = "620"; //게시판 만든 당사자
+	
+	public static final String SHAREDISPLAY = "630"; //화면 공유
+	
+	public static final String WATCHDISPLAY = "640"; //화면 보기
 	
 	public static final String ADDFRIENDS = "700"; // 친구추가
 	

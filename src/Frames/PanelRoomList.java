@@ -52,6 +52,7 @@ public class PanelRoomList extends JPanel implements ActionListener{
 				JOptionPane.showMessageDialog(this, "인원수 초과로 들어갈 수 없습니다.");
 			} else {
 				String line = "";
+				System.out.println(labelArray[1].getText());
 				line += (Protocol.ENTERROOM + "|" + labelArray[1].getText());
 				pw.println(line);
 				pw.flush();

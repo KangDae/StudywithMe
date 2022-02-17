@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 
-public class noticeView extends R {
+public class noticeView extends R{
 
 	public  JTextField Title_Textfield; //제목입력
 	public  JTextArea Text_Content; //내용입력
@@ -23,6 +23,8 @@ public class noticeView extends R {
 	public JLabel lblNewLabel; //제목 라벨
 	
 	public JLabel lblNewLabel_1; //내용 라벨
+	
+	public JLabel lblNewLabel_3; //작성자 라벨
 	
 
 	
@@ -50,21 +52,31 @@ public class noticeView extends R {
 		this.getContentPane().setLayout(null);
 		
 		Title_Textfield = new JTextField();
-		Title_Textfield.setBounds(92, 27, 226, 21);
+		Title_Textfield.setEditable(false);
+		Title_Textfield.setBounds(76, 27, 226, 21);
 		this.getContentPane().add(Title_Textfield);
 		Title_Textfield.setColumns(10);
 		
 		Text_Content = new JTextArea();
-		Text_Content.setBounds(40, 93, 294, 360);
+		Text_Content.setEditable(false);
+		Text_Content.setBounds(42, 120, 294, 360);
 		this.getContentPane().add(Text_Content);
 				
 		check_Btn = new JButton("확인");
-		check_Btn.setBounds(137, 497, 97, 23);
+		check_Btn.setBounds(136, 505, 97, 23);
 		this.getContentPane().add(check_Btn);
 		
 		lblNewLabel = new JLabel("내용");
-		lblNewLabel.setBounds(40, 76, 57, 15);
+		lblNewLabel.setBounds(42, 101, 57, 15);
 		this.getContentPane().add(lblNewLabel);
+		
+		JLabel lblNewLabel_2 = new JLabel("제목");
+		lblNewLabel_2.setBounds(40, 30, 57, 15);
+		getContentPane().add(lblNewLabel_2);
+		
+		lblNewLabel_3 = new JLabel("작성자");
+		lblNewLabel_3.setBounds(304, 65, 57, 15);
+		getContentPane().add(lblNewLabel_3);
 		
 		lblNewLabel_1 = new JLabel("제목");
 		lblNewLabel_1.setFont(new Font("굴림", Font.PLAIN, 14));
