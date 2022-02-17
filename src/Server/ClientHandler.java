@@ -379,6 +379,63 @@ public class ClientHandler extends R implements Runnable {
 					frameChattingRoom.frameDown();
 					frameCenter.start();
 
+				} else if (line[0].compareTo(Protocol.ENTERNOTICEBOARD) ==0) {
+					
+					
+					
+					String NoticeList[] = line[1].split("\\*"); // 게시판 갯수
+					
+					
+					for (int i = 0; i < NoticeList.length; i++) {
+						System.out.print(NoticeList[i] + "/");
+					}
+
+					String NoticeListDetail[]; // 게시판 세부
+					System.out.println("NoticeList size : " + NoticeList.length);
+
+					frameCenter.containNoticePanelClear(); // 룸 프레임에 컨테이너를 비워주고
+					for (int i = 0; i < NoticeList.length; i++) {
+
+						frameCenter.noticeboardList[i].init(); // 방리스트를 받은거로 다시 생성해주고
+						NoticeListDetail = NoticeList[i].split("%");
+
+						
+						frameCenter.noticeboardList[i].labelArray[1].setText(NoticeListDetail[0]);// 게시판 번호
+						frameCenter.noticeboardList[i].labelArray[3].setText(NoticeListDetail[1]); // 게시판 제목
+						frameCenter.noticeboardList[i].labelArray[5].setText(NoticeListDetail[2]); // 게시판 게시자
+						frameCenter.noticeboardList[i].labelArray[7].setText(NoticeListDetail[3]); // 게시판 날짜
+
+						
+
+					}
+				
+					// frameCenter.frameDown(); // 대기방 화면 끄고
+					
+					
+										
+					
+				} else if (line[0].compareTo(Protocol.WRITENOTICEBOARD_MASTER)==0) {
+					
+					
+					System.out.println("게시자 입장화면 변환");
+					noticewrite.framedown(); // 대기방 화면 끄고
+					System.out.println("NoticeMaker: " + line[1]);
+
+					noticeview.start();
+					noticeview.Title_Textfield.setText(line[1]);
+					noticeview.Text_Content.setText(line[2]);
+					noticeview.lblNewLabel_3.setText(line[3]);
+					
+					
+				} else if(line[0].compareTo(Protocol.ENTERNOTICEBOARD_SERVER)==0) {
+					System.out.println(line[1]);
+					
+					noticeview.start();
+					noticeview.Title_Textfield.setText(line[2]);
+					noticeview.lblNewLabel_3.setText(line[3]);
+					noticeview.Text_Content.setText(line[4]);
+					
+					
 				}
 
 			} catch (IOException io) {

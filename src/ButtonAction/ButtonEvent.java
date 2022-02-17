@@ -75,6 +75,8 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		// ================== 게시물 작성 부분 ======================
 		noticewrite.btn_Write.addActionListener(this);
 		noticewrite.btn_Cancle.addActionListener(this);
+		
+		noticeview.check_Btn.addActionListener(this);
 		// ===============> 내정보 수정하는 부분(in Center)<===============
 		frameCenter.btn_updateID.addActionListener(this);
 		frameCenter.btn_updateName.addActionListener(this);
@@ -566,18 +568,30 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		// ==> 게시판 작성 버튼 <==
 		else if (e.getSource().equals(frameCenter.btn_Write)) {
 			noticewrite.start();
+		    noticewrite.textArea.setText("");
+		    noticewrite.textField.setText("");
 			frameCenter.frameDown();
 		}
 		// ================== 게시판 작성 부분 ==================
 
 		// ==> 작성 버튼 <==
 		else if (e.getSource().equals(noticewrite.btn_Write)) {
-
+			String title = noticewrite.textField.getText();
+			String content = noticewrite.textArea.getText();
+			
+		    pw.println(Protocol.WRITENOTICEBOARD+"|"+title+"|"+content);
+		    pw.flush();
 		}
 
 		// ==> 취소 버튼 <==
 		else if (e.getSource().equals(noticewrite.btn_Cancle)) {
-
+			frameCenter.start();
+			noticewrite.framedown();
+		}
+		
+		else if(e.getSource().equals(noticeview.check_Btn)) {
+			frameCenter.start();
+			noticeview.frameDown();
 		}
 
 		// ================== 수정 부분(in Center) ==================
