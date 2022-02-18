@@ -256,6 +256,9 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 				condition_ID = false;
 				scretNumber = SCRET;
 				// 아이디 중복확인을 하지않고 이메일 인증만 했을 경우
+				
+				frameSignup.frameDown();
+				frameLogin.start();
 			} else if (!condition_ID && condition_Email) {
 				JOptionPane.showMessageDialog(btn_Confirm, "ID 중복확인 해주세요");
 				// 이메일 인증만하고 중복확인을 하지 않았을경우
