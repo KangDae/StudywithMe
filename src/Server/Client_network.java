@@ -20,7 +20,7 @@ public class Client_network {
 	}
 	public void network() {
 		try {
-			socket = new Socket("127.0.0.1",9500);
+			socket = new Socket("221.145.126.168",9500);
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 			bin = new BufferedInputStream(socket.getInputStream());

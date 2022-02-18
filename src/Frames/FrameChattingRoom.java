@@ -50,7 +50,10 @@ public class FrameChattingRoom extends R{
 	public Box vertical = Box.createVerticalBox();
 	public JButton btn_ShareDisplay;
     public JButton btn_ShowDisplay;
+    public JButton btn_Shutdown;
+   
 	Boolean typing;
+	public JTextField ExplainSharer;
 
 	public FrameChattingRoom(){
 		initialize();
@@ -80,7 +83,6 @@ public class FrameChattingRoom extends R{
 		panel_Chatting.setForeground(Color.LIGHT_GRAY);
 		tabbedPane_Chatting.addTab("채팅", null, panel_Chatting, null);
 		panel_Chatting.setLayout(null);
-		//Chatting_textArea_chatting.setBounds(12, 10, 355, 417);
 		
 		
 		
@@ -93,6 +95,7 @@ public class FrameChattingRoom extends R{
 		scroll_chatting.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scroll_chatting.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		panel_Chatting.add(scroll_chatting);
+		
 		Timer t = new Timer(1, new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				if (!typing) {
@@ -174,12 +177,23 @@ public class FrameChattingRoom extends R{
 		panel.setLayout(null);
 		
 		btn_ShareDisplay = new JButton("화면 공유");
-		btn_ShareDisplay.setBounds(124, 160, 97, 23);
+		btn_ShareDisplay.setBounds(38, 145, 97, 23);
 		panel.add(btn_ShareDisplay);
 		
 		btn_ShowDisplay = new JButton("보기");
-		btn_ShowDisplay.setBounds(124, 331, 97, 23);
+		btn_ShowDisplay.setBounds(38, 310, 97, 23);
 		panel.add(btn_ShowDisplay);
+		
+		ExplainSharer = new JTextField();
+		ExplainSharer.setEditable(false);
+		ExplainSharer.setBounds(38, 188, 272, 21);
+		panel.add(ExplainSharer);
+		ExplainSharer.setColumns(10);
+		
+		btn_Shutdown = new JButton("공유 중지");
+		btn_Shutdown.setBounds(213, 145, 97, 23);
+		panel.add(btn_Shutdown);
+		
 	}
 	
 	

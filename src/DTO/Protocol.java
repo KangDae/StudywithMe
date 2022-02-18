@@ -117,6 +117,12 @@ public class Protocol {
 	
 	public static final String WATCHDISPLAY = "640"; //화면 보기
 	
+	public static final String EDITSHAREUI = "650"; //화면 공유를 누를경우 UI의 변화
+	
+	public static final String STOPSHARE = "660"; //화면 공유 중지
+	
+	public static final String STOPWATCH = "670";
+	
 	public static final String ADDFRIENDS = "700"; // 친구추가
 	
 	public static final String ADDFRIENDS_ALREADY = "715"; // 이미 친군데?

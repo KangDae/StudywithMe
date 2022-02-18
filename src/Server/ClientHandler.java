@@ -22,10 +22,20 @@ import javax.swing.JPanel;
 import DTO.Protocol;
 import Resource.R;
 
+import shareDisplay.Display_Server;
+import shareDisplay.Display_Client;
+
 public class ClientHandler extends R implements Runnable {
+	
 	BufferedReader br;
 	PrintWriter pw;
 	Socket socket;
+	
+	
+	Display_Server displayServer;
+	Display_Client displyClient;
+	
+	
 
 	public ClientHandler() {
 		br = Client_network.br;
@@ -37,6 +47,7 @@ public class ClientHandler extends R implements Runnable {
 	public void run() {
 		// 받는쪽
 		String line[] = null;
+		String ip ="";
 		while (true) {
 			try {
 				line = br.readLine().split("\\|");
@@ -226,6 +237,8 @@ public class ClientHandler extends R implements Runnable {
 					frameChattingRoom.chatting_chattingPanel.removeAll();
 					frameChattingRoom.chatting_chattingPanel.repaint();
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText("");
+					frameChattingRoom.btn_ShareDisplay.setEnabled(true);
+					frameChattingRoom.ExplainSharer.setText("");
 					// frameCenter.frameDown(); // 대기방 화면 끄고
 
 				} else if (line[0].compareTo(Protocol.ROOMMAKE_OK1) == 0) // 방만들어짐 (만든 당사자) // 입장
@@ -543,9 +556,6 @@ public class ClientHandler extends R implements Runnable {
 				
 					// frameCenter.frameDown(); // 대기방 화면 끄고
 					
-					
-										
-					
 				} else if (line[0].compareTo(Protocol.WRITENOTICEBOARD_MASTER)==0) {
 					
 					
@@ -565,33 +575,43 @@ public class ClientHandler extends R implements Runnable {
 					noticeview.start();
 					noticeview.Title_Textfield.setText(line[2]);
 					noticeview.lblNewLabel_3.setText(line[3]);
-					noticeview.Text_Content.setText(line[4]);		
+					noticeview.Text_Content.setText(line[4]);
+					
+				} else if(line[0].compareTo(Protocol.EDITSHAREUI)==0) {
+					System.out.println("line 길이는 "+line.length);
+					System.out.println("line[1]="+line[1]);
+					System.out.println("line[2]="+line[2]);
+					
+					ip =line[2];
+					
+					frameChattingRoom.ExplainSharer.setText(line[1]+"님이 화면 공유 중입니다.");
+					frameChattingRoom.btn_ShareDisplay.setEnabled(false);
+//					frameChattingRoom.btn_Shutdown.setEnabled(false);
+					
+					
+				} else if(line[0].compareTo(Protocol.STOPSHARE)==0) {
+					
+					System.out.println("STOPSHARE Client");
+					displayServer.server.close();
+					
+					frameChattingRoom.ExplainSharer.setText("");
+					frameChattingRoom.btn_ShareDisplay.setEnabled(true);
+					
+				} else if(line[0].compareTo(Protocol.SHAREDISPLAY)==0) {
+					
+					frameChattingRoom.ExplainSharer.setText(line[1]+"님이 화면 공유 중입니다.");
+					frameChattingRoom.btn_ShareDisplay.setEnabled(false);
+					displayServer = new Display_Server();
+					displayServer.Start();
+					
 				} else if(line[0].compareTo(Protocol.WATCHDISPLAY)==0) {
 					
-					final int w = Toolkit.getDefaultToolkit().getScreenSize().width,
-							h = Toolkit.getDefaultToolkit().getScreenSize().height;
-
-					JFrame frame = new JFrame("Client"); // 창 생성
-
-					frame.setBounds(0, 0, 1920, 1080);// 창 위치,크기 조절
-
-					frame.setLayout(null); // 레이아웃 없게 함.
-
-					frame.setVisible(true);
+					displyClient = new Display_Client();
+					displyClient.start(ip);
 					
+				} else if(line[0].compareTo(Protocol.STOPWATCH)==0) {
 					
-
-					BufferedInputStream bin = new BufferedInputStream(socket.getInputStream());
-
-					// 소켓의 입력스트림을 버퍼스트림으로
-
-					while (true) {
-
-						frame.getGraphics().drawImage(ImageIO.read(ImageIO.createImageInputStream(bin)), 0, 0, w, h, frame);
-
-						// 이미지를 받아오는 동시에 화면에 그림
-
-					}
+					displyClient.stop();
 				}
 
 			} catch (IOException io) {

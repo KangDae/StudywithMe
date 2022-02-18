@@ -88,6 +88,7 @@ public class ServerHandler extends Thread {
 					h = Toolkit.getDefaultToolkit().getScreenSize().height;
 			OutputStream out = null;
 			String[] line = null;
+			String ip = "";
 			while (true) {
 				line = br.readLine().split("\\|");
 				if (line == null) {
@@ -1373,8 +1374,45 @@ public class ServerHandler extends Thread {
 				}
 
 				else if (line[0].compareTo(Protocol.SHAREDISPLAY) == 0) {
-
+					
+					int roomUserSize = roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.size();
+					String ThisName = priRoom.roomInUserList.get(priRoom.roomInUserList.indexOf(this)).user.getIdName();
+					String ThisIp = priRoom.roomInUserList.get(priRoom.roomInUserList.indexOf(this))
+							.socket.getInetAddress().toString().replace("/","");
+					
+					
+									
+					System.out.println(ThisName);
+					System.out.println(ThisIp);
+					
+					
+					for(int i = 0; i< roomUserSize; i++) {
+						if(priRoom.roomInUserList.get(i).user.getIdName().equals(this.user.getIdName())) {
+							System.out.println("SHAREDISPLAY 실행중");						
+							pw.println(Protocol.SHAREDISPLAY+"|"+ThisName+"|"+ThisIp);
+							pw.flush();
+						} else {						
+						roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw.println(Protocol.EDITSHAREUI+"|"+ThisName+"|"+ThisIp);
+						roomtotalList.get(roomtotalList.indexOf(priRoom)).roomInUserList.get(i).pw.flush();
+					
+						}
+					}
+						
+				}
 				
+				else if(line[0].compareTo(Protocol.STOPSHARE)==0) {
+					System.out.println("STOPSHARE SERVER");
+					pw.println(Protocol.STOPSHARE+"|");
+					pw.flush();
+				}
+				
+				else if(line[0].compareTo(Protocol.WATCHDISPLAY)==0) {
+					pw.println(Protocol.WATCHDISPLAY +"|");
+					pw.flush();			
+				}
+				else if(line[0].compareTo(Protocol.STOPWATCH)== 0) {
+					pw.println(Protocol.STOPWATCH+"|");
+					pw.flush();					
 				}
 
 			} // while
