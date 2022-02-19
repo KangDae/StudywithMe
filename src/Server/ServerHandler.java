@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -73,8 +74,8 @@ public class ServerHandler extends Thread {
 		this.noticeList = noticeList;
 		this.conn = conn;
 
-		br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+		br = new BufferedReader(new InputStreamReader(socket.getInputStream(),StandardCharsets.UTF_8));
+		pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8));
 		bout = new BufferedOutputStream(socket.getOutputStream());
 
 		this.fileName = "";
@@ -336,7 +337,7 @@ public class ServerHandler extends Thread {
 							// roomtotalList의 정보들을 console로 알려줌.
 							for (int i = 0; i < roomtotalList.size(); i++) {
 								roomListMessage += (roomtotalList.get(i).getrID() + "%"
-										+ roomtotalList.get(i).getTitle() + "%" + "%"
+										+ roomtotalList.get(i).getTitle() + "%"
 										+ roomtotalList.get(i).getUserCount() + "%"
 										+ roomtotalList.get(i).getMasterName() + "%" + roomtotalList.get(i).getSubject()
 										+ "%" + roomtotalList.get(i).roomInUserList.size() + "-");
