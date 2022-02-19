@@ -1,22 +1,19 @@
 package ButtonAction;
 
 import java.awt.BorderLayout;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import javax.imageio.ImageIO;
 import javax.swing.Box;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -24,10 +21,8 @@ import DTO.Protocol;
 import Function.Email.SendMail_update;
 import Resource.R;
 import Server.Client_network;
-import shareDisplay.Display_Client;
-import shareDisplay.Display_Server;
 
-public class ButtonEvent extends ButtonAccemble implements ActionListener, MouseListener, ListSelectionListener {
+public class ButtonEvent extends ButtonAccemble implements ActionListener, MouseListener, ListSelectionListener, KeyListener {
 
 	private static final long serialVersionUID = 1L;
 	PrintWriter pw;
@@ -131,6 +126,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		frameSearchRoom.searchRoom_btn.addActionListener(this);// 방 검색 검색버튼
 		frameSearchRoom.searchRoom_btn_Cancle.addActionListener(this);// 방 검색 확인 버튼
 		frameChattingRoom.chatting_btn_MessageSend.addActionListener(this); // 대화방 메시지보내기
+		frameChattingRoom.chatting_textField_message.addKeyListener(this); // 대화방 메시지보내기
 		frameChattingRoom.chatting_btn_ExitButton.addActionListener(this); // 대화방 나가기
 		frameChattingRoom.chatting_btn_FileTab.addActionListener(this); // 대화방 파일탭
 		frameChattingRoom.chatting_btn_Dismantling.addActionListener(this); // 대화방 모임해체
@@ -156,7 +152,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			frameSignup.comboBox_Year.setSelectedIndex(19);
 			frameSignup.comboBox_Moonth.setSelectedIndex(0);
 			frameSignup.comboBox_Day.setSelectedIndex(5);
-
+ 
 		} // ==> Exit버튼 기능 구현 <==
 		else if (e.getSource().equals(btnExit)) {
 			System.exit(0);
@@ -886,22 +882,7 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 		}
 		// ==> 채팅방 메세지 보내기 <==
 		else if (e.getSource().equals(frameChattingRoom.chatting_btn_MessageSend)) {
-			String message = "";
-			message = frameChattingRoom.chatting_textField_message.getText();
-
-			frameChattingRoom.chatting_chattingPanel.setLayout(new BorderLayout());
-			frameChattingRoom.vertical.add(Box.createVerticalStrut(5));
-			frameChattingRoom.chatting_chattingPanel.add(frameChattingRoom.vertical, BorderLayout.PAGE_START);
-			frameChattingRoom.chatting_chattingPanel.repaint();
-			if (frameChattingRoom.chatting_textField_message.getText().length() != 0) {
-				pw.println(Protocol.CHATTINGSENDMESSAGE + "|" + message + "%" + myIdname); // 메세지를 // 보냄
-				pw.flush();
-				frameChattingRoom.chatting_textField_message.setText("");
-				pw.println(Protocol.CHATTINGSCROLLBARDOWN + "|" + "message");
-				pw.flush();
-			} else {
-
-			}
+			chattingRoomMessage();
 
 		}
 		// ==> 방해체 <==
@@ -933,6 +914,15 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 			pw.flush();
 		}
 
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getSource().equals(frameChattingRoom.chatting_textField_message)) {
+			if(e.getKeyCode() == e.VK_ENTER ) {
+				chattingRoomMessage();
+			}
+		}
+		
 	}
 
 	@Override
@@ -983,6 +973,39 @@ public class ButtonEvent extends ButtonAccemble implements ActionListener, Mouse
 	public void mouseExited(MouseEvent e) {
 		StudyWithMe.setIcon(image);
 
+	}
+	
+	public void chattingRoomMessage(){
+		String message = "";
+		message = frameChattingRoom.chatting_textField_message.getText();
+
+		frameChattingRoom.chatting_chattingPanel.setLayout(new BorderLayout());
+		frameChattingRoom.vertical.add(Box.createVerticalStrut(5));
+		frameChattingRoom.chatting_chattingPanel.add(frameChattingRoom.vertical, BorderLayout.PAGE_START);
+		frameChattingRoom.chatting_chattingPanel.repaint();
+		if (frameChattingRoom.chatting_textField_message.getText().length() != 0) {
+			pw.println(Protocol.CHATTINGSENDMESSAGE + "|" + message + "%" + myIdname); // 메세지를 // 보냄
+			pw.flush();
+			frameChattingRoom.chatting_textField_message.setText("");
+			pw.println(Protocol.CHATTINGSCROLLBARDOWN + "|" + "message");
+			pw.flush();
+		} else {
+
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
