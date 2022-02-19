@@ -210,6 +210,8 @@ public class ClientHandler extends R implements Runnable {
 				{
 
 					String roomList[] = line[1].split("-"); // 방 갯수
+					String roomfirst[] = line[1].split("%");
+					
 					for (int i = 0; i < roomList.length; i++) {
 						System.out.print(roomList[i] + "/");
 					}
@@ -239,6 +241,9 @@ public class ClientHandler extends R implements Runnable {
 					frameChattingRoom.Chatting_textarea_Inuserlist.setText("");
 					frameChattingRoom.btn_ShareDisplay.setEnabled(true);
 					frameChattingRoom.ExplainSharer.setText("");
+					
+					frameChattingRoom.Chatting_textarea_Inuserlist.setText(roomfirst[3]);// 방장 추가
+
 					// frameCenter.frameDown(); // 대기방 화면 끄고
 
 				} else if (line[0].compareTo(Protocol.ROOMMAKE_OK1) == 0) // 방만들어짐 (만든 당사자) // 입장
