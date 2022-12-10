@@ -103,7 +103,7 @@ public class ServerHandler extends Thread {
 					// line[1]은 %까지 split
 					String userContent[] = line[1].split("%");
 					System.out.println(line[1]);
-					String sql = "Insert into UserContent values(nextval(num),?,?,?,?,?,?,?)";
+					String sql = "Insert into UserContent values(nextval(num),?,?,?,?,?,?)";
 					pstmt = conn.prepareStatement(sql);
 					// DB의 회원정보 순서
 					pstmt.setString(1, userContent[0]); // ID
@@ -112,7 +112,6 @@ public class ServerHandler extends Thread {
 					pstmt.setString(4, userContent[3]); // age
 					pstmt.setString(5, userContent[4]); // eamil
 					pstmt.setString(6, sql);
-					pstmt.setString(7, sql);
 					String Roompath = path + "\\userFolder\\" + userContent[0];
 
 					File folder = new File(Roompath);
