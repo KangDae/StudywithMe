@@ -29,7 +29,7 @@ public class Server {
 	String protocol = "jdbc:mariadb://";
 	String ip = "127.0.0.1";
 	String port = "3306";
-	String db = "userinfo";
+	String db = "studywithme";
 	/*
 	 * 		mariaDB와 연동, driver org.Driver
 	 * 		protocol url, id, pw
@@ -38,7 +38,7 @@ public class Server {
 	private String driver = "org.mariadb.jdbc.Driver";
 	private String url = String.format("%s%s:%s/%s", protocol, ip, port, db);
 	private String user = "root";
-	private String password = "7984";
+	private String password = "3302";
 	
 	public Server() {
 		try {
