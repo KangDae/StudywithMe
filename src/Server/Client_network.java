@@ -21,7 +21,7 @@ public class Client_network {
 	}
 	public void network() {
 		try {
-			socket = new Socket("221.145.126.168",9500);
+			socket = new Socket("192.168.96.77",9500);
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream(),StandardCharsets.UTF_8));
 			pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),StandardCharsets.UTF_8));
 			bin = new BufferedInputStream(socket.getInputStream());
