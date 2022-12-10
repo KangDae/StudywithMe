@@ -14,8 +14,8 @@ public class Client_network {
 	public static BufferedReader br;
 	public static PrintWriter pw;
 	public static BufferedInputStream bin;
-	public static Socket socket; 
-	
+	public static Socket socket;
+
 	public Client_network(){
 		network();
 	}
@@ -38,8 +38,8 @@ public class Client_network {
 		Runnable client = new ClientHandler();
 		Thread startThread = new Thread(client);
 		startThread.start();
-		
+
 	}
-		
-	
+
+
 }
